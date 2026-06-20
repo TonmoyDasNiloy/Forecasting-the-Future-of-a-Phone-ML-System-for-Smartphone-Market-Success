@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Smartphone BI Agent — Technical Documentation</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Arial, sans-serif; color: #1a1d29; line-height: 1.55;
+    font-size: 11pt; margin: 0;
+  }
+  h1,h2,h3,h4 { color: #312e81; line-height: 1.25; }
+  h1 { font-size: 26pt; }
+  h2 { font-size: 18pt; border-bottom: 3px solid #6366f1; padding-bottom: 5px; margin-top: 34px; page-break-after: avoid; }
+  h3 { font-size: 13.5pt; color: #4338ca; margin-top: 22px; page-break-after: avoid; }
+  h4 { font-size: 11.5pt; color: #4f46e5; margin-bottom: 4px; page-break-after: avoid; }
+  p { margin: 7px 0; }
+  code, .mono { font-family: "Consolas", "Courier New", monospace; font-size: 9.8pt; }
+  .eq {
+    background: #f5f6ff; border: 1px solid #c7d2fe; border-left: 4px solid #6366f1;
+    border-radius: 6px; padding: 10px 14px; margin: 10px 0; font-family: "Consolas", monospace;
+    font-size: 10pt; white-space: pre-wrap; color: #1e1b4b;
+  }
+  .ex {
+    background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #22c55e;
+    border-radius: 6px; padding: 8px 14px; margin: 8px 0; font-size: 10pt;
+  }
+  .note {
+    background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #f59e0b;
+    border-radius: 6px; padding: 8px 14px; margin: 8px 0; font-size: 10pt;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 9.8pt; page-break-inside: avoid; }
+  th { background: #4338ca; color: #fff; text-align: left; padding: 6px 9px; }
+  td { border: 1px solid #d6d9e6; padding: 6px 9px; vertical-align: top; }
+  tr:nth-child(even) td { background: #f6f7fb; }
+  .pill { display: inline-block; background: #eef2ff; color: #4338ca; border:1px solid #c7d2fe;
+    border-radius: 20px; padding: 1px 9px; font-size: 8.6pt; font-weight: 600; margin: 1px; }
+  .cover { text-align: center; padding-top: 150px; page-break-after: always; }
+  .cover .sub { color: #6b7280; font-size: 13pt; margin-top: 8px; }
+  .cover .meta { margin-top: 60px; color: #6b7280; font-size: 10pt; }
+  .toc li { margin: 4px 0; }
+  .section { page-break-before: always; }
+  .small { font-size: 9pt; color: #6b7280; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kpi { background:#312e81; color:#fff; border-radius:8px; padding:10px; text-align:center; }
+  .kpi b { font-size: 16pt; display:block; }
+  .arrow { color:#6366f1; font-weight:bold; }
+  ul { margin: 6px 0; padding-left: 22px; }
+  li { margin: 3px 0; }
+</style>
+</head>
+<body>
+
+<!-- ───────────── COVER ───────────── -->
+<div class="cover">
+  <div style="font-size:54pt">📱📊</div>
+  <h1>Smartphone BI Agent</h1>
+  <div class="sub">Complete Technical Documentation</div>
+  <div class="sub" style="font-size:11pt; max-width:520px; margin:18px auto; color:#4b5563;">
+    An end-to-end Business-Intelligence system that predicts the market success of a
+    new smartphone — segment, demand, customer profile, product-market fit, optimal
+    price and live market intelligence — from launch-time specifications alone.
+  </div>
+  <div class="meta">
+    Architecture · Machine-Learning Models · Data · Backend · Frontend · Mathematics<br/>
+    Generated for academic / thesis documentation
+  </div>
+</div>
+
+<!-- ───────────── TOC ───────────── -->
+<h2>Table of Contents</h2>
+<ol class="toc">
+  <li>System Overview &amp; Architecture</li>
+  <li>Technology Stack (every layer &amp; why)</li>
+  <li>The Dataset</li>
+  <li>The Feature Contract &amp; Engineered Features (with equations)</li>
+  <li>Pillar 1 — Market Research (Segment Classifier + Similarity Engine)</li>
+  <li>Pillar 2 — Demand Forecasting</li>
+  <li>Pillar 3 — Customer Segmentation (Retrieval)</li>
+  <li>Pillar 4 — Product-Market Fit &amp; Failure Prediction</li>
+  <li>Live Computations — CLV, Price Optimizer, Competitor Gap, Market Intelligence</li>
+  <li>Backend (FastAPI) — API Reference</li>
+  <li>Frontend (Next.js) — Architecture</li>
+  <li>Request Lifecycle — how everything connects</li>
+  <li>Accuracy Scorecard &amp; Honest Limitations</li>
+  <li>Mathematical Appendix — worked examples</li>
+</ol>
+
+<!-- ───────────── 1. OVERVIEW ───────────── -->
+<div class="section">
+<h2>1. System Overview &amp; Architecture</h2>
+<p>The Smartphone BI Agent takes a <b>single input</b> — the specifications of a new
+(unreleased) phone — and produces a full launch-intelligence dashboard. It is built as
+<b>four independent machine-learning pillars</b> plus three live analytical services,
+unified behind one agent and exposed through a REST API to a React dashboard.</p>
+
+<h3>1.1 High-level data flow</h3>
+<div class="eq">React Dashboard (browser)
+        │  HTTP/JSON  (POST /api/analyze, /api/competitors, /api/price-optimize, /api/news)
+        ▼
+FastAPI Backend  (backend/main.py)
+        │  imports
+        ▼
+Agent  (src/agent.py)  ──orchestrates──►  Pillar 1 · 2 · 3 · 4
+        │                                   │
+        │                                   ▼  load trained models
+        │                          joblib files (models/*.joblib)
+        ▼                                   ▲
+Live services: CLV · Price Optimizer        │ trained on
+Competitor Gap · Web News (ddgs)            ▼
+                              global_smartphone_bi_v4_final.csv (116,481 rows)</div>
+
+<h3>1.2 The four ML pillars</h3>
+<table>
+<tr><th>Pillar</th><th>Question it answers</th><th>Technique</th><th>Output</th></tr>
+<tr><td><b>1. Market Research</b></td><td>What class of phone is this &amp; what does it compete with?</td><td>XGBoost classifier + KNN similarity</td><td>Segment + nearest phones</td></tr>
+<tr><td><b>2. Demand Forecast</b></td><td>How many units/month will it sell?</td><td>XGBoost regression (cold-start)</td><td>6-month unit curve</td></tr>
+<tr><td><b>3. Customer Segmentation</b></td><td>Who will buy it?</td><td>KNN retrieval of real buyers</td><td>Age / income / gender / loyalty mix</td></tr>
+<tr><td><b>4. Product-Market Fit</b></td><td>Will it succeed or fail?</td><td>Random-Forest classifier</td><td>PMF score + GO / CAUTION / RECONSIDER</td></tr>
+</table>
+
+<h3>1.3 Design principle — honesty over fake accuracy</h3>
+<p>Every cold-start model is allowed to see <b>only launch-known features</b> (specs, price,
+brand, region, months-since-launch). Post-launch signals (sales, social-media mentions,
+returns) are forbidden as inputs — they would leak the answer. Train/test splits are
+done <b>by phone</b> (a phone never appears in both folds) so memorisation cannot inflate
+scores.</p>
+</div>
+
+<!-- ───────────── 2. TECH STACK ───────────── -->
+<div class="section">
+<h2>2. Technology Stack</h2>
+
+<h3>2.1 Machine Learning &amp; Data layer (Python)</h3>
+<table>
+<tr><th>Technology</th><th>Role</th><th>Why chosen</th></tr>
+<tr><td><b>pandas</b></td><td>Load &amp; manipulate the 116K-row dataset</td><td>Standard tabular data tool</td></tr>
+<tr><td><b>NumPy</b></td><td>Vector math, log transforms, distance weights</td><td>Fast numerical core</td></tr>
+<tr><td><b>XGBoost</b></td><td>Segment classifier (P1) &amp; demand regressor (P2)</td><td>Best-in-class for tabular data; handles mixed features</td></tr>
+<tr><td><b>scikit-learn</b></td><td>KNN (P1/P3), Random Forest (P4), scalers, encoders, group split, metrics</td><td>Reliable, well-tested ML toolkit</td></tr>
+<tr><td><b>joblib</b></td><td>Serialise trained models to <code>models/*.joblib</code></td><td>Fast load at inference</td></tr>
+</table>
+
+<h3>2.2 Backend layer</h3>
+<table>
+<tr><th>Technology</th><th>Role</th></tr>
+<tr><td><b>FastAPI</b></td><td>REST API server exposing the agent &amp; live services</td></tr>
+<tr><td><b>Uvicorn</b></td><td>ASGI server that runs FastAPI</td></tr>
+<tr><td><b>Pydantic v2</b></td><td>Validates &amp; coerces the incoming phone-spec JSON</td></tr>
+<tr><td><b>ddgs</b> (DuckDuckGo Search)</td><td>Fetches live news / reviews / competitor articles</td></tr>
+<tr><td><b>ThreadPoolExecutor</b></td><td>Runs all web searches in parallel (~4.5s vs ~15s)</td></tr>
+</table>
+
+<h3>2.3 Frontend layer</h3>
+<table>
+<tr><th>Technology</th><th>Role</th></tr>
+<tr><td><b>Next.js 16 (React 19)</b></td><td>App-router SPA, client components</td></tr>
+<tr><td><b>TypeScript</b></td><td>Typed API contracts between UI and backend</td></tr>
+<tr><td><b>Tailwind CSS v4</b></td><td>Utility-first styling, dark/light theming</td></tr>
+<tr><td><b>shadcn/ui</b></td><td>Accessible Card / Badge / Slider / Select components</td></tr>
+<tr><td><b>Recharts</b></td><td>Demand bars, donuts, treemap, radar charts</td></tr>
+<tr><td><b>Remotion</b></td><td>Programmatic explainer / demo videos</td></tr>
+</table>
+</div>
+
+<!-- ───────────── 3. DATASET ───────────── -->
+<div class="section">
+<h2>3. The Dataset</h2>
+<p>File: <code>global_smartphone_bi_v4_final.csv</code></p>
+<div class="grid2">
+  <div class="kpi"><b>116,481</b>rows (phone × month × region)</div>
+  <div class="kpi"><b>66</b>columns</div>
+  <div class="kpi"><b>968</b>unique phones</div>
+  <div class="kpi"><b>6</b>regions · <b>46</b> brands</div>
+</div>
+<p>Each row is one snapshot of a phone in a region for a month. Market segments are
+<span class="pill">budget</span><span class="pill">mid-range</span><span class="pill">premium</span><span class="pill">flagship</span>.</p>
+<p>Column families: identity (brand, model, country), numeric specs, categorical specs,
+time/region context, post-launch outcomes (sales, returns, NPS …), and buyer demographics
+(age, income, gender, RFM loyalty — each stored as percentage distributions).</p>
+</div>
+
+<!-- ───────────── 4. FEATURE CONTRACT ───────────── -->
+<div class="section">
+<h2>4. The Feature Contract &amp; Engineered Features</h2>
+<p>The single most important design artefact (<code>src/config.py</code>): every column is
+classified as <b>known-at-launch</b> or <b>post-launch</b>. Cold-start models may use only
+the former.</p>
+
+<h3>4.1 Known-at-launch inputs (29)</h3>
+<p><b>Numeric specs:</b> price_usd, 5g_or_not, num_cores, processor_speed, battery_capacity,
+fast_charging_available, fast_charging, ram_capacity, internal_memory, screen_size,
+refresh_rate, num_rear_cameras, primary_camera_rear, primary_camera_front,
+extended_memory_available, resolution_height, resolution_width, avg_rating.<br/>
+<b>Categorical:</b> brand_name, processor_brand, os. &nbsp;
+<b>Context:</b> months_since_launch, month_index, region.</p>
+
+<h3>4.2 Post-launch (NEVER used as cold-start inputs)</h3>
+<p>units_sold_monthly, social_media_mentions, search_trend_score, news_sentiment_score,
+market_share_pct, return_rate_pct, warranty_claims_per_100, nps_score,
+recommendation_rate_pct, repeat_purchase_rate_pct, customer_lifetime_value_usd, …</p>
+
+<h3>4.3 Engineered features (derived only from launch specs)</h3>
+<div class="eq">perf_score        = num_cores × processor_speed
+cam_total         = primary_camera_rear + primary_camera_front
+pixels            = resolution_height × resolution_width
+battery_per_inch  = battery_capacity / screen_size
+ram_x_mem         = ram_capacity × internal_memory
+price_per_ram     = price_usd / (ram_capacity + 1)
+value_score       = (ram_capacity + battery_capacity/1000 + cam_total/10) / ln(1 + price_usd)</div>
+<div class="ex"><b>Example</b> (Galaxy Test A: 8 cores @ 2.4 GHz, 50+16 MP, 5000 mAh, 6.5", 8 GB+128 GB, $320):<br/>
+perf_score = 8×2.4 = <b>19.2</b> · cam_total = 66 · battery_per_inch = 5000/6.5 = <b>769.2</b> ·
+price_per_ram = 320/9 = <b>35.6</b> ·
+value_score = (8 + 5 + 6.6) / ln(321) = 19.6 / 5.77 = <b>3.40</b></div>
+</div>
+
+<!-- ───────────── 5. PILLAR 1 ───────────── -->
+<div class="section">
+<h2>5. Pillar 1 — Market Research</h2>
+<p>Two jobs in one module (<code>src/pillar1_market_research.py</code>).</p>
+
+<h3>5.1 (A) Segment Classifier — XGBoost</h3>
+<p>Predicts <code>market_segment ∈ {budget, mid-range, premium, flagship}</code> from specs.</p>
+<table>
+<tr><th>Setting</th><th>Value</th></tr>
+<tr><td>Algorithm</td><td>XGBoost Classifier (gradient-boosted trees)</td></tr>
+<tr><td>Hyper-parameters</td><td>n_estimators=300, max_depth=6, learning_rate=0.1, subsample=0.9</td></tr>
+<tr><td>Features</td><td>18 numeric specs + 3 categorical (ordinal-encoded)</td></tr>
+<tr><td>Split</td><td>GroupShuffleSplit by phone, 80/20</td></tr>
+<tr><td>Result</td><td>Accuracy <b>99.4%</b>, Macro-F1 <b>99.6%</b></td></tr>
+</table>
+<p>Gradient boosting builds trees additively; the prediction is</p>
+<div class="eq">ŷ = softmax( Σ_k  f_k(x) ),   f_k ∈ trees,   minimising  Σ loss(y, ŷ) + Σ Ω(f_k)</div>
+<p>where Ω penalises tree complexity. Segments are almost perfectly separable by price+specs,
+so near-perfect accuracy here is legitimate (not leakage).</p>
+
+<h3>5.2 (B) Similarity / Retrieval Engine — KNN</h3>
+<p>Finds the most spec-similar phones that actually launched. Powers competitors,
+demographics (Pillar 3) and price anchoring.</p>
+<div class="eq">1.  log-scale price:  price' = ln(1 + price_usd)
+2.  standardise each feature:  z_i = (x_i − μ_i) / σ_i
+3.  weight price 2.5× (price dominates phone "type"):  z_price ×= 2.5
+4.  distance(a,b) = √ Σ_i (z_a,i − z_b,i)²      (Euclidean, region-filtered)
+5.  return the k nearest neighbours</div>
+<p>Reference catalogue: <b>5,801</b> phone×region rows.</p>
+</div>
+
+<!-- ───────────── 6. PILLAR 2 ───────────── -->
+<div class="section">
+<h2>6. Pillar 2 — Demand Forecasting</h2>
+<p><code>src/pillar2_demand.py</code> — predicts <code>units_sold_monthly</code> for a brand-new phone
+using only launch-known features.</p>
+
+<h3>6.1 Target transform</h3>
+<p>Demand is right-skewed, so the model learns the log of demand:</p>
+<div class="eq">target  y = ln(1 + units_sold_monthly)        (log1p)
+prediction back-transform:  units = e^ŷ − 1   (expm1)</div>
+
+<h3>6.2 Leak-free brand prior</h3>
+<p>A brand-strength feature is computed on the <b>training fold only</b> and mapped onto both
+folds, so a test phone's own sales never enter its features:</p>
+<div class="eq">brand_demand_prior(b) = mean over train rows of brand b of  ln(1 + units)
+(unseen brands fall back to the global train mean)</div>
+
+<h3>6.3 Model &amp; result</h3>
+<table>
+<tr><th>Setting</th><th>Value</th></tr>
+<tr><td>Algorithm</td><td>XGBoost Regressor</td></tr>
+<tr><td>Hyper-parameters</td><td>n_estimators=700, max_depth=8, learning_rate=0.03, subsample=0.85, colsample_bytree=0.8, min_child_weight=3</td></tr>
+<tr><td>Features</td><td>specs + engineered + time + region + brand_demand_prior</td></tr>
+<tr><td>Result</td><td>R²(log) = <b>0.854</b>, MAE = <b>±9.07 units/month</b></td></tr>
+</table>
+<p>The 6-month curve is produced by sweeping <code>months_since_launch = 0…5</code> and
+back-transforming each prediction.</p>
+<div class="note"><b>Honest ceiling.</b> R²≈0.85 is the genuine limit of what specs explain about
+demand; the remaining ~15% is marketing, timing and luck that no spec-only model can recover.</div>
+</div>
+
+<!-- ───────────── 7. PILLAR 3 ───────────── -->
+<div class="section">
+<h2>7. Pillar 3 — Customer Segmentation (Retrieval)</h2>
+<p><code>src/pillar3_segmentation.py</code>. Phone specs do <b>not</b> directly predict who buys a
+phone (a direct regressor scores R²≈0). Instead we <b>retrieve</b> the real buyers of similar
+phones.</p>
+<div class="eq">1.  find the k=10 nearest phones in the same region (Pillar-1 engine)
+2.  average their real buyer distributions (age, income, gender, RFM)
+3.  clip negatives, renormalise each block to sum to 100%:
+        p_i = max(0, v_i) / Σ_j max(0, v_j) × 100</div>
+<table>
+<tr><th>Block</th><th>R²</th><th>Verdict</th></tr>
+<tr><td>Income distribution</td><td><b>0.771</b></td><td>Strong — similar phones share buyer income</td></tr>
+<tr><td>Age distribution</td><td><b>0.671</b></td><td>Good — region-awareness doubled it</td></tr>
+<tr><td>RFM / loyalty</td><td><b>−0.16</b></td><td>Not predictable from specs (reported honestly)</td></tr>
+</table>
+<div class="note"><b>Why loyalty is shown but flagged.</b> Loyalty depends on the person &amp; brand
+relationship, not the device. The dashboard therefore presents loyalty as a population-level
+prior, not a confident prediction.</div>
+</div>
+
+<!-- ───────────── 8. PILLAR 4 ───────────── -->
+<div class="section">
+<h2>8. Pillar 4 — Product-Market Fit &amp; Failure Prediction</h2>
+<p><code>src/pillar4_pmf.py</code>. The dataset has no "success" column, so a transparent PMF target
+is <b>constructed</b> from real post-launch outcomes, then a classifier learns to predict it
+from launch specs only (non-circular: none of the label's ingredients are specs).</p>
+
+<h3>8.1 PMF score formula (each component min-max normalised to 0–1)</h3>
+<div class="eq">PMF = 0.25 · NPS
+    + 0.20 · repeat_purchase_rate
+    + 0.20 · recommendation_rate
+    + 0.15 · (1 − return_rate)        ← inverted (low returns = good)
+    + 0.10 · (1 − warranty_claims)    ← inverted (few defects = good)
+    + 0.10 · sales_slope              ← are monthly sales trending up?
+
+where  minmax(x) = (x − min) / (max − min + ε)</div>
+<p>Weights: loyalty/advocacy 65%, quality 25%, momentum 10%.</p>
+
+<h3>8.2 Failure label &amp; classifier</h3>
+<div class="eq">failure = 1  if  PMF &lt; 25th-percentile(PMF)   else 0      (data-relative, balanced)</div>
+<table>
+<tr><th>Setting</th><th>Value</th></tr>
+<tr><td>Algorithm</td><td>Random Forest Classifier</td></tr>
+<tr><td>Hyper-parameters</td><td>n_estimators=500, max_depth=12, min_samples_leaf=3, class_weight="balanced"</td></tr>
+<tr><td>Result</td><td>Accuracy <b>79.9%</b>, AUC <b>0.88</b>, base-rate 25%</td></tr>
+</table>
+
+<h3>8.3 Recommendation mapping (inference)</h3>
+<div class="eq">fail_p = P(failure | specs)          PMF_shown = 1 − fail_p
+fail_p &lt; 0.15  → "GO FOR LAUNCH"
+fail_p &lt; 0.35  → "PROCEED WITH CAUTION"
+else           → "RECONSIDER / REWORK"</div>
+<p>Top failure drivers (feature importance): price, avg_rating, screen resolution, 5G, RAM.</p>
+</div>
+
+<!-- ───────────── 9. LIVE COMPUTATIONS ───────────── -->
+<div class="section">
+<h2>9. Live Computations</h2>
+
+<h3>9.1 Customer Lifetime Value (computed live in the agent)</h3>
+<div class="eq">repeat_factor   = 1 + repeat_rate / 100
+net_price       = price × (1 − return_rate / 100)
+loyalty_horizon = 2.4          (avg purchase cycles a satisfied buyer gives a brand)
+margin          = 0.18
+CLV = net_price × margin × repeat_factor × loyalty_horizon</div>
+<div class="ex"><b>Worked example</b> (Galaxy Test A, $320, loyal-rate 25.9%, return 8%):<br/>
+repeat_factor = 1.259 · net_price = 320×0.92 = 294.4<br/>
+CLV = 294.4 × 0.18 × 1.259 × 2.4 = <b>$160.1</b>  ✓ (matches dashboard)</div>
+
+<h3>9.2 Optimal Price Recommender (anchored to competitors → stable)</h3>
+<div class="eq">market_price = median( prices of the 5 spec-matched competitors )   ← price excluded from matching
+spec_ratio   = clip( your_spec_score / competitor_avg_spec , 0.8 , 1.25 )
+fair_price   = market_price × spec_ratio
+unit_cost    = fair_price × (1 − 0.40)              (40% gross-margin assumption)
+demand(p)    = base_demand × max(0, 1 − 1.3 · (p − fair_price)/fair_price)   (linear elasticity)
+revenue(p)   = p × demand(p)
+profit(p)    = (p − unit_cost) × demand(p)
+recommended  = argmax_p  profit(p) × PMF(p)</div>
+<div class="note"><b>Why it is stable.</b> Competitors are matched on <b>specs only</b> (price excluded),
+so editing your input price never moves the anchor — the recommendation converges instead of
+chasing the input upward.</div>
+<div class="ex"><b>Example</b> (specs of Galaxy Test A): competitors $301–$361, median $325 → fair ≈ $326,
+unit_cost ≈ $196, recommended ≈ <b>$383</b> (peak profit×PMF).</div>
+
+<h3>9.3 Competitor Gap Analysis</h3>
+<div class="eq">norm(value) = clip( (value − lo) / (hi − lo) × 100 , 0 , 100 )</div>
+<p>Six specs (RAM, battery, camera, screen, refresh, performance) are normalised 0–100 for the
+phone and its three nearest competitors and drawn as a treemap; differences ≥12% become
+plain-English win/loss insights.</p>
+
+<h3>9.4 Market Intelligence (live web)</h3>
+<p>Two buckets, searched in parallel via DuckDuckGo: <b>Your Phone</b> (model + spec-similar
+handsets) and <b>Competitor</b> (the rivals Pillar 1 predicts). Results are de-duplicated,
+slot-capped and round-robin interleaved so neither bucket dominates.</p>
+</div>
+
+<!-- ───────────── 10. BACKEND ───────────── -->
+<div class="section">
+<h2>10. Backend — API Reference (FastAPI)</h2>
+<table>
+<tr><th>Endpoint</th><th>Method</th><th>Purpose</th><th>Returns</th></tr>
+<tr><td><code>/api/health</code></td><td>GET</td><td>Liveness check</td><td>status</td></tr>
+<tr><td><code>/api/analyze</code></td><td>POST</td><td>Full pipeline (4 pillars + CLV)</td><td>segment, demand, profile, PMF, CLV</td></tr>
+<tr><td><code>/api/competitors</code></td><td>POST</td><td>Spec gap vs nearest rivals</td><td>radar scores, specs, insights</td></tr>
+<tr><td><code>/api/price-optimize</code></td><td>POST</td><td>Profit-max price curve</td><td>curve, recommended price, assumptions</td></tr>
+<tr><td><code>/api/news</code></td><td>POST</td><td>Live news / reviews</td><td>articles (Your Phone / Competitor)</td></tr>
+</table>
+<p>Input is validated by a Pydantic <code>PhoneSpec</code> model (with the <code>5g_or_not</code> alias).
+CORS is open to <code>localhost:3000</code>. The agent &amp; pillars are imported from <code>src/</code>;
+trained models are loaded from <code>models/*.joblib</code> on demand.</p>
+</div>
+
+<!-- ───────────── 11. FRONTEND ───────────── -->
+<div class="section">
+<h2>11. Frontend — Architecture (Next.js)</h2>
+<table>
+<tr><th>File</th><th>Responsibility</th></tr>
+<tr><td><code>components/bi-agent-app.tsx</code></td><td>Root client app: state, theme, welcome orb, loading screen, parallel fetches</td></tr>
+<tr><td><code>components/specs-form.tsx</code></td><td>Sidebar spec inputs (chips, steppers, selects, toggles)</td></tr>
+<tr><td><code>components/dashboard.tsx</code></td><td>Assembles all result sections</td></tr>
+<tr><td><code>components/charts/*</code></td><td>Demand bars, donuts, loyalty bar, competitor treemap, price radar, PMF gauge</td></tr>
+<tr><td><code>components/news-panel.tsx</code></td><td>Live news cards + filters</td></tr>
+<tr><td><code>lib/api.ts</code> / <code>lib/types.ts</code></td><td>Typed fetch helpers &amp; response contracts</td></tr>
+</table>
+<p>On <b>Analyze</b>: the analysis call blocks the dashboard render; news, competitors and price
+optimisation are fired in parallel and populate their sections as they resolve, so the core
+dashboard appears in ~2s while slower web search fills in afterward.</p>
+</div>
+
+<!-- ───────────── 12. LIFECYCLE ───────────── -->
+<div class="section">
+<h2>12. Request Lifecycle — end to end</h2>
+<div class="eq">1. User fills specs → clicks Analyze
+2. React builds a PhoneSpec JSON, POSTs to 4 endpoints (analyze blocks; others background)
+3. FastAPI validates with Pydantic, calls agent.analyze()
+4. Agent runs:
+     P1 predict_segment()         → XGBoost classifier (joblib)
+     P1 find_similar()            → KNN over scaled catalogue
+     P3 predict_demographics()    → average neighbours' real buyers
+     P2 predict_curve()           → XGBoost regressor, 6 months
+     P4 predict_fit()             → Random-Forest probability
+     estimate_clv()               → closed-form CLV
+5. JSON returned → React renders KPIs, charts, profile, PMF
+6. Background: /competitors (treemap), /price-optimize (radar), /news (cards) fill in
+7. Dashboard complete</div>
+</div>
+
+<!-- ───────────── 13. SCORECARD ───────────── -->
+<div class="section">
+<h2>13. Accuracy Scorecard &amp; Honest Limitations</h2>
+<table>
+<tr><th>Pillar / Model</th><th>Metric</th><th>Score</th></tr>
+<tr><td>P1 Segment (XGBoost)</td><td>Accuracy / Macro-F1</td><td><b>99.4% / 99.6%</b></td></tr>
+<tr><td>P2 Demand (XGBoost)</td><td>R²(log) / MAE</td><td><b>0.854 / ±9.07 units</b></td></tr>
+<tr><td>P3 Income (KNN)</td><td>R²</td><td><b>0.771</b></td></tr>
+<tr><td>P3 Age (KNN)</td><td>R²</td><td><b>0.671</b></td></tr>
+<tr><td>P3 RFM loyalty (KNN)</td><td>R²</td><td><b>−0.16 (not predictable)</b></td></tr>
+<tr><td>P4 Failure (Random Forest)</td><td>Accuracy / AUC</td><td><b>79.9% / 0.88</b></td></tr>
+</table>
+<h3>Honest limitations</h3>
+<ul>
+<li>Demand caps at R²≈0.85 — the data's true ceiling from specs alone.</li>
+<li>RFM/loyalty is not predictable from specs; shown as a population prior.</li>
+<li>The PMF label is constructed (transparent formula), not ground-truth.</li>
+<li>Price-optimizer cost &amp; elasticity are stated assumptions (40% margin, β=1.3).</li>
+<li>Truly novel form-factors have weak nearest neighbours.</li>
+</ul>
+</div>
+
+<!-- ───────────── 14. APPENDIX ───────────── -->
+<div class="section">
+<h2>14. Mathematical Appendix — Worked Examples</h2>
+
+<h4>A. Segment confidence</h4>
+<div class="eq">confidence = max_k softmax(score_k);  Galaxy Test A → mid-range @ 100%</div>
+
+<h4>B. Demand back-transform</h4>
+<div class="eq">model outputs ŷ=4.66 (log) → units = e^4.66 − 1 ≈ 105 units/month</div>
+
+<h4>C. Price-vs-category</h4>
+<div class="eq">price_delta = (price − category_avg)/category_avg × 100
+($320 vs mid-range avg $247) → +29.5%</div>
+
+<h4>D. Affordability fit (frontend)</h4>
+<div class="eq">comfortable% = Σ income-tier% where price ≤ tier_budget_ceiling
+tiers: Low ≤ $180, Lower-mid ≤ $350, Mid ≤ $650, Upper-mid ≤ $1100, High ≤ ∞</div>
+
+<h4>E. Loyalty split (frontend)</h4>
+<div class="eq">engaged% = (Champion + Loyal + Recent) / (engaged + at-risk) × 100</div>
+
+<p class="small">Generated from the live source code of the Smartphone BI Agent
+(src/config.py, pillar1–4, agent.py, backend/main.py, frontend/components/*). All metrics
+read from outputs/metrics.json.</p>
+</div>
+
+</body>
+</html>

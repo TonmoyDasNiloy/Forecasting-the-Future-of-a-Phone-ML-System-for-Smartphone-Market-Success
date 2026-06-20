@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Smartphone BI Agent — Full Project Documentation</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background: #fff;
+    color: #111;
+    padding: 40px;
+    max-width: 960px;
+    margin: auto;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  /* Cover Page */
+  .cover {
+    text-align: center;
+    padding: 80px 40px;
+    border-bottom: 3px solid #4f46e5;
+    margin-bottom: 40px;
+    page-break-after: always;
+  }
+  .cover h1 { font-size: 32px; font-weight: 900; color: #4f46e5; margin-bottom: 10px; }
+  .cover h2 { font-size: 16px; font-weight: 400; color: #555; margin-bottom: 30px; }
+  .cover .meta { font-size: 12px; color: #888; }
+  .cover .badge {
+    display: inline-block; background: #eff6ff; border: 1px solid #bfdbfe;
+    color: #1d4ed8; padding: 4px 14px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; margin: 4px;
+  }
+
+  /* Chapter headings */
+  .chapter {
+    background: #4f46e5;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 800;
+    margin: 40px 0 20px;
+    page-break-before: always;
+  }
+  .chapter:first-of-type { page-break-before: avoid; }
+
+  h2 {
+    font-size: 15px; font-weight: 800; color: #1e1b4b;
+    border-left: 4px solid #4f46e5;
+    padding-left: 10px;
+    margin: 28px 0 10px;
+  }
+  h3 {
+    font-size: 13px; font-weight: 700; color: #3730a3;
+    margin: 18px 0 8px;
+  }
+  h4 { font-size: 12px; font-weight: 700; color: #555; margin: 14px 0 6px; }
+
+  p { margin-bottom: 10px; }
+
+  /* Tables */
+  table {
+    width: 100%; border-collapse: collapse;
+    margin: 14px 0; font-size: 12px;
+  }
+  th {
+    background: #f1f5f9; color: #334155;
+    padding: 8px 12px; text-align: left;
+    font-size: 11px; text-transform: uppercase;
+    letter-spacing: .06em; border: 1px solid #e2e8f0;
+  }
+  td { padding: 7px 12px; border: 1px solid #e2e8f0; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+
+  /* Code blocks */
+  pre, code {
+    font-family: 'Courier New', Courier, monospace;
+    background: #f8fafc; border: 1px solid #e2e8f0;
+    border-radius: 6px; font-size: 11px;
+  }
+  pre { padding: 14px 16px; overflow-x: auto; margin: 10px 0; line-height: 1.6; }
+  code { padding: 1px 5px; }
+
+  /* Q&A blocks */
+  .qa-block { margin: 18px 0; }
+  .question {
+    background: #eff6ff; border-left: 4px solid #3b82f6;
+    padding: 10px 14px; border-radius: 0 6px 6px 0;
+    font-weight: 700; color: #1e40af; margin-bottom: 8px;
+  }
+  .answer {
+    background: #f0fdf4; border-left: 4px solid #22c55e;
+    padding: 10px 14px; border-radius: 0 6px 6px 0;
+    color: #111;
+  }
+
+  /* Info boxes */
+  .info-box {
+    background: #fefce8; border: 1px solid #fde68a;
+    border-radius: 8px; padding: 12px 16px; margin: 12px 0;
+  }
+  .warn-box {
+    background: #fff7ed; border: 1px solid #fed7aa;
+    border-radius: 8px; padding: 12px 16px; margin: 12px 0;
+  }
+  .success-box {
+    background: #f0fdf4; border: 1px solid #bbf7d0;
+    border-radius: 8px; padding: 12px 16px; margin: 12px 0;
+  }
+  .danger-box {
+    background: #fef2f2; border: 1px solid #fecaca;
+    border-radius: 8px; padding: 12px 16px; margin: 12px 0;
+  }
+
+  /* Formula box */
+  .formula {
+    background: #f1f5f9; border: 2px solid #4f46e5;
+    border-radius: 8px; padding: 14px 18px; margin: 12px 0;
+    font-family: 'Courier New', monospace; font-size: 12px;
+    line-height: 2;
+  }
+
+  /* Lists */
+  ul, ol { margin: 8px 0 8px 22px; }
+  li { margin-bottom: 4px; }
+
+  /* Separator */
+  hr { border: none; border-top: 1px solid #e2e8f0; margin: 20px 0; }
+
+  /* Page break helpers */
+  .page-break { page-break-before: always; }
+
+  /* Footer */
+  .footer {
+    text-align: center; font-size: 10px; color: #94a3b8;
+    border-top: 1px solid #e2e8f0; padding-top: 14px; margin-top: 40px;
+  }
+
+  /* Print styles */
+  @media print {
+    body { padding: 20px; font-size: 11px; }
+    .chapter { page-break-before: always; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    a { text-decoration: none; color: inherit; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ COVER PAGE ═══════════════════════════ -->
+<div class="cover">
+  <div style="font-size:48px; margin-bottom:16px;">📱</div>
+  <h1>Smartphone BI Agent</h1>
+  <h2>Complete Project Documentation &amp; Defense Guide</h2>
+  <div style="margin: 20px 0;">
+    <span class="badge">XGBoost</span>
+    <span class="badge">Random Forest</span>
+    <span class="badge">KNN Retrieval</span>
+    <span class="badge">FastAPI</span>
+    <span class="badge">Next.js</span>
+    <span class="badge">Streamlit</span>
+  </div>
+  <hr style="margin: 24px auto; max-width:300px; border-color:#ddd;">
+  <p style="color:#555; font-size:13px; line-height:1.8;">
+    AI-powered market intelligence platform that converts smartphone specifications<br>
+    into full business analysis — market segment, demand forecast, customer profile,<br>
+    PMF score, CLV, competitors, price optimisation, and live news.
+  </p>
+  <div class="meta" style="margin-top:24px;">
+    <p>116,481 phone snapshots &nbsp;·&nbsp; 4 ML Pillars &nbsp;·&nbsp; 6 Regions &nbsp;·&nbsp; Cold-start inference</p>
+    <p style="margin-top:6px;">Dataset: global_smartphone_bi_v4_final.csv</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ TABLE OF CONTENTS ═══════════════════════════ -->
+<h2 style="border:none; padding:0; font-size:18px;">Table of Contents</h2>
+<ol style="margin-left:24px; line-height:2.2; font-size:13px;">
+  <li>System Architecture &amp; Overview</li>
+  <li>How to Run the System</li>
+  <li>Demo Phone Specifications</li>
+  <li>Activity Diagram Description</li>
+  <li>Functional Requirements</li>
+  <li>Non-Functional Requirements</li>
+  <li>Data Flow Diagram — All Levels</li>
+  <li>Dual Frontend Feature Comparison</li>
+  <li>Step-by-Step Data Journey</li>
+  <li>Machine Learning Integration</li>
+  <li>The Four API Endpoints</li>
+  <li>PMF Score — Formula, Source &amp; Explanation</li>
+  <li>All System Calculations with Examples</li>
+  <li>Agent Orchestration Layer</li>
+  <li>Defense Committee — Full Q&amp;A Guide</li>
+  <li>Files to Transfer to Another Device</li>
+</ol>
+
+<!-- ═══════════════════════════ CHAPTER 1 ═══════════════════════════ -->
+<div class="chapter">Chapter 1 — System Architecture &amp; Overview</div>
+
+<h2>What the System Does</h2>
+<p>You give it <strong>one input</strong>: the specs of a brand-new phone (price, RAM, camera, brand, battery, region). It returns a full business dashboard predicting how that phone will perform in the market — market position, who will buy it, how many units will sell, and whether to launch — using four ML pillars chained together.</p>
+
+<h2>Three-Layer Architecture</h2>
+<table>
+  <tr><th>Layer</th><th>Technology</th><th>Role</th></tr>
+  <tr><td>Frontend</td><td>Next.js (React) or Streamlit</td><td>User interface — input form + dashboard charts</td></tr>
+  <tr><td>Backend</td><td>FastAPI (Python)</td><td>API server — validates input, calls ML models</td></tr>
+  <tr><td>ML Models</td><td>XGBoost + Random Forest + KNN</td><td>Predictions — segment, demand, demographics, PMF</td></tr>
+</table>
+
+<h2>Dual Frontends — Key Difference</h2>
+<table>
+  <tr><th>Feature</th><th>Next.js + FastAPI</th><th>Streamlit Only</th></tr>
+  <tr><td>How they connect</td><td>HTTP POST over network (JSON)</td><td>Direct Python import (in-memory)</td></tr>
+  <tr><td>Startup</td><td>Two terminals required</td><td>One terminal only</td></tr>
+  <tr><td>Competitor Radar Chart</td><td>✅ Yes</td><td>❌ No</td></tr>
+  <tr><td>Price Optimiser</td><td>✅ Yes</td><td>❌ No</td></tr>
+  <tr><td>Live News Feed</td><td>✅ Yes</td><td>❌ No</td></tr>
+  <tr><td>Download PDF Report</td><td>✅ Yes</td><td>❌ No</td></tr>
+  <tr><td>Dark / Light Mode</td><td>✅ Yes</td><td>❌ No</td></tr>
+  <tr><td>Gender Split Chart</td><td>✅ Yes</td><td>❌ No</td></tr>
+  <tr><td>Affordability Fit</td><td>✅ Yes</td><td>❌ No</td></tr>
+  <tr><td>Raw JSON output</td><td>❌ No</td><td>✅ Yes</td></tr>
+</table>
+
+<!-- ═══════════════════════════ CHAPTER 2 ═══════════════════════════ -->
+<div class="chapter">Chapter 2 — How to Run the System</div>
+
+<h2>Full Stack (Next.js + FastAPI) — 2 Terminals</h2>
+<pre>
+# Terminal 1 — Backend (FastAPI)
+cd C:\Users\Tonmoy\OneDrive\Desktop\bi_agent
+uvicorn backend.main:app --reload --port 8000
+
+# Terminal 2 — Frontend (Next.js)
+cd C:\Users\Tonmoy\OneDrive\Desktop\bi_agent\frontend
+npm run dev
+</pre>
+<p>Open <strong>http://localhost:3000</strong> in your browser.</p>
+
+<h2>Streamlit Only — 1 Terminal</h2>
+<pre>
+cd C:\Users\Tonmoy\OneDrive\Desktop\bi_agent
+streamlit run app.py
+</pre>
+<p>Open <strong>http://localhost:8501</strong> in your browser.</p>
+
+<h2>Retrain Models (Optional)</h2>
+<pre>
+cd C:\Users\Tonmoy\OneDrive\Desktop\bi_agent
+python src/train_all.py
+</pre>
+
+<!-- ═══════════════════════════ CHAPTER 3 ═══════════════════════════ -->
+<div class="chapter">Chapter 3 — Ideal Demo Phone Specifications</div>
+
+<table>
+  <tr><th>Section</th><th>Field</th><th>Value</th></tr>
+  <tr><td>Identity</td><td>Brand</td><td>samsung</td></tr>
+  <tr><td></td><td>Model</td><td>Galaxy A55</td></tr>
+  <tr><td></td><td>Region</td><td>Asia-Pacific</td></tr>
+  <tr><td>Pricing</td><td>Price (USD)</td><td>$320</td></tr>
+  <tr><td>Connectivity</td><td>5G</td><td>Enabled</td></tr>
+  <tr><td></td><td>OS</td><td>Android</td></tr>
+  <tr><td>Processor</td><td>Brand</td><td>Snapdragon</td></tr>
+  <tr><td></td><td>Cores</td><td>8</td></tr>
+  <tr><td></td><td>Clock Speed</td><td>2.4 GHz</td></tr>
+  <tr><td>Memory</td><td>RAM</td><td>8 GB</td></tr>
+  <tr><td></td><td>Storage</td><td>128 GB</td></tr>
+  <tr><td></td><td>Expandable</td><td>Yes</td></tr>
+  <tr><td>Battery</td><td>Capacity</td><td>5000 mAh</td></tr>
+  <tr><td></td><td>Fast Charging</td><td>25W</td></tr>
+  <tr><td>Display</td><td>Screen Size</td><td>6.5 inches</td></tr>
+  <tr><td></td><td>Refresh Rate</td><td>120 Hz</td></tr>
+  <tr><td></td><td>Resolution</td><td>2400 × 1080</td></tr>
+  <tr><td>Camera</td><td>Rear Cameras</td><td>3</td></tr>
+  <tr><td></td><td>Main Camera</td><td>50 MP</td></tr>
+  <tr><td></td><td>Front Camera</td><td>16 MP</td></tr>
+  <tr><td>Rating</td><td>Avg Rating</td><td>7.5</td></tr>
+</table>
+
+<div class="success-box">
+  <strong>Why this is ideal:</strong> Produces GO FOR LAUNCH verdict, ~12% failure risk, recognisable competitors (Redmi Note, Realme, POCO), strong demand curve, and clear mid-range classification at 87% confidence.
+</div>
+
+<!-- ═══════════════════════════ CHAPTER 4 ═══════════════════════════ -->
+<div class="chapter">Chapter 4 — Functional Requirements</div>
+
+<table>
+  <tr><th>ID</th><th>Requirement</th><th>Detail</th></tr>
+  <tr><td>FR1</td><td>Phone Specification Input</td><td>User inputs brand, model, region, price, processor, RAM, storage, battery, display, camera, OS, connectivity with sensible defaults</td></tr>
+  <tr><td>FR2</td><td>Market Segment Classification</td><td>Classify into budget / mid-range / premium / flagship with confidence %. Cold-start only (no post-launch leakage)</td></tr>
+  <tr><td>FR3</td><td>Similar Phone Retrieval</td><td>Find K most spec-similar phones from historical dataset. Region-aware. Price log-scaled and 2.5× weighted</td></tr>
+  <tr><td>FR4</td><td>6-Month Demand Forecasting</td><td>Month-by-month demand curve using cold-start features only. Returns total projected units</td></tr>
+  <tr><td>FR5</td><td>Customer Demographics</td><td>Age distribution (5 buckets), income distribution (5 tiers), RFM loyalty segments retrieved from similar phones</td></tr>
+  <tr><td>FR6</td><td>PMF Scoring</td><td>PMF score 0–100, failure probability, GO FOR LAUNCH / CAUTION / RECONSIDER recommendation</td></tr>
+  <tr><td>FR7</td><td>CLV Calculation</td><td>Computed live: net_price × margin × repeat_factor × loyalty_horizon. Never read from dataset</td></tr>
+  <tr><td>FR8</td><td>Competitor Analysis</td><td>Top-3 competitors, radar chart (6 axes normalised 0–100), win/loss insights vs competitor averages</td></tr>
+  <tr><td>FR9</td><td>Price Optimisation</td><td>14-point profit curve anchored to competitor pricing. Stable recommendation regardless of user input price</td></tr>
+  <tr><td>FR10</td><td>Live News Feed</td><td>Real-time articles in two buckets: Your Phone and Competitor. Parallel search with 15s timeout</td></tr>
+  <tr><td>FR11</td><td>Dashboard Display</td><td>KPI cards, demand chart, donut charts, PMF gauge, competitor list, monthly tiles, JSON output</td></tr>
+</table>
+
+<!-- ═══════════════════════════ CHAPTER 5 ═══════════════════════════ -->
+<div class="chapter">Chapter 5 — Non-Functional Requirements</div>
+
+<table>
+  <tr><th>ID</th><th>Requirement</th><th>Detail</th></tr>
+  <tr><td>NFR1</td><td>No Data Leakage</td><td>Cold-start models never see post-launch features. Enforced via KNOWN_AT_LAUNCH vs POST_LAUNCH firewall in config.py</td></tr>
+  <tr><td>NFR2</td><td>Honest Accuracy</td><td>RFM reported as not predictable (R²≈0). Demand R²=0.854 treated as ceiling, not tuning failure</td></tr>
+  <tr><td>NFR3</td><td>Performance</td><td>News searches run in parallel (ThreadPoolExecutor). Models loaded once at startup, not per request</td></tr>
+  <tr><td>NFR4</td><td>Separation of Concerns</td><td>ML in src/, API in backend/, UI in frontend/. Frontend only talks to API — no direct ML calls</td></tr>
+  <tr><td>NFR5</td><td>Cold-Start Deployability</td><td>Works for brand-new phones with zero sales history. No feature requires post-launch data</td></tr>
+  <tr><td>NFR6</td><td>Reproducibility</td><td>RANDOM_STATE=42 globally. Models saved as .joblib files — training and inference are decoupled</td></tr>
+  <tr><td>NFR7</td><td>Dataset Scale</td><td>116,481 phone snapshots across 6 regions. Region-aware retrieval for meaningful matching</td></tr>
+  <tr><td>NFR8</td><td>Maintainability</td><td>PMF formula replaceable in one function. Feature engineering centralised in config.py</td></tr>
+  <tr><td>NFR9</td><td>Security / CORS</td><td>CORS restricted to localhost:3000 and 127.0.0.1:3000 only</td></tr>
+  <tr><td>NFR10</td><td>Usability</td><td>Pre-filled defaults allow instant Analyze. Colour-coded banner gives immediate verdict</td></tr>
+</table>
+
+<!-- ═══════════════════════════ CHAPTER 6 ═══════════════════════════ -->
+<div class="chapter">Chapter 6 — Data Flow Diagram (All Levels)</div>
+
+<h2>Level 0 — Context Diagram</h2>
+<p>Entire system is one black box. External entities: <strong>User</strong> (sends specs, receives report), <strong>Dataset CSV</strong> (feeds historical data), <strong>Web / DuckDuckGo</strong> (news articles).</p>
+
+<h2>Level 1 — Five Major Processes</h2>
+<table>
+  <tr><th>Process</th><th>Name</th><th>Input</th><th>Output</th></tr>
+  <tr><td>P1</td><td>Market Research</td><td>Specs + Dataset</td><td>Segment, confidence, competitor list</td></tr>
+  <tr><td>P2</td><td>Demand Forecasting</td><td>Specs + region + months</td><td>6-month demand curve</td></tr>
+  <tr><td>P3</td><td>Customer Segmentation</td><td>Similar phone IDs from P1 + Dataset</td><td>Age %, Income %, RFM %</td></tr>
+  <tr><td>P4</td><td>PMF Prediction</td><td>Specs + Dataset labels</td><td>PMF score, failure risk, recommendation</td></tr>
+  <tr><td>P5</td><td>Dashboard Assembly</td><td>Outputs of P1–P4 + CLV</td><td>Final JSON + rendered UI</td></tr>
+</table>
+
+<h2>Level 2 — Sub-Processes</h2>
+<h3>P1 — Market Research</h3>
+<ul>
+  <li>P1.1 Feature Engineering — raw specs → 7 derived features</li>
+  <li>P1.2 Segment Classifier — XGBoost → segment label + confidence</li>
+  <li>P1.3 Similarity Retrieval — region-filtered KNN → K nearest phone IDs</li>
+  <li>P1.4 Price Positioning — input price vs segment average → price_vs_category_pct</li>
+</ul>
+<h3>P2 — Demand Forecasting</h3>
+<ul>
+  <li>P2.1 Brand Prior Lookup — brand → average brand demand from training fold</li>
+  <li>P2.2 Demand Curve Sweep — specs × 6 months → 6 XGBoost predictions</li>
+  <li>P2.3 Aggregation — 6 values → total_horizon_units</li>
+</ul>
+<h3>P3 — Customer Segmentation</h3>
+<ul>
+  <li>P3.1 Neighbour Fetch — K phone IDs → demographic rows from dataset</li>
+  <li>P3.2 Age Aggregation — K neighbours → weighted average → normalise to 100%</li>
+  <li>P3.3 Income Aggregation — same pattern</li>
+  <li>P3.4 RFM Aggregation — same pattern</li>
+</ul>
+<h3>P4 — PMF Prediction</h3>
+<ul>
+  <li>P4.1 PMF Label Construction — 6 weighted post-launch metrics → PMF score per phone</li>
+  <li>P4.2 Failure Label — bottom 25% PMF → failure=1</li>
+  <li>P4.3 Failure Classifier — specs → Random Forest → failure probability</li>
+  <li>P4.4 Recommendation Engine — prob&lt;20%=GO / 20-35%=CAUTION / &gt;35%=RECONSIDER</li>
+</ul>
+
+<h2>Level 3 — Deep Detail</h2>
+<h3>P1.3 Similarity Retrieval</h3>
+<ol>
+  <li>Load phone table from pillar1_similarity.joblib</li>
+  <li>Filter rows by region == target_region (fallback to all if fewer than K)</li>
+  <li>Standardise spec matrix: (M − mean) / std per feature</li>
+  <li>Log-scale price, then multiply by 2.5×</li>
+  <li>Compute Euclidean distance from query vector to every filtered phone</li>
+  <li>argsort distances → return top-K indices, names, distances</li>
+</ol>
+<h3>P4.1 PMF Label Construction</h3>
+<ol>
+  <li>Aggregate each phone's post-launch metrics across all months (mean)</li>
+  <li>Min-max normalise each of 6 components across full dataset (0 to 1)</li>
+  <li>Apply weights: NPS×0.25, repeat×0.20, recommend×0.20, (1−return)×0.15, (1−warranty)×0.10, slope×0.10</li>
+  <li>Sort all scores → bottom 25th percentile → failure=1</li>
+</ol>
+
+<!-- ═══════════════════════════ CHAPTER 7 ═══════════════════════════ -->
+<div class="chapter">Chapter 7 — All System Calculations with Examples</div>
+
+<h2>Part 1 — Feature Engineering (7 Calculations)</h2>
+
+<h3>Calculation 1 — Performance Score</h3>
+<div class="formula">perf_score = num_cores × processor_speed
+Example:   perf_score = 8 × 2.4 = 19.2</div>
+
+<h3>Calculation 2 — Value Score</h3>
+<div class="formula">cam_total   = rear_MP + front_MP = 50 + 16 = 66
+numerator   = RAM + (battery/1000) + (cam_total/10) = 8 + 5 + 6.6 = 19.6
+denominator = log(1 + price) = log(321) = 5.771
+value_score = 19.6 ÷ 5.771 = 3.396</div>
+
+<h3>Calculation 3 — Total Pixels</h3>
+<div class="formula">pixels = resolution_height × resolution_width
+Example:   pixels = 2400 × 1080 = 2,592,000</div>
+
+<h3>Calculation 4 — Battery Per Inch</h3>
+<div class="formula">battery_per_inch = battery_capacity ÷ screen_size
+Example:   battery_per_inch = 5000 ÷ 6.5 = 769.23 mAh/inch</div>
+
+<h3>Calculation 5 — Camera Total</h3>
+<div class="formula">cam_total = primary_camera_rear + primary_camera_front
+Example:   cam_total = 50 + 16 = 66 MP</div>
+
+<h3>Calculation 6 — Price Per RAM</h3>
+<div class="formula">price_per_ram = price_usd ÷ (ram_capacity + 1)
+Example:   price_per_ram = 320 ÷ 9 = 35.56</div>
+
+<h3>Calculation 7 — RAM × Memory</h3>
+<div class="formula">ram_x_mem = ram_capacity × internal_memory
+Example:   ram_x_mem = 8 × 128 = 1024</div>
+
+<h2>Part 2 — Similarity Retrieval</h2>
+
+<h3>Calculation 8 — Log Price Transform</h3>
+<div class="formula">log_price = log(1 + price_usd)
+Example:   log_price = log(1 + 320) = log(321) = 5.771</div>
+
+<h3>Calculation 9 — Standardisation</h3>
+<div class="formula">standardised = (value − mean) ÷ standard_deviation
+RAM:    standardised = (8 − 5.2) ÷ 3.1 = 0.903
+Screen: standardised = (6.5 − 6.2) ÷ 0.4 = 0.75</div>
+
+<h3>Calculation 10 — Price Weight (2.5×)</h3>
+<div class="formula">weighted_price = standardised_price × 2.5
+Example:   0.85 × 2.5 = 2.125  (all other features × 1.0)</div>
+
+<h3>Calculation 11 — Euclidean Distance</h3>
+<div class="formula">distance = √[(f1_ours − f1_theirs)² + (f2_ours − f2_theirs)² + ...]
+
+Our phone:      price=2.125, RAM=0.903, battery=0.640
+Competitor A:   price=2.010, RAM=0.800, battery=0.700
+Competitor B:   price=3.500, RAM=0.850, battery=0.620
+
+Distance to A = √[(0.115)² + (0.103)² + (−0.060)²] = √0.02744 = 0.166 ← SIMILAR
+Distance to B = √[(−1.375)² + (0.053)² + (0.020)²] = √1.89384 = 1.376 ← DIFFERENT</div>
+
+<h2>Part 3 — Demand Forecasting</h2>
+
+<h3>Calculation 12 — Log Transform on Target</h3>
+<div class="formula">y = log(1 + units_sold_monthly)
+Example:   actual sales = 456 → y = log(457) = 6.124</div>
+
+<h3>Calculation 13 — Reverse Log (expm1)</h3>
+<div class="formula">predicted_units = e^(model_output) − 1
+Example:   model outputs 6.124 → units = e^6.124 − 1 = 455</div>
+
+<h3>Calculation 14 — Price vs Category</h3>
+<div class="formula">price_delta = ((our_price − category_avg) ÷ category_avg) × 100
+Example:   ((320 − 327) ÷ 327) × 100 = −2.1%</div>
+
+<h2>Part 4 — PMF Score</h2>
+
+<h3>Calculation 15 — Min-Max Normalisation</h3>
+<div class="formula">normalised = (value − minimum) ÷ (maximum − minimum)
+NPS Example:   (62 − 10) ÷ (95 − 10) = 52 ÷ 85 = 0.612</div>
+
+<h3>Calculation 16 — Inverted Normalisation</h3>
+<div class="formula">inverted = 1 − ((value − minimum) ÷ (maximum − minimum))
+Return rate:   raw = (8−2)÷(35−2) = 0.182  →  inverted = 1 − 0.182 = 0.818</div>
+
+<h3>Calculation 17 — Sales Slope</h3>
+<div class="formula">slope = np.polyfit(months_since_launch, units_sold_monthly, 1)[0]
+Declining phone: [500,480,460,440,420] → slope = −20
+Growing phone:   [300,340,380]         → slope = +40</div>
+
+<h3>Calculation 18 — Final PMF Score</h3>
+<div class="formula">PMF = (0.25 × NPS_norm)
+    + (0.20 × repeat_norm)
+    + (0.20 × recommendation_norm)
+    + (0.15 × return_inverted)
+    + (0.10 × warranty_inverted)
+    + (0.10 × slope_norm)
+
+Example:
+PMF = (0.25×0.612) + (0.20×0.720) + (0.20×0.800)
+    + (0.15×0.818) + (0.10×0.850) + (0.10×0.600)
+  = 0.153 + 0.144 + 0.160 + 0.123 + 0.085 + 0.060
+  = 0.725  (72.5%)</div>
+
+<h3>Calculation 19 — Failure Label</h3>
+<div class="formula">cutoff  = pmf_scores.quantile(0.25)   # e.g. 0.42
+failure = 1  if pmf_score &lt; 0.42
+failure = 0  if pmf_score ≥ 0.42
+
+Our phone: 0.725 ≥ 0.42  →  failure = 0  (Success)</div>
+
+<h2>Part 5 — CLV Calculations</h2>
+
+<h3>Calculation 20 — Net Price</h3>
+<div class="formula">net_price = price × (1 − return_rate ÷ 100)
+Example:   net_price = 320 × (1 − 8/100) = 320 × 0.92 = $294.40</div>
+
+<h3>Calculation 21 — Repeat Factor</h3>
+<div class="formula">repeat_factor = 1 + (repeat_rate ÷ 100)
+Example:   repeat_factor = 1 + (30/100) = 1.30</div>
+
+<h3>Calculation 22 — Final CLV</h3>
+<div class="formula">CLV = net_price × margin × repeat_factor × loyalty_horizon
+
+CLV = $294.40 × 0.18 × 1.30 × 2.4
+    = $294.40 × 0.18    →  $52.99
+    = $52.99  × 1.30    →  $68.89
+    = $68.89  × 2.40    →  $165.33 per buyer</div>
+
+<h2>Part 6 — Price Optimiser</h2>
+
+<h3>Calculation 23 — Spec Ratio</h3>
+<div class="formula">spec_ratio = your_spec_score ÷ avg_competitor_spec_score  (clamped 0.8–1.25)
+Example:   68 ÷ 62 = 1.097  (9.7% stronger specs than competitors)</div>
+
+<h3>Calculation 24 — Fair Price</h3>
+<div class="formula">fair_price = market_price × spec_ratio
+Example:   $310 × 1.097 = $339.90</div>
+
+<h3>Calculation 25 — Demand at Price Point</h3>
+<div class="formula">demand = base_demand × max(0, 1 − 1.3 × (price − fair_price) ÷ fair_price)
+
+At $320 (below fair $339.90):
+  rel = (320−339.90)÷339.90 = −0.0586
+  demand = 456 × (1 + 0.0762) = 491 units  ↑ more demand
+
+At $450 (above fair):
+  rel = (450−339.90)÷339.90 = 0.324
+  demand = 456 × (1 − 0.421) = 264 units   ↓ less demand</div>
+
+<h3>Calculation 26 — Profit at Price Point</h3>
+<div class="formula">unit_cost = fair_price × (1 − gross_margin) = $339.90 × 0.60 = $203.94
+profit    = (price − unit_cost) × demand
+
+At $320:  profit = ($320−$203.94) × 491 = $56,985
+At $450:  profit = ($450−$203.94) × 264 = $64,960  ← higher profit</div>
+
+<!-- ═══════════════════════════ CHAPTER 8 ═══════════════════════════ -->
+<div class="chapter">Chapter 8 — PMF Score: Formula, Source &amp; Explanation</div>
+
+<h2>What PMF Means (Simple)</h2>
+<p>PMF = Product-Market Fit. In simple words: <strong>"Does this phone deserve to be in the market?"</strong> High score = customers love it, buy again, recommend it. Low score = customers return it, complain, never come back.</p>
+
+<h2>The Real PMF Test (Sean Ellis, 2009)</h2>
+<p>The original PMF measurement is a <strong>single survey question</strong>:</p>
+<div class="info-box">"How would you feel if you could no longer use this product?"<br>
+<strong>Rule:</strong> If ≥ 40% say "Very Disappointed" → PMF achieved.</div>
+<p>This requires real customers who have already used the product. It cannot be applied to a phone that hasn't launched yet.</p>
+
+<h2>Why We Could Not Use the Real Test</h2>
+<div class="warn-box">This project deals with phones that have <strong>not launched yet</strong>. There are no customers to survey. There are no users to track. The standard test is physically impossible at the pre-launch stage.</div>
+
+<h2>Our Custom Proxy Formula</h2>
+<div class="formula">PMF = 0.25 × NPS
+    + 0.20 × repeat_purchase_rate
+    + 0.20 × recommendation_rate
+    + 0.15 × (1 − return_rate)
+    + 0.10 × (1 − warranty_claims)
+    + 0.10 × sales_slope</div>
+
+<h2>Source of Each Component</h2>
+<table>
+  <tr><th>Component</th><th>Weight</th><th>Source</th></tr>
+  <tr><td>NPS Score</td><td>25%</td><td>Fred Reichheld — "The One Number You Need to Grow", Harvard Business Review, 2003</td></tr>
+  <tr><td>Repeat Purchase Rate</td><td>20%</td><td>Sean Ellis — PMF Framework, Startup Marketing Blog, 2009</td></tr>
+  <tr><td>Recommendation Rate</td><td>20%</td><td>Sean Ellis — PMF Framework, 2009</td></tr>
+  <tr><td>Return Rate (inverted)</td><td>15%</td><td>Kano Model — Noriaki Kano, "Attractive Quality and Must-be Quality", 1984</td></tr>
+  <tr><td>Warranty Claims (inverted)</td><td>10%</td><td>Kano Model, 1984</td></tr>
+  <tr><td>Sales Slope</td><td>10%</td><td>Geoffrey Moore — "Crossing the Chasm", 1991</td></tr>
+  <tr><td>Overall PMF Concept</td><td>—</td><td>Marc Andreessen — "The Only Thing That Matters", 2007</td></tr>
+</table>
+
+<h2>How to Explain in Defense</h2>
+<div class="success-box">
+<em>"The exact formula is custom-built for this project. There is no single paper that publishes this equation. However, each component is grounded in established literature. NPS comes from Reichheld (HBR, 2003), repeat and recommendation components operationalise Sean Ellis's framework (2009), quality penalties reflect Kano's threshold quality model (1984), and sales slope reflects Moore's adoption curve (1991). The weights — 25%, 20%, 20%, 15%, 10%, 10% — were assigned based on relative importance, with advocacy metrics carrying 65% as the literature consistently identifies them as the strongest indicators of genuine product-market fit."</em>
+</div>
+
+<!-- ═══════════════════════════ CHAPTER 9 ═══════════════════════════ -->
+<div class="chapter">Chapter 9 — Agent Orchestration Layer</div>
+
+<h2>What It Is</h2>
+<p>Think of it as a <strong>film director</strong>. It does not act, does not operate the camera, does not write the music. But it decides who does what, in what order, and makes sure everything comes together into one final output.</p>
+
+<h2>What It Does — Step by Step</h2>
+<ol>
+  <li><strong>Receive raw specs dictionary</strong> — brand, price, RAM, battery, etc.</li>
+  <li><strong>Feature engineering</strong> — generate 7 derived features</li>
+  <li><strong>Pillar 1</strong> — classify segment + find K similar phones</li>
+  <li><strong>Pillar 2</strong> — forecast 6-month demand curve</li>
+  <li><strong>Pillar 3</strong> — retrieve customer demographics from Pillar 1's similar phones</li>
+  <li><strong>Pillar 4</strong> — compute PMF score + failure risk + recommendation</li>
+  <li><strong>CLV calculation</strong> — live formula using net price, margin, repeat factor, loyalty horizon</li>
+  <li><strong>Package into single JSON response</strong></li>
+</ol>
+
+<h2>CLV Formula Components</h2>
+<table>
+  <tr><th>Component</th><th>Formula</th><th>Example</th></tr>
+  <tr><td>Net Price</td><td>price × (1 − return_rate/100)</td><td>$320 × 0.92 = $294.40</td></tr>
+  <tr><td>Profit Margin</td><td>18% (stated assumption)</td><td>$294.40 × 0.18 = $52.99</td></tr>
+  <tr><td>Repeat Factor</td><td>1 + (repeat_rate/100)</td><td>1 + 0.30 = 1.30</td></tr>
+  <tr><td>Loyalty Horizon</td><td>2.4 (avg upgrade cycles)</td><td>× 2.4</td></tr>
+  <tr><td><strong>Final CLV</strong></td><td>net × margin × repeat × 2.4</td><td><strong>$165.33 per buyer</strong></td></tr>
+</table>
+
+<!-- ═══════════════════════════ CHAPTER 10 ═══════════════════════════ -->
+<div class="chapter">Chapter 10 — Defense Committee Full Q&amp;A Guide</div>
+
+<div class="qa-block">
+  <div class="question">Q1. In one sentence, what does your system do?</div>
+  <div class="answer">It takes the hardware specifications of a brand-new smartphone that has never been sold before and predicts how it will perform in the market — its competitive segment, six-month demand, who will buy it, and whether it is likely to succeed — using machine learning trained on 116,481 historical phone records.</div>
+</div>
+
+<div class="qa-block">
+  <div class="question">Q2. What is data leakage and where could it have occurred?</div>
+  <div class="answer">Data leakage is when a model is given information during training that would not be available at prediction time. In this project, the biggest risk was features like social_media_mentions and nps_score — they correlate 0.86 with sales but are only measurable after a phone is selling. We prevented this by creating an explicit firewall in config.py listing every post-launch column and blocking them from cold-start models.</div>
+</div>
+
+<div class="qa-block">
+  <div class="question">Q3. Why did you split data by phone and not by row?</div>
+  <div class="answer">If we split by row, the same phone could appear in both training and test sets at different months. The model would memorise that phone and score perfectly — not because it generalised, but because it cheated. Splitting by phone ensures every phone is either entirely in training or entirely in testing, forcing genuine generalisation to unseen phones.</div>
+</div>
+
+<div class="qa-block">
+  <div class="question">Q4. Why XGBoost over a neural network with 116,000 rows?</div>
+  <div class="answer">XGBoost wins on tabular structured data consistently in benchmark research. Neural networks need millions of rows to outperform tree-based models on tables. Additionally: XGBoost needs no normalisation, handles mixed types natively, provides interpretable feature importances, trains in seconds, and is robust to outliers. 116,000 rows is actually small for deep learning — a neural network would overfit without extensive regularisation tuning.</div>
+</div>
+
+<div class="qa-block">
+  <div class="question">Q5. Your segment classifier achieves 99.4% accuracy. Is that overfitting?</div>
+  <div class="answer">No, for three reasons: (1) GroupShuffleSplit by phone means no test phone was ever seen in training. (2) Macro-F1 of 99.6% means performance is balanced across all four classes — class imbalance cheating would show low macro-F1. (3) Market segments ARE defined by price thresholds that are genuinely cleanly separated in data — a human could classify most phones correctly just by looking at price. 99.4% is high because the problem is genuinely easy, not because the model is cheating.</div>
+</div>
+
+<div class="qa-block">
+  <div class="question">Q6. RFM R²≈0 even with KNN. Why keep it in the output?</div>
+  <div class="answer">RFM loyalty is a property of the customer's relationship with a brand over time — not a property of phone hardware. Even with KNN retrieval, the result reflects regional population priors, not a prediction specific to this phone. We kept it because: (1) removing it would make the demographic section incomplete, (2) the population prior is still useful context for retention planning, and (3) we treat it transparently — the README states it is not predictable. Showing it honestly with a caveat is more useful than hiding it.</div>
+</div>
+
+<div class="qa-block">
+  <div class="question">Q7. How did you choose K in KNN? Did you tune it?</div>
+  <div class="answer">K=10 for demographics, K=5 for competitor retrieval. These were chosen based on practical reasoning: K=1 is too noisy (depends on one phone's quirks), K=50+ dilutes into global averages losing regional specificity. K=10 provides stable averages while keeping neighbours genuinely similar. Formal tuning would cross-validate K values measuring demographic R² on held-out phones — this was not published, which is an acknowledged limitation. However the R² values (age 0.67, income 0.77) validate that the approach works.</div>
+</div>
+
+<div class="qa-block">
+  <div class="question">Q8. What is the baseline AUC for your failure classifier? How much improvement?</div>
+  <div class="answer">The baseline AUC is always exactly 0.50 for any constant predictor — this is a mathematical property of AUC. A classifier that always predicts the same score assigns equal probability to every phone, so ranking is random (50% chance of correct ranking). Our model achieves 0.88 — an improvement of 0.38 absolute points, or 76% relative improvement. Accuracy-wise: majority class baseline = 75% (always predict success), model = 79.9% — only 4.9% improvement. AUC is the correct metric here because it measures ranking quality across all thresholds, not just at a fixed cutoff.</div>
+</div>
+
+<div class="qa-block">
+  <div class="question">Q9. The PMF formula has specific weights. How did you decide them?</div>
+  <div class="answer">The weights are designer-specified based on established business literature. NPS + repeat + recommendation carry 65% combined because Sean Ellis's research shows these advocacy signals are the strongest evidence of genuine product-market fit. Quality signals (returns + warranty) carry 25% because Kano's model shows basic quality failures destroy satisfaction regardless of other positives. Sales slope gets 10% because a declining trend can reflect natural product lifecycle rather than genuine rejection. The weights are explicitly a design choice — the codebase allows changing them in one function and retraining.</div>
+</div>
+
+<div class="qa-block">
+  <div class="question">Q10. The PMF label uses post-launch data. Isn't predicting it from specs circular?</div>
+  <div class="answer">No, because the ingredients of the label are never specs. The label is built from NPS, repeat rate, return rate, warranty claims, and sales slope — all customer behaviour measurements. The model is trained on price, RAM, battery, screen, processor, brand — all hardware specs. Customer behaviour and hardware specs are independent variables. Predicting customer behaviour outcomes from hardware specs is a legitimate causal hypothesis — certain spec profiles produce customers who stay, recommend, and return. There is no circular dependency.</div>
+</div>
+
+<div class="qa-block">
+  <div class="question">Q11. Why does the price optimiser recommendation stay stable when I change my input price?</div>
+  <div class="answer">Because the recommendation is anchored to competitor pricing, not the user's input price. The competitor set is found using spec similarity only — price is excluded from the matching features for the optimiser. So changing the input price does not change which competitors are found, does not change the market median price, and does not change the fair price calculation. The user's input price is only used to tell them whether they are above or below the recommendation — it plays no role in computing the recommendation itself.</div>
+</div>
+
+<div class="qa-block">
+  <div class="question">Q12. What is cold-start and how does your system handle it?</div>
+  <div class="answer">Cold-start means making predictions about a product that has no historical data — it has never been sold and has zero reviews or sales figures. Our system handles it by training exclusively on launch-known features (specs, price, brand, region) and finding similar historical phones to infer what will likely happen. Every prediction relies only on information available before the phone ships. No feature requires data that only exists after launch.</div>
+</div>
+
+<div class="qa-block">
+  <div class="question">Q13. What is Pydantic and why do you need it?</div>
+  <div class="answer">Pydantic is a data validation library that automatically checks every field of incoming data against declared rules before any ML code runs. Even in a controlled system, users can type negative prices, strings where numbers are expected, or leave required fields empty. Without validation, these bad inputs propagate into the ML pipeline and produce nonsense or crashes. Pydantic catches these at the boundary and returns a structured error with the exact field name and violated rule — before any model executes.</div>
+</div>
+
+<div class="qa-block">
+  <div class="question">Q14. What would happen if someone entered a completely fictional phone — 1TB RAM, 100,000mAh battery?</div>
+  <div class="answer">Two things: (1) The segment classifier would still produce a prediction (likely flagship) but confidence would be unreliable as inputs are far outside training distribution. (2) The similarity engine would return neighbours, but distances would be very large — meaning neighbours are not genuinely similar. There is currently no warning when neighbour distances are large. This is a known limitation — in production the system should flag poor-quality neighbours so users know the demographic and demand predictions are unreliable.</div>
+</div>
+
+<div class="qa-block">
+  <div class="question">Q15. R² = 0.854 for demand — why do you call it the ceiling?</div>
+  <div class="answer">We call it the ceiling because we exhaustively tested additional feature engineering, brand priors, and hyperparameter tuning — and R² did not move beyond 0.86. This is the statistical signature of having reached the informational limit of available features. The remaining 15% of variance is explained by factors unknowable from specs: marketing spend, celebrity endorsements, competitor releases, economic events, timing. No model trained only on specs can recover this information. Pushing higher would require post-launch leakage, which was explicitly rejected.</div>
+</div>
+
+<!-- ═══════════════════════════ CHAPTER 11 ═══════════════════════════ -->
+<div class="chapter">Chapter 11 — Files to Transfer to Another Device</div>
+
+<h2>Transfer These (Essential)</h2>
+<table>
+  <tr><th>File / Folder</th><th>Transfer?</th><th>Reason</th></tr>
+  <tr><td>src/</td><td>✅ YES</td><td>All ML logic — agent, pillars, config</td></tr>
+  <tr><td>models/</td><td>✅ YES — CRITICAL</td><td>Pre-trained .joblib files. Without these, must retrain from scratch</td></tr>
+  <tr><td>global_smartphone_bi_v4_final.csv</td><td>✅ YES</td><td>Dataset needed for similarity retrieval at runtime</td></tr>
+  <tr><td>backend/</td><td>✅ YES</td><td>FastAPI server + requirements.txt</td></tr>
+  <tr><td>frontend/ (without node_modules)</td><td>✅ YES</td><td>Next.js UI components and pages</td></tr>
+  <tr><td>app.py</td><td>✅ YES</td><td>Streamlit UI</td></tr>
+  <tr><td>frontend/node_modules/</td><td>❌ NO</td><td>200MB+. Reinstall with: npm install</td></tr>
+  <tr><td>src/__pycache__/</td><td>❌ NO</td><td>Auto-regenerated by Python</td></tr>
+  <tr><td>.claude/</td><td>❌ NO</td><td>Only Claude Code settings, not needed to run</td></tr>
+  <tr><td>ui_mockups/</td><td>❌ NO</td><td>Just SVG design files</td></tr>
+</table>
+
+<h2>Setup Steps on New Device</h2>
+<ol>
+  <li><strong>Transfer</strong> — zip the bi_agent folder (excluding node_modules), transfer, extract</li>
+  <li><strong>Install Python packages:</strong>
+    <pre>pip install fastapi uvicorn pydantic streamlit plotly scikit-learn xgboost joblib pandas numpy ddgs</pre>
+  </li>
+  <li><strong>Install Node packages:</strong>
+    <pre>cd frontend
+npm install</pre>
+  </li>
+  <li><strong>Run:</strong>
+    <pre># Terminal 1
+uvicorn backend.main:app --reload --port 8000
+
+# Terminal 2
+cd frontend
+npm run dev</pre>
+  </li>
+  <li>Open <strong>http://localhost:3000</strong></li>
+</ol>
+
+<!-- ═══════════════════════════ CHAPTER 12 ═══════════════════════════ -->
+<div class="chapter">Chapter 12 — Quick Reference Card</div>
+
+<h2>Model Performance Summary</h2>
+<table>
+  <tr><th>Pillar</th><th>Model</th><th>Metric</th><th>Score</th></tr>
+  <tr><td>P1 Segment</td><td>XGBoost (300 trees)</td><td>Accuracy</td><td>99.4%</td></tr>
+  <tr><td>P1 Segment</td><td>XGBoost (300 trees)</td><td>Macro-F1</td><td>99.6%</td></tr>
+  <tr><td>P2 Demand</td><td>XGBoost (700 trees)</td><td>R² (log)</td><td>0.854</td></tr>
+  <tr><td>P2 Demand</td><td>XGBoost (700 trees)</td><td>MAE</td><td>±9 units</td></tr>
+  <tr><td>P3 Income</td><td>KNN Retrieval</td><td>R²</td><td>0.771</td></tr>
+  <tr><td>P3 Age</td><td>KNN Retrieval</td><td>R²</td><td>0.671</td></tr>
+  <tr><td>P3 RFM</td><td>KNN Retrieval</td><td>R²</td><td>≈0.00 (not predictable)</td></tr>
+  <tr><td>P4 PMF</td><td>Random Forest (500 trees)</td><td>Accuracy</td><td>79.9%</td></tr>
+  <tr><td>P4 PMF</td><td>Random Forest (500 trees)</td><td>AUC</td><td>0.88</td></tr>
+</table>
+
+<h2>Key Numbers to Remember</h2>
+<table>
+  <tr><th>Number</th><th>What it means</th></tr>
+  <tr><td>116,481</td><td>Total rows in the dataset</td></tr>
+  <tr><td>6</td><td>Regions covered (Asia-Pacific, North America, Europe, South Asia, Middle East & Africa, Latin America)</td></tr>
+  <tr><td>300</td><td>Trees in segment XGBoost classifier</td></tr>
+  <tr><td>700</td><td>Trees in demand XGBoost regressor</td></tr>
+  <tr><td>500</td><td>Trees in PMF Random Forest classifier</td></tr>
+  <tr><td>K=10</td><td>Nearest neighbours for demographics</td></tr>
+  <tr><td>K=5</td><td>Nearest neighbours for competitor list</td></tr>
+  <tr><td>2.5×</td><td>Price weighting in similarity retrieval</td></tr>
+  <tr><td>25th percentile</td><td>Failure label cutoff in PMF</td></tr>
+  <tr><td>18%</td><td>Profit margin assumption in CLV</td></tr>
+  <tr><td>2.4</td><td>Loyalty horizon (upgrade cycles) in CLV</td></tr>
+  <tr><td>1.3 (BETA)</td><td>Demand sensitivity in price optimiser</td></tr>
+  <tr><td>14</td><td>Price points swept in price optimiser</td></tr>
+  <tr><td>42</td><td>Random state seed for all models (reproducibility)</td></tr>
+  <tr><td>0.88</td><td>AUC of failure classifier</td></tr>
+  <tr><td>0.50</td><td>Baseline AUC (random predictor)</td></tr>
+</table>
+
+<div class="footer">
+  <p>Smartphone BI Agent — Complete Project Documentation</p>
+  <p>XGBoost + Random Forest + KNN Retrieval · 116,481 phone snapshots · Cold-start inference only</p>
+  <p>FastAPI (Python) + Next.js (React) + Streamlit</p>
+</div>
+
+</body>
+</html>

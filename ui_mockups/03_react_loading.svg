@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1400" height="900" xmlns="http://www.w3.org/2000/svg" font-family="Inter,-apple-system,sans-serif">
+<defs>
+  <linearGradient id="btnL" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#6366f1" stop-opacity="0.6"/><stop offset="100%" stop-color="#7c3aed" stop-opacity="0.6"/>
+  </linearGradient>
+  <radialGradient id="orb-active" cx="35%" cy="30%" r="65%">
+    <stop offset="0%" stop-color="#c084fc" stop-opacity="1"/>
+    <stop offset="30%" stop-color="#818cf8" stop-opacity="0.95"/>
+    <stop offset="60%" stop-color="#38bdf8" stop-opacity="0.85"/>
+    <stop offset="100%" stop-color="#1e1b4b" stop-opacity="0.6"/>
+  </radialGradient>
+  <radialGradient id="orb-glow-active" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#818cf8" stop-opacity="0.6"/>
+    <stop offset="60%" stop-color="#6366f1" stop-opacity="0.2"/>
+    <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="shimmer" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="transparent"/>
+    <stop offset="40%" stop-color="#6366f1"/>
+    <stop offset="60%" stop-color="#a855f7"/>
+    <stop offset="100%" stop-color="transparent"/>
+  </linearGradient>
+</defs>
+
+<!-- Background -->
+<rect width="1400" height="900" fill="#0b0d14"/>
+
+<!-- ═══ LEFT SIDEBAR ═══ -->
+<rect x="0" y="0" width="300" height="900" fill="#111318"/>
+<rect x="300" y="0" width="1" height="#1f2937"/>
+<rect x="300" y="0" width="1" height="900" fill="#1f2937"/>
+
+<!-- Sidebar header (same as welcome) -->
+<rect x="0" y="0" width="300" height="72" fill="#111318"/>
+<rect x="0" y="72" width="300" height="1" fill="#1f2937"/>
+<circle cx="30" cy="36" r="18" fill="#1e1b4b"/>
+<text x="30" y="40" fill="#818cf8" font-size="14" text-anchor="middle">BI</text>
+<text x="58" y="30" fill="#f1f5f9" font-size="13" font-weight="900">Launch Profile</text>
+<text x="58" y="46" fill="#64748b" font-size="10">Configure specs · Run AI analysis</text>
+
+<!-- Form (condensed, showing key sections) -->
+<text x="18" y="96" fill="#6366f1" font-size="8" font-weight="700" letter-spacing="2">IDENTITY</text>
+<rect x="18" y="102" width="264" height="24" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="28" y="118" fill="#e2e8f0" font-size="10">Galaxy A55</text>
+<rect x="18" y="130" width="264" height="24" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="28" y="146" fill="#e2e8f0" font-size="10">Asia-Pacific  ▾</text>
+
+<text x="18" y="172" fill="#6366f1" font-size="8" font-weight="700" letter-spacing="2">PRICING</text>
+<rect x="18" y="178" width="264" height="24" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="28" y="194" fill="#94a3b8" font-weight="700" font-size="10">$</text>
+<text x="40" y="194" fill="#e2e8f0" font-size="10" font-weight="600">320</text>
+
+<text x="18" y="220" fill="#6366f1" font-size="8" font-weight="700" letter-spacing="2">CONNECTIVITY &amp; OS</text>
+<rect x="18" y="226" width="264" height="24" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1"/>
+<text x="28" y="242" fill="#6366f1" font-size="10">● 5G Enabled</text>
+<rect x="240" y="230" width="36" height="16" rx="8" fill="#6366f1"/>
+<circle cx="268" cy="238" r="5" fill="white"/>
+
+<text x="18" y="268" fill="#6366f1" font-size="8" font-weight="700" letter-spacing="2">PROCESSOR</text>
+<rect x="18" y="274" width="264" height="24" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="28" y="290" fill="#e2e8f0" font-size="10">snapdragon · 8 cores · 2.4 GHz</text>
+
+<text x="18" y="316" fill="#6366f1" font-size="8" font-weight="700" letter-spacing="2">MEMORY</text>
+<rect x="18" y="322" width="264" height="24" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="28" y="338" fill="#e2e8f0" font-size="10">8 GB RAM · 128 GB Storage</text>
+
+<text x="18" y="364" fill="#6366f1" font-size="8" font-weight="700" letter-spacing="2">BATTERY</text>
+<rect x="18" y="370" width="264" height="24" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="28" y="386" fill="#e2e8f0" font-size="10">5000 mAh · Fast Charging 25W</text>
+
+<text x="18" y="412" fill="#6366f1" font-size="8" font-weight="700" letter-spacing="2">DISPLAY</text>
+<rect x="18" y="418" width="264" height="24" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="28" y="434" fill="#e2e8f0" font-size="10">6.5″ · 120Hz · 2400×1080</text>
+
+<text x="18" y="460" fill="#6366f1" font-size="8" font-weight="700" letter-spacing="2">CAMERA</text>
+<rect x="18" y="466" width="264" height="24" rx="8" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="28" y="482" fill="#e2e8f0" font-size="10">3 rear · 50 MP main · 16 MP front</text>
+
+<!-- Dimmed bottom section indicating disabled state -->
+<text x="18" y="508" fill="#374151" font-size="8" font-weight="700" letter-spacing="2">RATINGS</text>
+<rect x="18" y="514" width="264" height="24" rx="8" fill="#0f1117" stroke="#1f2937" stroke-width="1"/>
+<text x="28" y="530" fill="#374151" font-size="10">7.5 / 10</text>
+
+<!-- ANALYZING button (disabled state with spinner) -->
+<rect x="0" y="848" width="300" height="1" fill="#1f2937"/>
+<rect x="0" y="849" width="300" height="51" fill="#111318"/>
+<rect x="16" y="858" width="268" height="36" rx="10" fill="url(#btnL)"/>
+<!-- Spinner SVG circles (loading state) -->
+<circle cx="132" cy="876" r="7" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="3"/>
+<path d="M 132 869 A 7 7 0 0 1 139 876" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"/>
+<text x="168" y="881" fill="white" font-size="12" font-weight="700" text-anchor="middle">Analyzing…</text>
+
+<!-- ═══ MAIN PANEL ═══ -->
+
+<!-- Top bar with amber pulsing dot -->
+<rect x="300" y="0" width="1100" height="58" fill="#0b0d14" opacity="0.92"/>
+<rect x="300" y="58" width="1100" height="1" fill="#1f2937"/>
+<circle cx="330" cy="29" r="16" fill="#1e1b4b"/>
+<text x="330" y="34" fill="#818cf8" font-size="12" font-weight="700" text-anchor="middle">BI</text>
+<text x="356" y="23" fill="#f1f5f9" font-size="12" font-weight="900">Product Launch</text>
+<text x="490" y="23" fill="#818cf8" font-size="12" font-weight="900">Intelligence</text>
+<text x="572" y="23" fill="#f1f5f9" font-size="12" font-weight="900"> Dashboard</text>
+
+<!-- AMBER pulsing dot (analyzing state) -->
+<circle cx="357" cy="41" r="5" fill="#f59e0b"/>
+<!-- Pulse ring -->
+<circle cx="357" cy="41" r="9" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.4"/>
+<text x="368" y="45" fill="#f59e0b" font-size="10">Analyzing…</text>
+
+<!-- News fetching badge -->
+<rect x="1160" y="16" width="120" height="26" rx="13" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<!-- Spinner -->
+<circle cx="1178" cy="29" r="6" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2.5"/>
+<path d="M 1178 23 A 6 6 0 0 1 1184 29" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+<text x="1192" y="33" fill="#94a3b8" font-size="10">Fetching news…</text>
+
+<rect x="1292" y="16" width="60" height="26" rx="13" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="1322" y="33" fill="#94a3b8" font-size="10" text-anchor="middle">Report</text>
+<rect x="1358" y="16" width="34" height="26" rx="13" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="1375" y="33" fill="#94a3b8" font-size="10" text-anchor="middle">☀</text>
+
+<!-- ─── LOADING SCREEN CONTENT ─── -->
+
+<!-- ACTIVE ORB (brighter, more intense) -->
+<circle cx="850" cy="390" r="160" fill="url(#orb-glow-active)"/>
+<!-- Ripple ring 1 -->
+<circle cx="850" cy="390" r="140" fill="none" stroke="#818cf8" stroke-width="3" opacity="0.55"/>
+<!-- Ripple ring 2 -->
+<circle cx="850" cy="390" r="140" fill="none" stroke="#c084fc" stroke-width="3" opacity="0.40"/>
+<!-- Ripple ring 3 (extra for active state) -->
+<circle cx="850" cy="390" r="120" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.25"/>
+
+<!-- Orb body (active = brighter) -->
+<circle cx="850" cy="390" r="115" fill="#2a1f6b" opacity="0.8"/>
+<circle cx="850" cy="390" r="112" fill="url(#orb-active)"/>
+
+<!-- Color wash layers — more vivid when active -->
+<ellipse cx="820" cy="358" rx="88" ry="76" fill="#a855f7" opacity="0.65"/>
+<ellipse cx="885" cy="420" rx="82" ry="72" fill="#0ea5e9" opacity="0.55"/>
+<ellipse cx="878" cy="358" rx="65" ry="55" fill="#ec4899" opacity="0.40"/>
+<ellipse cx="825" cy="415" rx="60" ry="52" fill="#22d3ee" opacity="0.45"/>
+
+<!-- Bright shine -->
+<ellipse cx="818" cy="358" rx="56" ry="42" fill="white" opacity="0.52"/>
+<!-- Outer glow ring -->
+<circle cx="850" cy="390" r="112" fill="none" stroke="#818cf8" stroke-width="3" opacity="0.55"/>
+
+<!-- Cycling status text (showing one of 5 stages) -->
+<text x="850" y="556" fill="#f1f5f9" font-size="15" font-weight="600" text-anchor="middle">Forecasting 6-month demand…</text>
+
+<!-- Shimmer progress bar -->
+<rect x="700" y="572" width="300" height="5" rx="2.5" fill="#1f2937"/>
+<rect x="700" y="572" width="300" height="5" rx="2.5" fill="url(#shimmer)" opacity="0.85"/>
+
+<!-- Stage indicators (dots) -->
+<circle cx="780" cy="594" r="4" fill="#6366f1"/>
+<circle cx="810" cy="594" r="4" fill="#6366f1"/>
+<circle cx="840" cy="594" r="5" fill="#a855f7"/>
+<circle cx="870" cy="594" r="4" fill="#374151"/>
+<circle cx="900" cy="594" r="4" fill="#374151"/>
+<!-- Stage labels -->
+<text x="780" y="614" fill="#6366f1" font-size="8" text-anchor="middle">Research</text>
+<text x="810" y="614" fill="#6366f1" font-size="8" text-anchor="middle">Market</text>
+<text x="840" y="614" fill="#a855f7" font-size="8" text-anchor="middle" font-weight="700">Demand</text>
+<text x="870" y="614" fill="#374151" font-size="8" text-anchor="middle">Segments</text>
+<text x="900" y="614" fill="#374151" font-size="8" text-anchor="middle">PMF</text>
+
+<!-- Stage cycling messages panel -->
+<text x="850" y="650" fill="#374151" font-size="11" text-anchor="middle">Step 2 of 5 · Typically completes in 2–4 seconds</text>
+</svg>

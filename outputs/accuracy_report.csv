@@ -1,0 +1,76 @@
+Pillar,Model / Method,Metric,Value,Unit,Grade,Note
+Dataset,—,Total rows,116481.0,rows,—,global_smartphone_bi_v4_final.csv
+Dataset,—,Total columns,66.0,cols,—,
+Dataset,—,Unique phones,968.0,phones,—,
+Dataset,—,Regions,6.0,count,—,
+Dataset,—,Brands,46.0,count,—,
+Dataset,—,Market segments,4.0,count,—,budget / mid-range / premium / flagship
+Pillar 1 – Market Research,XGBoost Classifier,Accuracy,99.3998,%,A+,Group-split by phone
+Pillar 1 – Market Research,XGBoost Classifier,Macro F1,99.5684,%,A+,Balanced across 4 classes
+Pillar 1 – Market Research,XGBoost Classifier,Weighted F1,99.3991,%,A+,
+Pillar 1 – Market Research,XGBoost Classifier,Train samples,92489.0,rows,—,
+Pillar 1 – Market Research,XGBoost Classifier,Test samples,23992.0,rows,—,
+Pillar 1 – Market Research,XGBoost – class: budget,Precision,98.5308,%,A+,"Support: 9,657"
+Pillar 1 – Market Research,XGBoost – class: budget,Recall,100.0,%,A+,
+Pillar 1 – Market Research,XGBoost – class: budget,F1,99.2599,%,A+,
+Pillar 1 – Market Research,XGBoost – class: budget,Support,9657.0,rows,—,
+Pillar 1 – Market Research,XGBoost – class: flagship,Precision,100.0,%,A+,"Support: 2,115"
+Pillar 1 – Market Research,XGBoost – class: flagship,Recall,100.0,%,A+,
+Pillar 1 – Market Research,XGBoost – class: flagship,F1,100.0,%,A+,
+Pillar 1 – Market Research,XGBoost – class: flagship,Support,2115.0,rows,—,
+Pillar 1 – Market Research,XGBoost – class: mid-range,Precision,100.0,%,A+,"Support: 7,372"
+Pillar 1 – Market Research,XGBoost – class: mid-range,Recall,98.0467,%,A+,
+Pillar 1 – Market Research,XGBoost – class: mid-range,F1,99.0137,%,A+,
+Pillar 1 – Market Research,XGBoost – class: mid-range,Support,7372.0,rows,—,
+Pillar 1 – Market Research,XGBoost – class: premium,Precision,100.0,%,A+,"Support: 4,848"
+Pillar 1 – Market Research,XGBoost – class: premium,Recall,100.0,%,A+,
+Pillar 1 – Market Research,XGBoost – class: premium,F1,100.0,%,A+,
+Pillar 1 – Market Research,XGBoost – class: premium,Support,4848.0,rows,—,
+Pillar 1 – Market Research,KNN Retrieval Engine,Reference phones indexed,5801.0,phones,—,"One row per (phone, region)"
+Pillar 2 – Demand Forecast,XGBoost Regressor,R² (log-space),0.8539,0-1,A+,85.4% of variance explained
+Pillar 2 – Demand Forecast,XGBoost Regressor,MAE (raw units),9.0725,units/month,—,Mean actual = 41.6 units
+Pillar 2 – Demand Forecast,XGBoost Regressor,RMSE (raw units),13.2596,units/month,—,
+Pillar 2 – Demand Forecast,XGBoost Regressor,MAPE,24.372,%,—,Lower is better
+Pillar 2 – Demand Forecast,XGBoost Regressor,Within 10% error,25.6919,%,—,% of predictions within 10% of actual
+Pillar 2 – Demand Forecast,XGBoost Regressor,Within 25% error,61.7998,%,—,% of predictions within 25% of actual
+Pillar 2 – Demand Forecast,XGBoost Regressor,Test samples,23992.0,rows,—,
+Pillar 2 – Demand Forecast,XGBoost – segment: budget,MAE (raw units),9.196,units/month,—,Actual mean=41.7  Pred mean=39.7
+Pillar 2 – Demand Forecast,XGBoost – segment: mid-range,MAE (raw units),9.929,units/month,—,Actual mean=46.9  Pred mean=44.7
+Pillar 2 – Demand Forecast,XGBoost – segment: premium,MAE (raw units),8.0269,units/month,—,Actual mean=36.9  Pred mean=35.6
+Pillar 2 – Demand Forecast,XGBoost – segment: flagship,MAE (raw units),7.9196,units/month,—,Actual mean=33.6  Pred mean=32.5
+Pillar 3 – Customer Segmentation,KNN Retrieval – Age Distribution,Block R² (mean),0.6709,0-1,A,
+Pillar 3 – Customer Segmentation,KNN Retrieval – Age Distribution,R²: age_18_24_pct,0.8344,0-1,A+,
+Pillar 3 – Customer Segmentation,KNN Retrieval – Age Distribution,R²: age_25_34_pct,0.7067,0-1,A,
+Pillar 3 – Customer Segmentation,KNN Retrieval – Age Distribution,R²: age_35_44_pct,0.379,0-1,B,
+Pillar 3 – Customer Segmentation,KNN Retrieval – Age Distribution,R²: age_45_54_pct,0.4884,0-1,B+,
+Pillar 3 – Customer Segmentation,KNN Retrieval – Age Distribution,R²: age_55_plus_pct,0.9459,0-1,A+,
+Pillar 3 – Customer Segmentation,KNN Retrieval – Income Distribution,Block R² (mean),0.7713,0-1,A+,
+Pillar 3 – Customer Segmentation,KNN Retrieval – Income Distribution,R²: income_low_pct,0.8528,0-1,A+,
+Pillar 3 – Customer Segmentation,KNN Retrieval – Income Distribution,R²: income_lower_mid_pct,0.7754,0-1,A+,
+Pillar 3 – Customer Segmentation,KNN Retrieval – Income Distribution,R²: income_mid_pct,0.583,0-1,A-,
+Pillar 3 – Customer Segmentation,KNN Retrieval – Income Distribution,R²: income_upper_mid_pct,0.8153,0-1,A+,
+Pillar 3 – Customer Segmentation,KNN Retrieval – Income Distribution,R²: income_high_pct,0.8299,0-1,A+,
+Pillar 3 – Customer Segmentation,KNN Retrieval – RFM / Loyalty,Block R² (mean),-0.1598,0-1,N/A,Not predictable from device specs — reports population prior
+Pillar 3 – Customer Segmentation,KNN Retrieval – RFM / Loyalty,R²: rfm_recent_pct,-0.21,0-1,N/A,
+Pillar 3 – Customer Segmentation,KNN Retrieval – RFM / Loyalty,R²: rfm_champion_pct,-0.1292,0-1,N/A,
+Pillar 3 – Customer Segmentation,KNN Retrieval – RFM / Loyalty,R²: rfm_loyal_pct,-0.1239,0-1,N/A,
+Pillar 3 – Customer Segmentation,KNN Retrieval – RFM / Loyalty,R²: rfm_at_risk_pct,-0.1764,0-1,N/A,
+Pillar 3 – Customer Segmentation,KNN Retrieval – RFM / Loyalty,R²: rfm_hibernating_pct,-0.1596,0-1,N/A,
+Pillar 4 – PMF & Failure,Random Forest,Accuracy,79.8969,%,B,vs 75% random baseline (75% non-failure)
+Pillar 4 – PMF & Failure,Random Forest,AUC-ROC,0.88,0-1,A,Ranks 88% of phone pairs correctly by failure risk
+Pillar 4 – PMF & Failure,Random Forest,Precision,59.0164,%,—,"Of flagged failures, % that are real"
+Pillar 4 – PMF & Failure,Random Forest,Recall,72.0,%,—,"Of real failures, % that are caught"
+Pillar 4 – PMF & Failure,Random Forest,F1 Score,64.8649,%,—,
+Pillar 4 – PMF & Failure,Random Forest,Base rate,25.0,%,—,Random classifier = 25% accuracy
+Pillar 4 – PMF & Failure,Random Forest,Test samples,194.0,phones,—,
+Pillar 4 – PMF & Failure,Random Forest – Feature Importance,Rank 1: price_usd,0.1458,importance,—,
+Pillar 4 – PMF & Failure,Random Forest – Feature Importance,Rank 2: avg_rating,0.106,importance,—,
+Pillar 4 – PMF & Failure,Random Forest – Feature Importance,Rank 3: resolution_height,0.0961,importance,—,
+Pillar 4 – PMF & Failure,Random Forest – Feature Importance,Rank 4: 5g_or_not,0.0784,importance,—,
+Pillar 4 – PMF & Failure,Random Forest – Feature Importance,Rank 5: resolution_width,0.0592,importance,—,
+Pillar 4 – PMF & Failure,Random Forest – Feature Importance,Rank 6: ram_capacity,0.0585,importance,—,
+Pillar 4 – PMF & Failure,Random Forest – Feature Importance,Rank 7: screen_size,0.0584,importance,—,
+Pillar 4 – PMF & Failure,Random Forest – Feature Importance,Rank 8: primary_camera_rear,0.0571,importance,—,
+Pillar 4 – PMF & Failure,Random Forest – Feature Importance,Rank 9: processor_brand,0.0471,importance,—,
+Pillar 4 – PMF & Failure,Random Forest – Feature Importance,Rank 10: refresh_rate,0.0458,importance,—,
+System Composite,All Pillars,Composite Score,85.7121,%,A+,Unweighted mean across all key metrics (RFM excluded)

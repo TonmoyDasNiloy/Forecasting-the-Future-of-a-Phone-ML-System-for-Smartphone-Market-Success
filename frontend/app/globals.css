@@ -1,0 +1,336 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* ═══════════════════════════════════════════════════════
+   LIGHT MODE — Neomorphism base: soft blue-gray #e8ecf2
+═══════════════════════════════════════════════════════ */
+:root {
+  /* Neomorphism shadow pair */
+  --neo-shadow-dark:  #bfc5d1;
+  --neo-shadow-light: #ffffff;
+  --neo-glow:         rgba(99, 102, 241, 0.22);
+
+  /* Page background: the neomorphism surface color */
+  --background: oklch(0.906 0.013 260);
+
+  /* Cards = same surface as background (neomorphism rule) */
+  --card:    oklch(0.906 0.013 260);
+  --popover: oklch(0.906 0.013 260);
+  --card-foreground:    oklch(0.11 0.018 265);
+  --popover-foreground: oklch(0.11 0.018 265);
+  --foreground: oklch(0.11 0.018 265);
+
+  /* Primary: vivid indigo */
+  --primary:          oklch(0.51 0.265 264);
+  --primary-foreground: oklch(0.99 0 0);
+
+  /* Secondary / raised surfaces */
+  --secondary:          oklch(0.88 0.014 260);
+  --secondary-foreground: oklch(0.11 0.018 265);
+
+  /* Muted */
+  --muted:            oklch(0.88 0.014 260);
+  --muted-foreground: oklch(0.38 0.048 265);
+
+  /* Accent */
+  --accent:           oklch(0.875 0.015 260);
+  --accent-foreground: oklch(0.11 0.018 265);
+
+  /* Destructive */
+  --destructive: oklch(0.52 0.22 27);
+
+  /* Borders: very subtle in neomorphism */
+  --border: oklch(0 0 0 / 5%);
+  --input:  oklch(0 0 0 / 7%);
+  --ring:   oklch(0.51 0.265 264);
+
+  /* Charts */
+  --chart-1: oklch(0.51 0.265 264);
+  --chart-2: oklch(0.52 0.20 160);
+  --chart-3: oklch(0.60 0.20 55);
+  --chart-4: oklch(0.52 0.22 305);
+  --chart-5: oklch(0.52 0.22 27);
+
+  --radius: 0.75rem;
+
+  /* Sidebar */
+  --sidebar:                  oklch(0.892 0.013 260);
+  --sidebar-foreground:       oklch(0.11 0.018 265);
+  --sidebar-primary:          oklch(0.51 0.265 264);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent:           oklch(0.875 0.015 260);
+  --sidebar-accent-foreground: oklch(0.11 0.018 265);
+  --sidebar-border:           oklch(0 0 0 / 5%);
+  --sidebar-ring:             oklch(0.51 0.265 264);
+}
+
+/* ═══════════════════════════════════════════════════════
+   DARK MODE — Neomorphism base: mid-navy
+   Key improvements vs previous:
+   • card lightness: 0.172 → 0.200 (bigger gap from bg = clear elevation)
+   • neo-shadow-light: 10% → 15% (stronger highlight stripe)
+   • neo-shadow-dark: 70% → 78% (deeper trough shadow)
+   • border: 6% → 10% (crisp card edges)
+   • foreground / card-foreground: 0.95 → 0.97 (near-white text)
+   • muted-foreground: 0.78 → 0.84 (readable secondary text)
+   • primary accent: 0.65 → 0.70 (vivid indigo)
+   • chart colors boosted ~0.04L across the board
+═══════════════════════════════════════════════════════ */
+.dark {
+  --neo-shadow-dark:  rgba(0, 0, 0, 0.78);
+  --neo-shadow-light: rgba(255, 255, 255, 0.15);
+  --neo-glow:         rgba(99, 102, 241, 0.50);
+
+  /* Page surface */
+  --background: oklch(0.145 0.022 265);
+
+  /* Cards clearly lighter than bg — strong visible elevation */
+  --card:    oklch(0.200 0.022 265);
+  --popover: oklch(0.200 0.022 265);
+  --card-foreground:    oklch(0.97 0.006 265);
+  --popover-foreground: oklch(0.97 0.006 265);
+  --foreground: oklch(0.97 0.006 265);
+
+  --primary:          oklch(0.70 0.22 264);
+  --primary-foreground: oklch(0.99 0 0);
+
+  --secondary:          oklch(0.230 0.022 265);
+  --secondary-foreground: oklch(0.97 0.006 265);
+
+  --muted:            oklch(0.230 0.022 265);
+  --muted-foreground: oklch(0.84 0.030 265);
+
+  --accent:           oklch(0.230 0.022 265);
+  --accent-foreground: oklch(0.97 0.006 265);
+
+  --destructive: oklch(0.70 0.22 25);
+
+  /* More visible white border — crisp card edges */
+  --border: oklch(1 0 0 / 10%);
+  --input:  oklch(1 0 0 / 16%);
+  --ring:   oklch(0.70 0.22 264);
+
+  --chart-1: oklch(0.70 0.22 264);
+  --chart-2: oklch(0.76 0.18 160);
+  --chart-3: oklch(0.82 0.18 55);
+  --chart-4: oklch(0.74 0.18 305);
+  --chart-5: oklch(0.70 0.22 25);
+
+  --sidebar:                  oklch(0.122 0.020 265);
+  --sidebar-foreground:       oklch(0.97 0.006 265);
+  --sidebar-primary:          oklch(0.70 0.22 264);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent:           oklch(0.230 0.022 265);
+  --sidebar-accent-foreground: oklch(0.97 0.006 265);
+  --sidebar-border:           oklch(1 0 0 / 10%);
+  --sidebar-ring:             oklch(0.70 0.22 264);
+}
+
+/* ═══════════════════════════════════════════════════════
+   NEOMORPHISM UTILITY CLASSES
+═══════════════════════════════════════════════════════ */
+
+/* Raised: element floats above the surface */
+.neo-raised {
+  box-shadow:
+    8px 8px 20px var(--neo-shadow-dark),
+    -5px -5px 14px var(--neo-shadow-light);
+  border: 1px solid var(--border);
+}
+
+/* Inset: element pressed into the surface */
+.neo-inset {
+  box-shadow:
+    inset 4px 4px 12px var(--neo-shadow-dark),
+    inset -3px -3px 8px var(--neo-shadow-light);
+  border: 1px solid var(--border);
+}
+
+/* Flat: subtle depth, used for secondary cards */
+.neo-flat {
+  box-shadow:
+    4px 4px 10px var(--neo-shadow-dark),
+    -3px -3px 8px var(--neo-shadow-light);
+  border: 1px solid var(--border);
+}
+
+/* Small flat: micro-cards, pills, tiles */
+.neo-sm {
+  box-shadow:
+    2px 2px 6px var(--neo-shadow-dark),
+    -1px -1px 5px var(--neo-shadow-light);
+  border: 1px solid var(--border);
+}
+
+/* Glow: raised + indigo accent glow */
+.neo-glow {
+  box-shadow:
+    8px 8px 20px var(--neo-shadow-dark),
+    -5px -5px 14px var(--neo-shadow-light),
+    0 0 28px var(--neo-glow);
+  border: 1px solid var(--border);
+}
+
+/* Pressed: nav item active state */
+.neo-pressed {
+  box-shadow:
+    inset 3px 3px 10px var(--neo-shadow-dark),
+    inset -2px -2px 6px var(--neo-shadow-light);
+  transform: scale(0.97);
+}
+
+/* Hover transition helper */
+.neo-hover {
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+.neo-hover:hover {
+  box-shadow:
+    10px 10px 24px var(--neo-shadow-dark),
+    -6px -6px 16px var(--neo-shadow-light);
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════════════
+   LIGHT MODE: fix readable text/color classes
+═══════════════════════════════════════════════════════ */
+html:not(.dark) {
+  .text-emerald-300 { color: oklch(0.40 0.16 160) !important; }
+  .text-emerald-400 { color: oklch(0.44 0.17 160) !important; }
+  .text-emerald-500 { color: oklch(0.44 0.17 160) !important; }
+
+  .text-sky-400     { color: oklch(0.43 0.17 230) !important; }
+  .text-sky-500     { color: oklch(0.40 0.16 230) !important; }
+
+  .text-amber-300   { color: oklch(0.46 0.15 72)  !important; }
+  .text-amber-400   { color: oklch(0.50 0.16 72)  !important; }
+  .text-amber-500   { color: oklch(0.48 0.15 72)  !important; }
+
+  .text-indigo-400  { color: oklch(0.51 0.26 264) !important; }
+  .text-violet-400  { color: oklch(0.49 0.24 290) !important; }
+
+  .text-red-300     { color: oklch(0.48 0.22 27)  !important; }
+  .text-red-400     { color: oklch(0.48 0.22 27)  !important; }
+
+  --muted-foreground: oklch(0.36 0.048 265);
+
+  /* Recommendation banners */
+  .bg-emerald-950\/60 { background-color: oklch(0.90 0.08 160 / 55%) !important; }
+  .border-emerald-600\/40 { border-color: oklch(0.52 0.17 160 / 65%) !important; }
+
+  .bg-amber-950\/60 { background-color: oklch(0.92 0.09 72 / 55%) !important; }
+  .border-amber-600\/40 { border-color: oklch(0.52 0.16 72 / 65%) !important; }
+
+  .bg-red-950\/60 { background-color: oklch(0.92 0.08 27 / 55%) !important; }
+  .border-red-600\/40 { border-color: oklch(0.50 0.22 27 / 65%) !important; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════════════ */
+@keyframes gradient-shift {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes theme-icon-in {
+  from { transform: rotate(-90deg) scale(0.4); opacity: 0; }
+  to   { transform: rotate(0deg)   scale(1);   opacity: 1; }
+}
+
+@keyframes siri-spin      { to { transform: rotate(360deg); } }
+@keyframes siri-spin-rev  { to { transform: rotate(-360deg); } }
+@keyframes siri-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }
+}
+@keyframes siri-ripple {
+  0%   { transform: scale(0.85); opacity: 0.55; }
+  100% { transform: scale(1.9);  opacity: 0; }
+}
+@keyframes siri-text-glow {
+  0%, 100% { opacity: 0.85; }
+  50%      { opacity: 1; }
+}
+@keyframes siri-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes siri-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-left {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes neo-pulse {
+  0%, 100% { box-shadow: 7px 7px 18px var(--neo-shadow-dark), -5px -5px 14px var(--neo-shadow-light), 0 0 14px var(--neo-glow); }
+  50%      { box-shadow: 7px 7px 18px var(--neo-shadow-dark), -5px -5px 14px var(--neo-shadow-light), 0 0 28px var(--neo-glow); }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    transition: background-color 0.25s ease, border-color 0.2s ease, color 0.15s ease, box-shadow 0.2s ease;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}

@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Smartphone BI Agent — Full Defense Q&amp;A</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #fff;
+    color: #111;
+    padding: 40px 48px;
+    max-width: 960px;
+    margin: auto;
+    font-size: 12.5px;
+    line-height: 1.75;
+  }
+
+  /* ── Cover ── */
+  .cover {
+    text-align: center;
+    padding: 60px 20px 50px;
+    border-bottom: 4px solid #4f46e5;
+    margin-bottom: 36px;
+    page-break-after: always;
+  }
+  .cover h1 { font-size: 28px; font-weight: 900; color: #4f46e5; margin-bottom: 8px; }
+  .cover h2 { font-size: 14px; font-weight: 400; color: #666; margin-bottom: 24px; }
+  .cover .stat {
+    display: inline-block;
+    background: #eff6ff; border: 1px solid #bfdbfe;
+    color: #1d4ed8; padding: 5px 16px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; margin: 4px;
+  }
+  .cover p { color: #555; font-size: 12px; margin-top: 20px; line-height: 1.8; }
+
+  /* ── Table of Contents ── */
+  .toc { margin-bottom: 40px; page-break-after: always; }
+  .toc h2 { font-size: 16px; font-weight: 800; color: #1e1b4b;
+    border-left: 5px solid #4f46e5; padding-left: 12px; margin-bottom: 16px; }
+  .toc ol { margin-left: 28px; }
+  .toc li { margin-bottom: 5px; font-size: 12px; }
+  .toc .sec { font-weight: 700; color: #4f46e5; }
+  .toc .sub { color: #555; font-size: 11px; }
+
+  /* ── Section header ── */
+  .section-header {
+    background: #4f46e5;
+    color: #fff;
+    padding: 11px 18px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 800;
+    margin: 36px 0 20px;
+    page-break-before: always;
+    letter-spacing: 0.02em;
+  }
+  .section-header:first-of-type { page-break-before: avoid; }
+
+  /* ── Q&A block ── */
+  .qa { margin-bottom: 22px; }
+
+  .q-label {
+    font-size: 10px; font-weight: 800;
+    color: #1d4ed8; letter-spacing: .1em;
+    text-transform: uppercase; margin-bottom: 3px;
+  }
+
+  .question {
+    background: #eff6ff;
+    border-left: 4px solid #3b82f6;
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+    font-weight: 700;
+    color: #1e3a8a;
+    font-size: 12.5px;
+    margin-bottom: 8px;
+  }
+
+  .answer {
+    background: #f8fafc;
+    border-left: 4px solid #22c55e;
+    padding: 11px 15px;
+    border-radius: 0 6px 6px 0;
+    color: #111;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  /* ── Code inside answers ── */
+  .answer code, pre {
+    font-family: 'Courier New', Courier, monospace;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 11px;
+  }
+  .answer code { padding: 1px 5px; }
+  pre {
+    padding: 10px 14px;
+    margin: 8px 0;
+    line-height: 1.6;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  /* ── Inline highlights ── */
+  .answer strong { color: #1e1b4b; }
+
+  /* ── Divider ── */
+  hr { border: none; border-top: 1px solid #e2e8f0; margin: 10px 0 20px; }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    font-size: 10px;
+    color: #94a3b8;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 14px;
+    margin-top: 40px;
+  }
+
+  /* ── Print ── */
+  @media print {
+    body { padding: 20px 28px; font-size: 11.5px; }
+    .section-header { page-break-before: always; }
+    .qa { page-break-inside: avoid; }
+    pre { white-space: pre-wrap; word-break: break-word; }
+    a { text-decoration: none; color: inherit; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div style="font-size:44px; margin-bottom:14px;">📱</div>
+  <h1>Smartphone BI Agent</h1>
+  <h2>Full Defense Committee Q&amp;A Guide</h2>
+  <div>
+    <span class="stat">75 Questions</span>
+    <span class="stat">12 Sections</span>
+    <span class="stat">Dataset · ML · Backend · Frontend · Architecture</span>
+  </div>
+  <p>
+    Covers every layer of the system — dataset engineering, all four ML pillars,<br>
+    FastAPI backend, Next.js frontend, architecture decisions, ethics, and rapid-fire code questions.<br>
+    Each answer is grounded in the actual source code.
+  </p>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <h2>Sections</h2>
+  <ol>
+    <li><span class="sec">Section A</span> <span class="sub">— Dataset &amp; Data Engineering (8 questions)</span></li>
+    <li><span class="sec">Section B</span> <span class="sub">— Feature Engineering (6 questions)</span></li>
+    <li><span class="sec">Section C</span> <span class="sub">— Pillar 1: Market Research &amp; Similarity (7 questions)</span></li>
+    <li><span class="sec">Section D</span> <span class="sub">— Pillar 2: Demand Forecasting (7 questions)</span></li>
+    <li><span class="sec">Section E</span> <span class="sub">— Pillar 3: Customer Segmentation (5 questions)</span></li>
+    <li><span class="sec">Section F</span> <span class="sub">— Pillar 4: PMF &amp; Failure Prediction (7 questions)</span></li>
+    <li><span class="sec">Section G</span> <span class="sub">— Backend / FastAPI (10 questions)</span></li>
+    <li><span class="sec">Section H</span> <span class="sub">— Frontend / Next.js (6 questions)</span></li>
+    <li><span class="sec">Section I</span> <span class="sub">— Architecture &amp; Design Decisions (7 questions)</span></li>
+    <li><span class="sec">Section J</span> <span class="sub">— Machine Learning Cross-Cutting (8 questions)</span></li>
+    <li><span class="sec">Section K</span> <span class="sub">— Ethics, Limitations &amp; Research Validity (5 questions)</span></li>
+    <li><span class="sec">Section L</span> <span class="sub">— Rapid-Fire Code Questions (10 questions)</span></li>
+  </ol>
+</div>
+
+<!-- ═══════════════════ SECTION A ═══════════════════ -->
+<div class="section-header">Section A — Dataset &amp; Data Engineering</div>
+
+<div class="qa">
+  <div class="q-label">A1</div>
+  <div class="question">Your dataset has 116,481 rows. A phone like the Galaxy S23 would appear multiple times — once per month, per region. How many unique phones are actually in the dataset, and why does that distinction matter for your train/test split?</div>
+  <div class="answer">
+    The 116,481 rows are snapshots — each phone appears once per month per region it is sold in. The number of unique phones is far smaller (roughly a few thousand distinct brand+model combinations). This distinction is critical for the train/test split. If we split by row, the same phone could appear in both training and testing at different months. The model would have already seen that phone's hardware specs during training and would trivially score well on test — not because it generalised, but because it memorised. This is why we use <code>GroupShuffleSplit</code> with <code>groups = brand_name + "__" + model</code>. Every phone ends up entirely in training or entirely in testing. A phone the model has never seen is the only honest test of generalisation.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">A2</div>
+  <div class="question">social_media_mentions, search_trend_score, and news_sentiment_score are in POST_LAUNCH. Their correlation with sales is 0.86. What would have happened if you included them, and would that model be useful?</div>
+  <div class="answer">
+    If included during training, the model would learn to rely on social media buzz as the dominant predictor of sales — and R² would jump to perhaps 0.95+. But at inference time for a brand-new phone, those features do not exist. You would have to either leave them blank (causing garbage predictions), fill them with zeros (wrong), or estimate them (circular — you are trying to predict sales, not buzz). The model would be perfectly accurate in training and completely unusable in production. This is the classic leakage problem. The <code>POST_LAUNCH</code> list in <code>config.py</code> is an explicit firewall that prevents any of these features from entering the cold-start models.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">A3</div>
+  <div class="question">avg_rating is in NUM_SPECS — the pre-launch features. But average rating is only possible after customers have used the phone. How do you justify its inclusion?</div>
+  <div class="answer">
+    This is a genuine limitation we acknowledge. The justification is that <code>avg_rating</code> in the dataset reflects the brand's historical average rating for similar phones, not post-launch ratings of the specific new phone. At launch time, a manufacturer knows their own quality track record — Samsung consistently rates 7–8, a no-name brand rates 5–6. So the field is used as a proxy for brand quality history, not as a customer review of the new phone. In production, a stricter design would rename it <code>brand_avg_quality_score</code> and compute it from training data per brand — rather than taking it as user input.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">A4</div>
+  <div class="question">customer_lifetime_value_usd is in POST_LAUNCH, yet you compute CLV in agent.py at inference time. Why are these two different, and which one is trustworthy?</div>
+  <div class="answer">
+    They are fundamentally different things. The <code>customer_lifetime_value_usd</code> column in POST_LAUNCH is a measured, historical value — it reflects what CLV actually turned out to be for each phone after years of real sales data. The CLV computed in <code>agent.py</code> is a forward-looking formula:<br><br>
+    <code>net_price × margin(18%) × repeat_factor × loyalty_horizon(2.4)</code><br><br>
+    It uses only the new phone's price and the demographics retrieved from similar phones. It is a prediction, not a measurement. The historical column cannot be used because the new phone has no sales history. The formula-based CLV is the honest cold-start equivalent — it is the one that is actually useful for a pre-launch decision.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">A5</div>
+  <div class="question">In _phone_table(), demographics are aggregated using "mean" across all months. What assumption does this make and is it valid?</div>
+  <div class="answer">
+    It assumes that the buyer demographic mix for a phone is stable over its lifetime. In reality, early adopters (months 1–3) tend to be younger, higher-income, and more tech-oriented. Later buyers (months 12+) are more price-sensitive mainstream buyers. Averaging across all months blurs this temporal pattern. The resulting demographic profile represents an "average buyer across the phone's lifespan" rather than the buyer at launch. For launch decisions specifically, we would ideally want month-1 demographics only. This is a known simplification that trades accuracy for statistical stability — month-1 data alone would be based on very few rows per phone.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">A6</div>
+  <div class="question">What happens if a user selects a region with fewer than K phones? Show where in the code this is handled.</div>
+  <div class="answer">
+    In <code>pillar1_market_research.py</code> lines 93–94:
+    <pre>mask = (ph["region"] == region).values
+if mask.sum() < k:
+    mask = np.ones(len(ph), dtype=bool)  # fall back to all regions</pre>
+    If the selected region has fewer than K phones in the phone table, the mask is reset to all <code>True</code> — the similarity search falls back to the entire global dataset. Retrieved neighbours may then come from different regions, which slightly reduces the regional accuracy of demographics. This fallback is a pragmatic choice: returning fewer than K neighbours or crashing would be worse alternatives.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">A7</div>
+  <div class="question">What is the difference between months_since_launch and month_index in config.py under TIME_CONTEXT?</div>
+  <div class="answer">
+    They represent the same concept — how many months since the phone launched — but differ in origin. <code>months_since_launch</code> is the raw column from the dataset, counting from the phone's actual release date. <code>month_index</code> is a simplified 0-based counter used during inference in <code>predict_curve()</code> — it runs 0, 1, 2, 3, 4, 5 for a 6-month forecast. Both are included in <code>TIME_CONTEXT</code> because during training the model sees both, and both contribute to the model learning the temporal decay pattern of demand. During inference, both are set to the same loop variable <code>m</code> in <code>predict_curve()</code>.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">A8</div>
+  <div class="question">units_sold_monthly is in POST_LAUNCH. But Pillar 2 predicts it. Is that not a contradiction?</div>
+  <div class="answer">
+    No. The column is post-launch in the sense that you cannot know it before the phone ships — it measures actual sales. But it is the <strong>target variable</strong>, not a feature. We train the model using historical phones where we know both the launch specs and the eventual sales. The model learns to map specs → sales. At inference, we only provide specs — the model predicts what sales will be. Predicting a post-launch outcome from pre-launch inputs is exactly the goal of forecasting. The <code>POST_LAUNCH</code> list only blocks these columns from being used as <em>input features</em> — it does not prevent them from being prediction targets.
+  </div>
+</div>
+
+<!-- ═══════════════════ SECTION B ═══════════════════ -->
+<div class="section-header">Section B — Feature Engineering</div>
+
+<div class="qa">
+  <div class="q-label">B1</div>
+  <div class="question">Why is cam_total divided by 10, and battery_capacity divided by 1000 in value_score?</div>
+  <div class="answer">
+    <pre>value_score = (RAM + battery/1000 + cam_total/10) / log(1 + price)</pre>
+    RAM is typically 4–16 GB. Battery is 3000–6000 mAh. Camera is 12–200 MP. Without scaling, battery would dominate the numerator (5000 >> 8 >> 66). Dividing battery by 1000 brings it to ~3–6, and camera by 10 brings it to ~5–20, making all three components roughly equal in magnitude. This is manual normalisation so that the sum is a balanced measure of value rather than a battery-dominated one.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">B2</div>
+  <div class="question">Why does price_per_ram use ram_capacity + 1 instead of just ram_capacity?</div>
+  <div class="answer">
+    <code>price_per_ram = price_usd / (ram_capacity + 1)</code><br><br>
+    The <code>+1</code> prevents division by zero if a phone has <code>ram_capacity = 0</code> — which could occur from data entry errors, missing values, or hypothetical edge cases. Without it, a zero-RAM phone would crash the entire feature engineering step. This is a standard defensive programming pattern — a Laplace smoothing approach when applied to counts.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">B3</div>
+  <div class="question">perf_score = num_cores × processor_speed. A 4-core 3.0 GHz and 8-core 1.5 GHz both score 12. Is that valid? What is lost?</div>
+  <div class="answer">
+    It is a simplification. In reality, 8 cores at 1.5 GHz outperforms 4 cores at 3.0 GHz for multithreaded workloads (background sync, multitasking) but may underperform for single-threaded tasks (game rendering, UI). The formula treats cores and speed as linearly interchangeable. What is lost: cache size, instruction set efficiency, IPC (instructions per clock), and core types (big/little architecture). For the purpose of market segmentation and demand prediction at scale, this approximation is acceptable — it provides a single numeric that correlates with the performance tier of the phone without requiring microarchitecture data that is not in the dataset.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">B4</div>
+  <div class="question">pixels = resolution_height × resolution_width gives ~2.5 million. How does this affect KNN distance calculations?</div>
+  <div class="answer">
+    The pixel value (e.g., 2,592,000) is orders of magnitude larger than other features like <code>ram_capacity</code> (8) or <code>num_cores</code> (8). Without standardisation, Euclidean distance would be completely dominated by pixel differences. The <code>StandardScaler</code> applied in the similarity engine normalises every feature to zero mean and unit variance, so a one-standard-deviation difference in pixels contributes the same to distance as a one-standard-deviation difference in RAM. After scaling, the raw magnitude is irrelevant — what matters is relative deviation from the mean.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">B5</div>
+  <div class="question">Are the 7 engineered features used in all four pillars, or only some?</div>
+  <div class="answer">
+    Not in all. Pillar 1 segment classifier uses <code>NUM_SPECS + CAT_SPECS</code> — raw features only, no engineered features. Pillar 1 similarity engine also uses raw <code>sim_feats</code>. Pillar 2 demand explicitly includes <code>C.ENGINEERED</code>:
+    <pre>num = (C.NUM_SPECS + C.TIME_CONTEXT + C.ENGINEERED)</pre>
+    Pillar 4 PMF uses <code>NUM_SPECS + CAT_SPECS</code> without engineering. The competitor and price-optimize endpoints in <code>backend/main.py</code> call <code>C.add_engineered_features()</code> explicitly for radar scoring and spec similarity. So engineered features are primarily used in Pillar 2 and the backend endpoints.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">B6</div>
+  <div class="question">value_score internally uses cam_total, which is also in ENGINEERED. Is there double-counting of camera information?</div>
+  <div class="answer">
+    Technically yes — <code>cam_total</code> and <code>value_score</code> both carry camera information. For models using the full <code>ENGINEERED</code> list (Pillar 2), both are present simultaneously. XGBoost handles this via <code>colsample_bytree=0.8</code> — randomly excluding 20% of features per tree — and the model's internal feature importance naturally downweights the redundant one. In a linear model, this collinearity would be a serious problem. In gradient boosted trees it is tolerated, but ideally <code>cam_total</code> would be excluded from <code>ENGINEERED</code> since it already appears inside <code>value_score</code>, or explicitly removed from the feature list passed to Pillar 2.
+  </div>
+</div>
+
+<!-- ═══════════════════ SECTION C ═══════════════════ -->
+<div class="section-header">Section C — Pillar 1: Market Research &amp; Similarity</div>
+
+<div class="qa">
+  <div class="q-label">C1</div>
+  <div class="question">You use OrdinalEncoder for categorical features in the segment classifier. Ordinal encoding implies an order between brands. Why not one-hot encoding?</div>
+  <div class="answer">
+    XGBoost trees make decisions by comparing feature values against thresholds — "if brand_encoded > 1.5, go right." This works correctly even with arbitrary integer codes because the model does not assume any linear relationship between codes. It will split brands into groups that make sense for the prediction task regardless of the numbering order. One-hot encoding with 30+ brands would create 30+ binary columns, expanding the feature space significantly and requiring more trees or deeper trees to learn the same patterns. <code>OrdinalEncoder</code> keeps the feature space compact while XGBoost's splitting mechanism handles the lack of ordinal meaning.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">C2</div>
+  <div class="question">What does max_depth=6 mean structurally? What would happen at max_depth=20?</div>
+  <div class="answer">
+    <code>max_depth=6</code> means each decision tree has at most 6 levels of splits, producing at most 2⁶ = 64 leaf nodes. Each leaf represents a specific combination of feature conditions. At <code>max_depth=20</code>, a single tree could have up to 2²⁰ = 1,048,576 leaves — more leaves than training samples. The tree would perfectly memorise the training data, achieving ~100% training accuracy. But on the test set it would fail on any phone that does not exactly match a memorised pattern — classic overfitting. The model would lose its ability to generalise to new phone brands or spec combinations it never saw.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">C3</div>
+  <div class="question">What would happen if the query price was not log-transformed in find_similar()?</div>
+  <div class="answer">
+    The entire similarity engine was trained with log-transformed prices. The <code>StandardScaler</code>'s mean and standard deviation for the price feature were computed on <code>log(1 + price)</code>. If we provide the raw price (e.g., 320) instead of log-price (5.77), the standardisation becomes <code>(320 - mean_of_logs) / std_of_logs</code> — the 320 is not in the same space as the scaler's statistics. This produces a massively inflated standardised value, which then gets multiplied by the 2.5× weight. The price dimension would completely dominate the distance calculation, and the "nearest neighbours" would be purely the cheapest phones in the dataset regardless of any other spec similarity.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">C4</div>
+  <div class="question">Why 2.5× for the price weight specifically? Was it empirically tuned?</div>
+  <div class="answer">
+    The comment in the code states <em>"price dominates buyer profile."</em> The justification is that a buyer spending $800 and a buyer spending $200 are fundamentally different demographic and behavioural segments, even if specs are similar. Price tier is the strongest single signal of who the buyer is. The 2.5× value is a design choice — it was not tuned via a formal grid search. A rigorous approach would cross-validate different weights (1.0, 1.5, 2.0, 2.5, 3.0) against demographic prediction accuracy on held-out phones and select the best. This is an acknowledged limitation of the current implementation.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">C5</div>
+  <div class="question">What is the computational difference between sklearn NearestNeighbors and a simple argsort?</div>
+  <div class="answer">
+    Both produce the same result for brute-force search. <code>sklearn.NearestNeighbors</code> defaults to a ball-tree or KD-tree algorithm for large datasets, which reduces query time from O(N) to O(log N) per query. For 116,000 rows and 12 features, a brute-force argsort takes a few milliseconds. The tree-based approach would be significantly faster for very large datasets or high query volumes. At our scale, the practical difference per single inference call is negligible. However, using <code>NearestNeighbors</code> is the correct engineering choice because it scales properly as the dataset grows — if the dataset reaches 1 million rows, the improvement becomes substantial.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">C6</div>
+  <div class="question">find_similar() is called twice in agent.py, each time reloading the joblib file. Is this efficient?</div>
+  <div class="answer">
+    No. Each <code>joblib.load()</code> reads the artifact from disk, deserialises it, and creates data structures in memory. For the similarity artifact which includes the full phone table matrix, this could involve hundreds of megabytes of I/O per call. The correct design is to load all model artifacts once at application startup — in FastAPI this is done in a startup event handler — and store them in application state. Both calls to <code>find_similar()</code> could then share the already-loaded artifact. As a further improvement, <code>find_similar()</code> could accept the preloaded artifact as a parameter to eliminate file I/O at inference time entirely.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">C7</div>
+  <div class="question">The phone table is grouped by (brand_name, model, region). A competitor found for a South Asia user might only exist in North America. What are the implications?</div>
+  <div class="answer">
+    The similarity engine retrieves phones from the target region first. But with the fallback, competitors from North America may appear for a South Asia user. The problem: a $300 phone sold in North America competes in a different economic context than the same specs in South Asia. Pricing norms, market expectations, and buyer demographics differ significantly. The system would give demographic profiles and competitor intelligence that is accurate for North America but potentially misleading for South Asia. A more robust design would use a hierarchical fallback — first same region, then adjacent regions, then global — to preserve regional accuracy even when the target region has sparse data.
+  </div>
+</div>
+
+<!-- ═══════════════════ SECTION D ═══════════════════ -->
+<div class="section-header">Section D — Pillar 2: Demand Forecasting</div>
+
+<div class="qa">
+  <div class="q-label">D1</div>
+  <div class="question">What does right skew of ~1.8 look like, and what goes wrong without log transform?</div>
+  <div class="answer">
+    Right skew of 1.8 means the distribution has a long tail to the right. Most phones sell 100–500 units per month, but a few flagship phones sell 5,000–50,000 units. On a histogram: very tall bar at low values, thin tail stretching far right. Without log transform, the regressor (which minimises squared error) would spend most effort fitting the rare high-sales outliers — a prediction error of 1,000 units contributes 1,000,000 to squared error, while an error of 100 contributes only 10,000. The model would overpredict for average phones to reduce outlier errors. After <code>log1p()</code>, all values are compressed — a 50,000-unit phone becomes ~10.8, a 500-unit phone ~6.2. The squared error penalties become symmetric and the model fits the full range equally.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">D2</div>
+  <div class="question">Walk through exactly what goes wrong if brand_demand_prior is computed on the full dataset before the split.</div>
+  <div class="answer">
+    The brand demand prior is <code>mean(log(units))</code> per brand. If computed on the full dataset: Samsung's prior includes test rows. When the model sees a test Samsung phone, it already knows Samsung's average sales (which were computed from test rows). The model effectively uses a signal computed from the test set's own labels during training. This inflates R² artificially — the model appears to generalise well but is actually leaking test information back through the brand prior. By computing on the training fold only — <code>y.iloc[tr].groupby(d["brand_name"].iloc[tr]).mean()</code> — test phones receive only information that was knowable before seeing their labels.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">D3</div>
+  <div class="question">Why does the demand regressor use 700 trees at learning_rate=0.03 vs the classifier's 300 trees at 0.1?</div>
+  <div class="answer">
+    Regression is a harder problem here. Market segments are cleanly separated by price thresholds — the classifier needs fewer trees to learn the boundary. Demand is continuous, noisy, and influenced by many interacting features. More trees allow the regressor to learn finer-grained patterns. A lower learning rate means each tree contributes less to the final prediction — the ensemble corrects errors slowly and carefully rather than aggressively. This combination (many weak trees, slow learning) produces a smoother, more generalised prediction function that avoids fitting noise in the training data. The cost is longer training time, which is acceptable since training is done offline.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">D4</div>
+  <div class="question">All 6 rows in predict_curve() have identical specs. What feature drives the variation across months?</div>
+  <div class="answer">
+    <code>months_since_launch</code> (and <code>month_index</code>, set to the same value). The model learned during training that phones follow a demand curve — typically high in months 0–1 (launch hype), declining through months 2–4, stabilising by months 5–6. This pattern is captured because training data contains multiple months per phone, and the model sees how <code>months_since_launch</code> correlates with sales for each phone. At inference, changing <code>months_since_launch</code> from 0 to 5 with all else equal asks the model: "given these specs, what would sales look like at month N?" — and the model produces the learned temporal pattern.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">D5</div>
+  <div class="question">R² is measured in log-space, MAE in original unit space. Why? Which matters more for business?</div>
+  <div class="answer">
+    R² in log-space measures the proportion of variance in log-sales explained by the model. It is the right evaluation metric during training because the model was trained on log-targets — reporting it in the same space reflects the model's actual optimisation objective. But a business stakeholder has no intuition for "log-units." MAE in original units — via <code>np.expm1(y.iloc[te]), np.expm1(p)</code> — translates to "on average, the model's monthly unit prediction is off by ±9 units." That is directly interpretable: a manufacturer can decide whether ±9 units of forecast error is acceptable for their planning purposes. For business communication, MAE in original units is far more useful.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">D6</div>
+  <div class="question">For a brand-new brand not in training data, what is gmean and is it a sensible fallback?</div>
+  <div class="answer">
+    <code>gmean = float(y.iloc[tr].mean())</code> is the global mean of <code>log(units)</code> across all training phones, regardless of brand. It represents the "average phone" demand. For an unknown brand, mapping to <code>gmean</code> says: "we have no information about this brand's historical performance, so we assume it performs like the average phone." This is the best possible prior with zero information. The alternative — leaving the brand prior as NaN — would cause the model to receive a missing value it was not trained to handle. The fallback underestimates demand for genuinely strong new brands and overestimates for very weak entrants — it is correct in expectation but high-variance for any specific unknown brand.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">D7</div>
+  <div class="question">What does colsample_bytree=0.8 do and what regularisation effect does it have?</div>
+  <div class="answer">
+    Each time a new tree is built, only 80% of features are randomly selected and made available for that tree to split on. The remaining 20% are excluded from that specific tree. This is similar to the feature subsampling in Random Forest. The regularisation effect: no single feature can dominate every tree — each tree must find good splits using a slightly different feature subset. This reduces correlation between trees (correlated trees add little value to an ensemble) and prevents over-reliance on any single dominant feature. It is particularly valuable here because <code>price_usd</code> is highly predictive — without column subsampling, most trees would use price as their root split, making the ensemble fragile to price variations.
+  </div>
+</div>
+
+<!-- ═══════════════════ SECTION E ═══════════════════ -->
+<div class="section-header">Section E — Pillar 3: Customer Segmentation</div>
+
+<div class="qa">
+  <div class="q-label">E1</div>
+  <div class="question">What is the difference between retrieval-based inference and regression? Why use retrieval for demographics?</div>
+  <div class="answer">
+    Regression would train a model to predict demographic percentages directly from specs — learning a mapping: hardware features → buyer ages. Retrieval instead finds the most similar phones that already launched, then looks up who actually bought them. Regression assumes that the relationship between specs and demographics is captured in a learnable function. The problem is that demographics are heavily influenced by brand, marketing, regional culture, and pricing strategy — factors not in the specs. Retrieval sidesteps this by using real measured buyer data from genuinely similar phones. The empirical evidence supports the choice: income R²=0.77 and age R²=0.67 are meaningful signals achievable through retrieval.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">E2</div>
+  <div class="question">What is lost by using simple mean of K neighbours instead of distance-weighted average?</div>
+  <div class="answer">
+    With simple mean, a very similar phone (distance 0.1) and a much less similar phone (distance 1.5) contribute equally to the demographic average. Distance-weighted averaging would give the closer phone 15× more influence, which better reflects genuine similarity. If the 3 closest phones all share similar demographics and the 7 more distant ones differ, the simple mean blurs the signal. Distance weighting formula:
+    <pre>weighted_demo = Σ (demo_i × (1/dist_i)) / Σ (1/dist_i)</pre>
+    This is a known improvement opportunity in the current implementation — the architecture supports it since distances are already returned by <code>find_similar()</code>.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">E3</div>
+  <div class="question">RFM has R²≈0. You kept it in the output. How do you defend this?</div>
+  <div class="answer">
+    Three reasons. First, R²≈0 reflects our inability to predict RFM from specs — not that RFM is zero or meaningless. The population prior (how customers split between loyal/at-risk/hibernating) is still real information. Second, a business making retention decisions needs RFM context — even as a population baseline rather than a phone-specific prediction, it gives the marketing team a baseline for retention planning. Third, removing it would make the dashboard incomplete. The key is transparency: the README documents that RFM is not predictable from specs. Users understand they are seeing a population baseline, not a phone-specific forecast. Showing it honestly with a caveat is more useful than hiding it.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">E4</div>
+  <div class="question">What ethical considerations apply to displaying gender split in a commercial BI tool?</div>
+  <div class="answer">
+    Gender data reflects historical purchasing patterns. Using this to make product decisions can create self-reinforcing loops: if you design future phones to target men (because historical data says men buy them), you reduce diversity in the product, making future data even more male-skewed. The dataset's gender categories (male/female/non-binary) may not represent the full spectrum of gender identities, and treating gender as a market segmentation variable can reinforce stereotypes. In a production tool, gender split should be presented as descriptive historical data — what was, not what should be — accompanied by a disclaimer against using it for discriminatory targeting.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">E5</div>
+  <div class="question">Could a phone have very similar specs but completely different demographics due to regional culture?</div>
+  <div class="answer">
+    Yes, absolutely. A $300 5G phone with 8GB RAM in North America targets young urban professionals with disposable income. The same specs in South Asia might be a premium product beyond most buyers' reach, targeting a completely different economic demographic. Specs alone cannot capture cultural context, brand perception, or purchasing power parity. The region-aware retrieval partially addresses this — phones from the same region share cultural and economic context. But when the fallback kicks in (fewer than K regional phones), globally retrieved neighbours may have very different demographic profiles despite spec similarity. This is the fundamental limit of any spec-only demographic inference.
+  </div>
+</div>
+
+<!-- ═══════════════════ SECTION F ═══════════════════ -->
+<div class="section-header">Section F — Pillar 4: PMF &amp; Failure Prediction</div>
+
+<div class="qa">
+  <div class="q-label">F1</div>
+  <div class="question">PMF labels are built globally, not per region. Is that valid?</div>
+  <div class="answer">
+    This is a real limitation. A Samsung Galaxy A55 with PMF=0.72 globally might have PMF=0.85 in South Asia (where it is a premium aspirational product) and PMF=0.55 in North America (where it is basic entry-level). The current implementation aggregates all regional rows and computes one global PMF score. The justification is practical: per-region PMF labels would require enough rows per phone per region for reliable aggregation — many phones only have a few rows per region. With insufficient data, regional PMF estimates would be highly noisy. The global label sacrifices regional precision for statistical reliability.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">F2</div>
+  <div class="question">With a 25/75 split, does class_weight="balanced" help? Show the math.</div>
+  <div class="answer">
+    Yes. With 75% success (class 0) and 25% failure (class 1), a model always predicting success achieves 75% accuracy. Without balanced weighting, the model is incentivised to always predict the majority class. With <code>class_weight="balanced"</code>, weights are computed as:
+    <pre>weight_class_0 = N / (2 × 0.75N) = 0.667
+weight_class_1 = N / (2 × 0.25N) = 2.000</pre>
+    Misclassifying a failure now costs 3× more than misclassifying a success. The model is pushed to find genuine failure signals rather than defaulting to the majority class. This is why accuracy of 79.9% with AUC 0.88 is meaningful — without balancing, accuracy would look similar but AUC would be much lower.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">F3</div>
+  <div class="question">pmf_score = 1 - fail_p in predict_fit(). Is what is displayed the same as the PMF formula?</div>
+  <div class="answer">
+    No — this is an important distinction. The PMF formula (NPS × 0.25 + repeat × 0.20 + ...) is used only during <em>training</em> to construct the failure label. The label is binary: failure=1 if PMF score &lt; 25th percentile. At inference, the Random Forest predicts the probability of <code>failure=1</code>. The displayed PMF score is <code>1 - fail_p</code> — the model's confidence that the phone is <em>not</em> in the bottom 25% PMF quartile. A PMF score of 0.85 means the model is 85% confident this phone is not a low-PMF product. It is not a direct calculation of the weighted formula — it is a probabilistic estimate produced by the Random Forest.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">F4</div>
+  <div class="question">Random Forest uses max_depth=12 vs XGBoost classifier's max_depth=6. Why different depths?</div>
+  <div class="answer">
+    The segment classifier has a very clean decision boundary — price alone separates most phones into budget/mid/premium/flagship. Shallow trees suffice. PMF failure prediction is more nuanced — whether a phone fails involves complex interactions between price, brand, specs, and market positioning that cannot be captured with 6 levels of splits. For example, a low-priced phone might fail because buyers expect it to be cheap, while the same specs at a higher price might succeed because they signal quality. These interaction effects require deeper trees. Random Forest uses bagging (each tree sees a random bootstrap sample) which provides inherent regularisation even with deep trees — reducing the overfitting risk that would concern us with deep trees in a single decision tree.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">F5</div>
+  <div class="question">How were 0.15 and 0.35 chosen as failure thresholds? What happens if 0.15 is changed to 0.10?</div>
+  <div class="answer">
+    The thresholds are hardcoded design choices in <code>predict_fit()</code> — not tuned by any optimisation criterion. They represent business risk appetite: below 15% failure probability = confidently safe to launch; 15–35% = meaningful risk; above 35% = high risk. If 0.15 → 0.10, the GO FOR LAUNCH band narrows — more phones receive CAUTION verdicts. The system becomes more conservative. This is a risk-sensitivity dial: a company launching its first phone might want 0.05 as the GO threshold (very conservative), while an established brand with strong distribution might accept 0.25. The thresholds can be adjusted in a single place in the code to match different business risk profiles.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">F6</div>
+  <div class="question">A phone with exactly 2 months of data is excluded from slope calculation. What value does it get?</div>
+  <div class="answer">
+    From the code:
+    <pre>if sub["months_since_launch"].nunique() >= 3:
+    slopes[(b, m)] = np.polyfit(...)[0]
+else:
+    slopes[(b, m)] = 0.0</pre>
+    It gets a slope of 0.0, meaning neutral trend. This is the most defensible default — it neither penalises the phone for declining sales nor rewards it for growing. After min-max normalisation, 0.0 maps near the median of the slope distribution (slopes range from negative to positive). The limitation is that a phone with only 2 data points may have a genuinely positive or negative trend that is being masked, but fitting a slope to just 2 points would produce high-variance estimates anyway — the exclusion is the correct conservative choice.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">F7</div>
+  <div class="question">What does min_samples_leaf=3 do in the Random Forest?</div>
+  <div class="answer">
+    A leaf node must have at least 3 training samples. Any potential split that would leave one side with fewer than 3 samples is rejected. This prevents trees from creating leaves that memorise individual training examples. Without this constraint, a tree could have a leaf based on a single phone: "if brand=xiaomi AND model=Redmi_Note_4_2022 AND price=185 → failure=1." Such leaves are useless for generalisation to new phones. With <code>min_samples_leaf=3</code>, every leaf's prediction is based on at least 3 examples, producing more stable and generalisable probability estimates. For a dataset of 116,481 rows, requiring 3 samples per leaf is a lenient constraint — it prevents singletons without over-restricting the tree's expressiveness.
+  </div>
+</div>
+
+<!-- ═══════════════════ SECTION G ═══════════════════ -->
+<div class="section-header">Section G — Backend / FastAPI</div>
+
+<div class="qa">
+  <div class="q-label">G1</div>
+  <div class="question">Explain the alias="5g_or_not" and populate_by_name = True in the PhoneSpec model.</div>
+  <div class="answer">
+    The dataset and ML models use the column name <code>5g_or_not</code>. But Python variable names cannot start with a digit — <code>5g_or_not</code> would be a syntax error. So the Pydantic field is named <code>five_g</code> (valid Python) but accepts JSON with the key <code>"5g_or_not"</code> via the alias. <code>populate_by_name = True</code> means the field can also be populated using its Python name <code>five_g</code> — without this, only the alias would work. If a client sends both <code>"five_g"</code> and <code>"5g_or_not"</code> in the same JSON body, Pydantic uses the alias value and ignores the Python-name key.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">G2</div>
+  <div class="question">CORS allows http://localhost:3000 but not https://. What would happen if the frontend used HTTPS?</div>
+  <div class="answer">
+    CORS is enforced by the browser. When a Next.js page at <code>https://localhost:3000</code> makes a <code>fetch()</code> to <code>http://localhost:8000/api/analyze</code>, the browser sends a preflight OPTIONS request. The server responds with <code>Access-Control-Allow-Origin: http://localhost:3000</code>. The browser checks whether the requesting origin (<code>https://localhost:3000</code>) matches the allowed origin (<code>http://localhost:3000</code>). They do not match — the scheme (<code>https</code> vs <code>http</code>) is part of the origin. The browser blocks the request with a CORS error. Fix: add <code>"https://localhost:3000"</code> to the <code>allow_origins</code> list.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">G3</div>
+  <div class="question">Why import "from agent import analyze" inside the endpoint function body rather than at the top of the file?</div>
+  <div class="answer">
+    When FastAPI starts, it executes module-level code immediately, including top-level imports. If the import is at the top, it would trigger <code>import pillar1_market_research</code>, which would attempt <code>joblib.load()</code> on model files. If model files do not exist yet (first run before training), the entire server fails to start. By placing the import inside the endpoint function, it only happens when the endpoint is first called — by which time models are expected to exist. There is a performance cost: Python re-executes the import statement on every call, but Python's module cache (<code>sys.modules</code>) means the actual work only happens once. Subsequent calls find the module already loaded and return it instantly.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">G4</div>
+  <div class="question">spec_ratio is clamped to max(0.8, min(1.25, ...)). What happens if a phone has specs 3× better than competitors?</div>
+  <div class="answer">
+    Without clamping, the raw ratio would be 3.0, and <code>fair_price = market_price × 3.0</code> would suggest charging triple the competitor price — economically unrealistic for a smartphone market where buyers comparison-shop. The clamp says: regardless of how superior your specs are, price at most 25% above market (<code>spec_ratio = 1.25</code>). Similarly, even with inferior specs, do not price below 80% of market (<code>spec_ratio = 0.8</code>) — the market floor is set by manufacturing cost realities. This reflects real market constraints: the market has pricing norms that cannot be exceeded arbitrarily through spec superiority alone.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">G5</div>
+  <div class="question">The price optimiser objective is profit × pmf_score. What real-world decision does this encode?</div>
+  <div class="answer">
+    It encodes risk-adjusted profit maximisation. A price point generating $100,000 profit at PMF score 0.30 gets objective value $30,000. A point generating $60,000 profit at PMF score 0.90 gets value $54,000 and wins. The formula says: prefer a reliable moderate profit over a risky high profit. This is similar in concept to the Sharpe ratio in finance (return divided by volatility). The business interpretation: a launch price that maximises raw profit but places the phone in a market where it is likely to fail — high returns, low repeat purchases — is not actually optimal for the long run. A lower price with higher customer satisfaction generates sustainable revenue.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">G6</div>
+  <div class="question">What happens to a news search task that takes 16 seconds with timeout=15?</div>
+  <div class="answer">
+    <code>as_completed(futures, timeout=15)</code> raises a <code>concurrent.futures.TimeoutError</code> after 15 seconds if not all futures have completed. The underlying thread is NOT killed — Python threads cannot be forcefully terminated. The thread continues running in the background until the DDGS request finishes or its own network timeout triggers. The result is simply discarded. The <code>except Exception: pass</code> block swallows the <code>TimeoutError</code>, and the endpoint proceeds with whatever results arrived within 15 seconds. A user might get 4 of 6 news searches, with the 2 slow ones silently dropped — fewer articles but no failure.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">G7</div>
+  <div class="question">Why does Competitor get 11 article slots vs Your Phone's 9?</div>
+  <div class="answer">
+    <code>CAPS = {"Your Phone": 9, "Competitor": 11}</code>. For a phone that has not launched yet, there is limited news to find — searches may return few relevant results. Competitor phones are already in the market — richer news coverage, reviews, pricing histories, and comparisons are available. Giving competitors more slots ensures the news feed is populated with useful competitive intelligence rather than mostly empty or low-quality articles about a nonexistent product. Additionally, there are typically 3–4 competitors each contributing 2–3 searches, so more cap space is needed to prevent truncation of useful competitor intelligence.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">G8</div>
+  <div class="question">Insights only fire at ≥12% difference. What happens at 11.9%?</div>
+  <div class="answer">
+    It is simply not reported. The 12% threshold is a noise filter — differences below 12% are considered within the margin of market variation and not worth highlighting as a clear competitive advantage or disadvantage. At 11.9%, the insight is silently dropped. This is a hard threshold, which is its main limitation. A more sophisticated approach would use a tiered system: differences of 5–12% could show a "slight advantage" label while differences above 12% show "strong advantage." The current implementation is intentionally simple — only clear, significant differences are surfaced to avoid cluttering the dashboard with marginal observations.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">G9</div>
+  <div class="question">Adding a field to PhoneSpec but not to spec_to_dict() — error or silent wrong results?</div>
+  <div class="answer">
+    Silent wrong results. <code>spec_to_dict()</code> would simply not include the new field in the dictionary passed to the ML models. The ML models would then either raise a <code>KeyError</code> (if the feature is expected and missing) or silently run without it. If Pydantic validates the input correctly but the field never reaches the model, the model produces predictions that ignore the new information entirely — no exception is raised at the API level. This fragile architecture should be replaced by having <code>spec_to_dict()</code> automatically derive from <code>PhoneSpec.model_fields</code> rather than manually listing every field.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">G10</div>
+  <div class="question">Is CORS sufficient security for a production deployment?</div>
+  <div class="answer">
+    No. CORS is a browser-level protection that prevents malicious web pages from making unauthorised requests on behalf of a logged-in user. It does not protect against direct HTTP requests from <code>curl</code>, Python's <code>requests</code>, Postman, or any non-browser client, nor server-to-server requests from other machines on the network. For production you would add: API key authentication (token in header), rate limiting (prevent abuse), HTTPS (encrypt data in transit), input sanitisation beyond Pydantic, and OAuth2 if multiple users are involved. CORS alone is suitable for local development but should never be treated as a security boundary in production.
+  </div>
+</div>
+
+<!-- ═══════════════════ SECTION H ═══════════════════ -->
+<div class="section-header">Section H — Frontend / Next.js</div>
+
+<div class="qa">
+  <div class="q-label">H1</div>
+  <div class="question">Why call /api/analyze first, then competitors and news non-blocking? Why not all three at once?</div>
+  <div class="answer">
+    Because the competitor and news endpoints depend on data from the analysis — specifically, competitor names from Pillar 1 are used to construct news search queries. More importantly, the main analysis result is needed to render the primary dashboard. If all three were called simultaneously, the user would see nothing until the slowest endpoint (likely news at ~10–15 seconds) completes. By calling <code>/api/analyze</code> first and rendering the dashboard immediately, then loading competitors and news in the background, the user sees useful information within 2–3 seconds. The news and competitor sections fill in progressively. This is the progressive loading UX pattern — prioritise critical-path data, defer supplementary data.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">H2</div>
+  <div class="question">What are the limitations of the DownloadButton HTML-to-print PDF approach?</div>
+  <div class="answer">
+    The button generates an HTML string from the dashboard data and opens a new browser tab, then triggers <code>window.print()</code>. Limitations: (1) Output is controlled by the browser's print renderer — layout, fonts, and chart sizing may differ from the screen. (2) SVG charts may not render correctly in all browsers when printed. (3) No control over page breaks, headers, or footers. (4) Interactive elements are frozen or missing. (5) The result is not a true PDF unless the user explicitly selects "Save as PDF" in the print dialog. A production implementation would use a headless browser library (Puppeteer, Playwright) or a server-side PDF generator (ReportLab, WeasyPrint) for reliable, consistent output.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">H3</div>
+  <div class="question">What happens visually if the API returns a 500 error during the SiriOrb loading animation?</div>
+  <div class="answer">
+    This depends on the error handling in <code>bi-agent-app.tsx</code>. If the <code>try/catch</code> around the <code>fetch()</code> call sets an error state and the component re-renders to show an error message, the animation stops and is replaced by the error UI. If error handling is missing or incomplete, the animation could run indefinitely because the loading state is never set to <code>false</code>. In a robustly implemented component, the <code>finally</code> block always clears the loading state regardless of success or failure — <code>finally { setLoading(false) }</code> — so the animation always terminates. This is a standard React pattern for async operations.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">H4</div>
+  <div class="question">Where is the dark/light mode preference stored? What happens on page refresh?</div>
+  <div class="answer">
+    Common implementations store the preference in <code>localStorage</code> (persists across refreshes, same browser), in-memory React state (lost on page refresh), or a cookie (persists and accessible server-side). If stored in <code>localStorage</code>, a page refresh reads the stored preference and applies the theme before the first render. Without <code>localStorage</code>, every refresh resets to the default theme. A robust implementation reads <code>localStorage</code> on mount via a <code>useEffect</code> hook and also respects the system preference via <code>window.matchMedia('(prefers-color-scheme: dark)')</code> as the default before any explicit user selection.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">H5</div>
+  <div class="question">Practical difference between Streamlit (direct import) and Next.js (HTTP) on localhost?</div>
+  <div class="answer">
+    On localhost, the primary difference is latency and error handling. Direct Python import has ~millisecond call overhead — a function call in the same process. HTTP adds network stack overhead (TCP connection, serialisation, deserialisation) even on localhost — typically 10–50ms. For a dashboard where the user waits 2–5 seconds for ML inference, this 50ms overhead is imperceptible. More significant: a bug in the ML code crashes the entire Streamlit app. With Next.js + FastAPI, a backend crash returns a 500 error the frontend handles gracefully. The HTTP architecture also allows deploying backend and frontend independently and scaling them separately — a critical production advantage.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">H6</div>
+  <div class="question">What feeds the affordability fit calculation in the Next.js dashboard?</div>
+  <div class="answer">
+    The affordability fit is computed entirely in the Next.js frontend using the income distribution data returned by the API. The API returns percentages: <code>income_low_pct, income_lower_mid_pct, income_mid_pct, income_upper_mid_pct, income_high_pct</code>. The frontend applies income thresholds per region (what income level can afford what price point) to these percentages and sums the proportion of buyers whose income tier can support the phone's price. For example, if the phone costs $320 and buyers in <code>income_mid_pct</code> and above can afford it, the affordability fit is the sum of those percentages. The ML models produce the demographic distribution; the frontend computes the business-meaningful interpretation.
+  </div>
+</div>
+
+<!-- ═══════════════════ SECTION I ═══════════════════ -->
+<div class="section-header">Section I — Architecture &amp; Design Decisions</div>
+
+<div class="qa">
+  <div class="q-label">I1</div>
+  <div class="question">Engineering justification for maintaining two frontends? Is this acceptable technical debt?</div>
+  <div class="answer">
+    The two frontends served different purposes at different development stages. Streamlit enabled rapid ML prototyping — the entire pipeline and basic visualisation were built and tested in a single Python file without front-end engineering. It was built first. The Next.js frontend is the production version with more features and better UX. In practice, Streamlit should have been retired once Next.js was complete. Maintaining both creates two surfaces that can diverge (Streamlit lacks competitor radar, price optimiser, news) and doubles the maintenance burden when the API or ML output changes. In a real product team, this would be classified as technical debt with a ticket to deprecate Streamlit after the Next.js version is validated.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">I2</div>
+  <div class="question">Problems with sys.path.insert(0, ...) in production.</div>
+  <div class="answer">
+    <code>sys.path</code> manipulation is a development convenience that breaks in production. Problems: (1) It ties the import path to a specific directory structure — moving the project breaks it. (2) It can shadow system-level modules if <code>src/</code> contains a file with the same name as a standard library module. (3) It does not work reliably with multiprocessing, async workers, or when the working directory is not what you expect. The correct approach is to package <code>src/</code> as a proper Python package with <code>setup.py</code> or <code>pyproject.toml</code>, install it with <code>pip install -e .</code>, and use standard imports. This makes the code location-independent and deployment-safe.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">I3</div>
+  <div class="question">Each prediction call runs joblib.load(). What is the problem at 100 requests/second?</div>
+  <div class="answer">
+    <code>joblib.load()</code> reads from disk and deserialises Python objects on every call. For the similarity artifact which includes the full phone table matrix, this could involve 100MB+ of memory allocation per request. At 100 requests/second, this creates enormous memory churn and garbage collection pressure. The standard solution is to load all models once at application startup and store them in application-level state:
+    <pre>@app.on_event("startup")
+async def load_models():
+    app.state.pillar1 = joblib.load("models/pillar1_segment.joblib")</pre>
+    All requests then share the same in-memory model objects, reducing per-request latency from potentially hundreds of milliseconds to zero.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">I4</div>
+  <div class="question">If P2 and P4 ran in parallel, what would the latency improvement be?</div>
+  <div class="answer">
+    Currently: P1 → P3 → P2 → P4. P3 must follow P1 (needs similar phone indices). P2 and P4 both depend only on <code>spec_row</code>, not on each other. If run in parallel:
+    <pre>Sequential: time(P1) + time(P3) + time(P2) + time(P4)
+Parallel:   time(P1) + time(P3) + max(time(P2), time(P4))</pre>
+    If P2 and P4 each take 200ms, sequential adds 400ms; parallel adds 200ms. The improvement equals the runtime of the faster one — it becomes "free." In Python, true CPU-bound parallelism requires <code>ProcessPoolExecutor</code> rather than <code>ThreadPoolExecutor</code> due to the GIL.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">I5</div>
+  <div class="question">If RANDOM_STATE=43, would you get different accuracy numbers? Does that make them arbitrary?</div>
+  <div class="answer">
+    Yes, slightly different numbers — a different random state produces a different train/test split and different tree construction. No, they are not arbitrary in the meaningful sense. The variation across different random seeds (measurable via k-fold cross-validation) gives a confidence interval. If accuracy ranges from 98.9% to 99.6% across 10 seeds, the reported 99.4% is within that range. The number is not cherry-picked — it is the result of one fixed seed chosen before training. The fact that RANDOM_STATE=42 is a common convention (not chosen for its result) further supports that the reported number is not manipulated. For a fully rigorous defense, you would report the k-fold mean ± standard deviation.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">I6</div>
+  <div class="question">A competitor claims 99% demand prediction accuracy. How do you explain that your 85% is more valuable?</div>
+  <div class="answer">
+    A model achieving 99% demand accuracy almost certainly uses post-launch data — social media mentions, search trends, early reviews. This model is useless before launch. It can only tell you how a phone is doing after it is already selling — information the manufacturer can see themselves without ML. Our 85% comes from launch-known specs only — it is the only number that matters for the decision a manufacturer actually faces: "should I build and launch this phone?" A competitor's 99% is an impressive number for a useless model. Our 85% is a genuine prediction of an unknown future outcome from information that exists before any manufacturing decision is made. Honest and deployable beats dishonest and impressive.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">I7</div>
+  <div class="question">No versioning for .joblib files. What risk does overwriting during retraining create?</div>
+  <div class="answer">
+    Each artifact contains a fitted model AND its associated preprocessors (OrdinalEncoder, StandardScaler) trained on the same data fold. If you retrain with new data and overwrite <code>pillar1_segment.joblib</code>, the encoder now has different ordinal mappings for brand names. But if <code>pillar1_similarity.joblib</code> was not simultaneously retrained, the old scaler (trained on old data) is now paired with inference code expecting the new encoder's output space. This version mismatch silently produces wrong predictions — no error is raised. The fix: version artifacts with timestamps or hash suffixes and use a manifest file to ensure all artifacts are from the same training run.
+  </div>
+</div>
+
+<!-- ═══════════════════ SECTION J ═══════════════════ -->
+<div class="section-header">Section J — Machine Learning Cross-Cutting</div>
+
+<div class="qa">
+  <div class="q-label">J1</div>
+  <div class="question">Why a single split instead of k-fold cross-validation?</div>
+  <div class="answer">
+    GroupShuffleSplit with k=1 is faster and simpler. K-fold with group constraints would run K full training passes, each taking several minutes for 700-tree XGBoost on 116,000 rows. For this project, a single group-based split gives a realistic estimate of generalisation performance without the computational cost of k-fold. The limitation: a single split's accuracy depends on which phones end up in test — a different split could give a noticeably different number. K-fold gives a mean ± std estimate that is more statistically robust. For a published research paper, k-fold would be required. For a project defense with resource constraints, a well-constructed single group split is acceptable and honest.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">J2</div>
+  <div class="question">What is the fundamental algorithmic difference between Gradient Boosting (XGBoost) and Random Forest?</div>
+  <div class="answer">
+    <strong>Random Forest:</strong> all trees are built independently in parallel. Each tree sees a random bootstrap sample of data and a random subset of features. Final prediction is the average (regression) or majority vote (classification) across all trees.<br><br>
+    <strong>Gradient Boosting:</strong> trees are built sequentially. Each new tree is trained to correct the residual errors of all previous trees. The "gradient" is the direction of steepest descent in the loss function — each tree adds a small correction in that direction. Final prediction is the weighted sum of all trees.<br><br>
+    Implication: Random Forest is inherently parallelisable and more robust to outliers. XGBoost is typically more accurate on structured data with careful tuning but requires sequential training and is more sensitive to hyperparameters.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">J3</div>
+  <div class="question">Is the demand model high-bias, high-variance, or well-balanced? What evidence supports your answer?</div>
+  <div class="answer">
+    The model is well-balanced with a slight lean toward low-bias. Evidence: (1) <code>max_depth=8</code> allows complex interactions — not a high-bias shallow model. (2) <code>n_estimators=700</code> with <code>learning_rate=0.03</code> and <code>colsample_bytree=0.8</code> are regularisation choices that reduce variance. (3) R²=0.854 on a group-split test set of never-seen phones confirms it generalises — a high-variance model would show high training R² but low test R². The remaining ~15% unexplained variance is not bias or variance — it is irreducible error from information unavailable in the features (marketing spend, timing, economic conditions, luck).
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">J4</div>
+  <div class="question">n_jobs=-1 — what does it do, and what risk does it create in a shared server?</div>
+  <div class="answer">
+    <code>n_jobs=-1</code> tells the library to use all available CPU cores. During training, this parallelises tree construction — a 4-core machine builds 4 trees simultaneously. During inference, it parallelises prediction across the ensemble. The risk in a shared deployment: if 10 users simultaneously hit the API, each triggering an inference call with <code>n_jobs=-1</code>, each call attempts to use all cores. With 8 cores and 10 concurrent calls, you have 80 threads fighting for 8 cores — massive context-switching overhead that degrades performance below even single-threaded execution. In production, set <code>n_jobs=1</code> for inference (or a small fixed number) and handle concurrency at the web server level (multiple uvicorn workers).
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">J5</div>
+  <div class="question">How does XGBoost handle an unknown brand encoded as -1 that was never in training data?</div>
+  <div class="answer">
+    During training, the encoder assigns integer codes 0, 1, 2, ... to all known brands. Unknown values get <code>-1</code> via <code>handle_unknown="use_encoded_value", unknown_value=-1</code>. XGBoost sees <code>-1</code> as a numeric value and tries to split on it — "if brand_encoded &lt; 0.5, go left." Since no training sample had brand_encoded = -1, the tree never learned a specific pattern for it. The split threshold includes -1 on the side with the lowest-numbered brand (likely 0 or 1 since -1 &lt; any positive code). Unknown brands are treated similarly to whichever brand has the lowest ordinal code — not ideal, but it does not crash. A better approach would use a dedicated "unknown" bucket in the encoder.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">J6</div>
+  <div class="question">How is feature scaling handled in Pillar 2 vs Pillar 1, and why the difference?</div>
+  <div class="answer">
+    Pillar 1 similarity: <code>StandardScaler</code> is fitted on the phone table and saved inside <code>pillar1_similarity.joblib</code>. At inference, <code>scaler.transform()</code> is applied to the query features. Scaling is essential here because KNN uses Euclidean distance — unscaled features with large magnitudes (pixels) would dominate.<br><br>
+    Pillar 2 demand: No <code>StandardScaler</code> is used. XGBoost is a tree-based model — it makes decisions by comparing feature values against thresholds, not by computing distances or dot products. Tree models are scale-invariant: multiplying all price values by 1000 does not change where the optimal splits are. Normalisation is unnecessary for tree models — only distance-based models (KNN, SVM, neural networks) require feature scaling.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">J7</div>
+  <div class="question">What would you expect the top 3 most important features to be for demand prediction, and how would you use that information?</div>
+  <div class="answer">
+    Based on domain knowledge and model structure:<br>
+    1. <strong>price_usd</strong> — the strongest single predictor of sales volume (cheaper phones sell more units globally)<br>
+    2. <strong>brand_demand_prior</strong> — explicitly engineered to capture brand-level demand history; high information content<br>
+    3. <strong>ram_capacity or battery_capacity</strong> — most searched-for specs, strongly correlating with market tier and sales volume<br><br>
+    Feature importance from <code>model.feature_importances_</code> would confirm or refute this. The actionable use: if price is the top feature, a manufacturer should focus on price optimisation first. If brand prior dominates, a new brand should invest in brand building before launch rather than spec engineering.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">J8</div>
+  <div class="question">What does min_child_weight=3 do in XGBoost, and is 3 reasonable for 116,000 rows?</div>
+  <div class="answer">
+    <code>min_child_weight</code> is the minimum sum of instance weights required in a child node to allow a split. Any split leaving one child with sum &lt; 3 is rejected. This prevents trees from creating splits that fit only 1–2 training samples — pathological splits memorising individual outliers. For 116,481 rows, <code>min_child_weight=3</code> means at most 99.997% of all rows can be on one side of a split (3 on the other). This is a very lenient constraint — it only prevents true singletons. A value of 10–50 would be more conservative. Setting it to 3 indicates the model prioritises fitting the data closely, with <code>colsample_bytree</code> and <code>subsample</code> handling regularisation via other mechanisms.
+  </div>
+</div>
+
+<!-- ═══════════════════ SECTION K ═══════════════════ -->
+<div class="section-header">Section K — Ethics, Limitations &amp; Research Validity</div>
+
+<div class="qa">
+  <div class="q-label">K1</div>
+  <div class="question">If a business makes a launch decision based on your PMF score and the phone fails, what is your accountability?</div>
+  <div class="answer">
+    The system is an analytical tool, not a decision-making authority. The documentation explicitly states: (1) the PMF formula is a proxy using custom weights, not a published validated instrument; (2) all accuracy metrics are honest estimates from held-out data with acknowledged limitations; (3) the system cannot account for marketing spend, timing, economic conditions, or competitor actions. Accountability for the business decision rests with the decision-maker. This is analogous to a weather forecast — a 70% chance of rain does not make the meteorologist responsible if it rains and your outdoor event is ruined. You made the decision knowing the uncertainty. The key is that limitations were never hidden — the README documents all of them explicitly.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">K2</div>
+  <div class="question">What is the self-fulfilling loop risk from demographic predictions?</div>
+  <div class="answer">
+    If manufacturers consistently use this tool and always see "target demographic: 25–34, mid-income males" for mid-range phones, they may design products, marketing, and distribution specifically for that demographic. Phones for women, older adults, or lower-income buyers are never built because the tool (trained on historical data) never surfaces those segments. The market data then reflects a world where those demographics never had good options — confirming the tool's bias. This is feedback loop amplification, a documented problem in algorithmic systems. The solution: treat demographic predictions as historical baselines (what was), not prescriptions (what should be), and actively invest in segments the tool flags as underserved.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">K3</div>
+  <div class="question">If training data is 2020–2023 and the tool is used in 2026, which predictions are most affected by dataset staleness?</div>
+  <div class="answer">
+    1. <strong>Demand forecasting</strong> — consumer demand patterns shift with economic conditions, 5G adoption curves, and new form factors (foldables). A model trained before foldables became mainstream would underestimate demand for foldable-style specs.<br>
+    2. <strong>Market segment boundaries</strong> — what counted as "flagship" in 2021 ($800) may be "premium" by 2026 as prices shift. The segment classifier may misclassify newer phones.<br>
+    3. <strong>Brand demand priors</strong> — brands rise and fall. A strong prior for Huawei (pre-sanctions) would be outdated. New brands would receive the global mean fallback.<br>
+    4. <strong>PMF failure labels</strong> — consumer expectations for battery life, camera quality, and refresh rate have risen. A phone that passed in 2021 might fail by 2026 standards.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">K4</div>
+  <div class="question">"AUC=0.88 means the system correctly identifies failing phones 88% of the time." Is this correct?</div>
+  <div class="answer">
+    No. AUC (Area Under the ROC Curve) measures ranking quality, not classification accuracy. AUC=0.88 means: if you randomly select one failing phone and one succeeding phone from the test set, there is an 88% probability that the model assigns a higher failure probability to the failing phone. It says nothing about what happens at any specific threshold. The accuracy at threshold 0.5 is separately reported as 79.9%. AUC is threshold-independent — it tells you how well the model distinguishes between classes across all possible decision thresholds. A simple way to explain it: "the model correctly ranks a random failure above a random success 88% of the time."
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">K5</div>
+  <div class="question">The price sweep runs from market_price × 0.5 to × 1.6. What if the optimal price is outside this range?</div>
+  <div class="answer">
+    For a phone with competitors priced at $300, the sweep is $150–$480. If the true optimal price is $600 (premium positioning with strong brand), it is outside the sweep — the recommendation would incorrectly suggest ~$480 as the best price. The sweep boundary introduces a systematic constraint: the tool cannot recommend a price more than 60% above the market median. This is a deliberate conservative constraint, but it means the tool is unsuitable for genuine premium/luxury phone launches where competitive reference pricing is intentionally far below the target price. The assumption embedded in the 0.5–1.6 band is that the phone competes within its spec-defined market tier rather than redefining it through brand positioning.
+  </div>
+</div>
+
+<!-- ═══════════════════ SECTION L ═══════════════════ -->
+<div class="section-header">Section L — Rapid-Fire Code Questions</div>
+
+<div class="qa">
+  <div class="q-label">L1</div>
+  <div class="question">What does np.expm1(art["model"].predict(X)) do, and why not np.exp()?</div>
+  <div class="answer">
+    <code>expm1(x) = e^x - 1</code>. The model predicts <code>log1p(units) = log(1 + units)</code>. To reverse: <code>e^prediction - 1 = units</code>. <code>np.exp()</code> would give <code>e^log(1+units) = 1 + units</code> — off by 1. For large predictions the difference is just 1 unit (negligible), but for very small predictions near zero, <code>log1p</code> and <code>log</code> diverge significantly and using <code>exp</code> instead of <code>expm1</code> produces a result exactly 1 unit too high. <code>expm1</code> is also numerically more stable near zero because it uses a special implementation for small inputs.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">L2</div>
+  <div class="question">In _minmax(x, invert=False), why is there + 1e-9 in the denominator?</div>
+  <div class="answer">
+    <pre>r = (x - x.min()) / (x.max() - x.min() + 1e-9)</pre>
+    If all values in <code>x</code> are identical (e.g., all phones have the same NPS score), then <code>x.max() - x.min() = 0</code>. Division by zero would produce NaN or raise an error. Adding <code>1e-9</code> (one billionth) prevents this while being so small it has no practical effect when the range is non-zero. All values would correctly normalise to 0.0 when there is no variation — <code>0 / (0 + 1e-9) = 0.0</code> — meaning that component contributes nothing to the PMF score when it is constant across all phones.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">L3</div>
+  <div class="question">loyalty_horizon = 2.4 is hardcoded in agent.py. Where does 2.4 come from?</div>
+  <div class="answer">
+    It represents the average number of smartphone upgrade cycles a loyal customer goes through with the same brand. The global average smartphone replacement cycle is approximately 2.5 years (GSMA/Statista research). A loyal customer who stays with the brand for 6 years goes through ~2.4 upgrade cycles in that window (6 ÷ 2.5 = 2.4). It is a domain constant, not a learned parameter. It is an acknowledged simplification — brand loyalty horizons differ by region and brand strength. Apple users average longer cycles (~3 years); budget Android users shorter (~1.5 years). The value could be made brand-specific or region-specific in a more advanced version.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">L4</div>
+  <div class="question">In find_similar(), why fit NearestNeighbors on art["matrix"][mask] but index with sub_idx[loc[0]]?</div>
+  <div class="answer">
+    <code>art["matrix"]</code> is the pre-computed normalised feature matrix for all phones. <code>mask</code> selects only phones in the target region. <code>art["matrix"][mask]</code> is the sub-matrix of regional phones. <code>NearestNeighbors</code> is fitted on this sub-matrix — distances are indices into it (0, 1, 2, ..., n_regional-1). <code>sub_idx = np.where(mask)[0]</code> stores the original row indices of regional phones in the full matrix. <code>sub_idx[loc[0]]</code> converts the local sub-matrix index back to the global row index — so <code>chosen</code> contains row numbers in the original phone table, not row numbers in the regional sub-matrix. Without this mapping, <code>ph.iloc[chosen]</code> would return completely wrong phones.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">L5</div>
+  <div class="question">In the news endpoint, zip_longest is used to interleave two lists. What happens if one list is empty?</div>
+  <div class="answer">
+    <code>zip_longest(*by_tag.values())</code> interleaves "Your Phone" and "Competitor" article lists. Unlike <code>zip</code>, it does not stop at the shorter list — it continues until the longest list is exhausted, filling gaps with <code>None</code>. The code handles this:
+    <pre>for item in group:
+    if item is not None:
+        interleaved.append(item)</pre>
+    If "Your Phone" is empty, <code>zip_longest</code> produces <code>(None, competitor_article)</code> pairs. The <code>if item is not None</code> check skips the None entries. The result is a list containing only competitor articles, correctly interleaved without errors or missing data.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">L6</div>
+  <div class="question">What does ... mean in price_usd: float = Field(..., gt=0), and what does gt=0 enforce?</div>
+  <div class="answer">
+    In Pydantic, <code>...</code> (Ellipsis) is the sentinel for "this field is required — no default value." If a request body omits <code>price_usd</code>, Pydantic raises a <code>422 Unprocessable Entity</code> error before the endpoint function is called. <code>gt=0</code> is a validator constraint: <code>gt</code> means "greater than." Any submitted value of 0 or negative raises a validation error with the message "value must be greater than 0." Combined: <code>price_usd</code> must be present in every request AND must be a positive float. If price were optional or had a default, the <code>...</code> would be replaced by that value.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">L7</div>
+  <div class="question">Why y = df["market_segment"].astype("category") then y = y.cat.codes?</div>
+  <div class="answer">
+    <code>astype("category")</code> converts the string column to a Pandas Categorical type, which: (1) assigns a consistent integer code to each category alphabetically (budget=0, flagship=1, mid-range=2, premium=3), and (2) stores the category names in <code>y.cat.categories</code> for later retrieval. <code>y.cat.codes</code> extracts the integer codes — XGBoost needs integers 0, 1, 2, ... as class labels. The category names are saved in the joblib artifact (<code>"classes": classes</code>) so that at inference time we can reverse the integer prediction back to a human-readable segment name via <code>art["classes"][i]</code>.
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">L8</div>
+  <div class="question">What is the "if False else" doing in the agent.py line with find_similar?</div>
+  <div class="answer">
+    <pre>_, sim_idx, _ = (None, *([],), None) if False else p1.find_similar(spec_row, region, k=10)</pre>
+    <code>if False</code> is a dead code branch that never executes — the expression always evaluates to <code>p1.find_similar(...)</code>. This is leftover from a development iteration where the developer was testing a fallback path if <code>find_similar</code> were disabled. The <code>(None, *([],), None)</code> is a fallback that would be returned if the condition were ever True. In practice, this line always calls <code>p1.find_similar()</code> — the <code>if False</code> is dead code. It should be simplified to: <code>_, sim_idx, _ = p1.find_similar(spec_row, region, k=10)</code>
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">L9</div>
+  <div class="question">sys.path.insert(0, ...) vs sys.path.append(...) — what is the difference and why is insert(0) used here?</div>
+  <div class="answer">
+    <code>sys.path</code> is a list of directories Python searches for modules, in order. <code>insert(0, path)</code> places the new directory at the front — it is searched first, before the standard library and site-packages. <code>append(path)</code> places it at the end — it is searched last. Using <code>insert(0, ...)</code> ensures that <code>src/</code> modules shadow anything with the same name in installed packages. This is intentional here — you want <code>import agent</code> to find <code>src/agent.py</code> before any potentially installed package named <code>agent</code>. The risk: accidentally shadowing standard library modules if <code>src/</code> contains files with conflicting names (e.g., <code>src/json.py</code> would break JSON parsing everywhere).
+  </div>
+</div>
+<hr/>
+
+<div class="qa">
+  <div class="q-label">L10</div>
+  <div class="question">GROSS_MARGIN = 0.40 in the price optimiser vs margin = 0.18 in CLV. Are these the same concept?</div>
+  <div class="answer">
+    No — they measure entirely different things. <code>GROSS_MARGIN = 0.40</code> in the price optimiser is the <strong>gross margin on hardware</strong>: revenue minus direct manufacturing cost (components, assembly, shipping). If the phone sells for $320, the manufacturer spent $192 making it ($320 × 0.60) and earns $128 gross. This is a supply-chain / product economics figure. <code>margin = 0.18</code> in the CLV formula is the <strong>net profit margin after operating expenses</strong>: after paying for retail distribution, marketing, customer support, and warranty services, only 18% of revenue remains as profit. The gross margin (40%) is the ceiling; operating costs consume 22 percentage points, leaving 18% net. Both are hardcoded domain assumptions, not learned from the dataset.
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>Smartphone BI Agent — Full Defense Q&amp;A · 75 Questions · 12 Sections</p>
+  <p>Dataset · Feature Engineering · ML (XGBoost, Random Forest, KNN) · FastAPI · Next.js · Architecture · Ethics</p>
+</div>
+
+</body>
+</html>

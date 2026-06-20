@@ -1,0 +1,183 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>BI Agent — Results Report</title>
+<style>
+@page{size:A4;margin:16mm 14mm;}*{box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;color:#1a1d29;line-height:1.5;font-size:11pt;margin:0}
+h1{font-size:26pt;color:#312e81}h2{font-size:17pt;color:#312e81;border-bottom:3px solid #6366f1;padding-bottom:5px;margin-top:30px;page-break-after:avoid}
+h3{font-size:13pt;color:#4338ca;margin-top:20px;page-break-after:avoid}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:9.6pt;page-break-inside:avoid}
+th{background:#4338ca;color:#fff;text-align:left;padding:6px 9px}td{border:1px solid #d6d9e6;padding:5px 9px}
+tr:nth-child(even) td{background:#f6f7fb}
+.kpi{display:inline-block;background:#312e81;color:#fff;border-radius:8px;padding:9px 16px;margin:4px;text-align:center}
+.kpi b{font-size:15pt;display:block}
+.note{background:#fffbeb;border:1px solid #fde68a;border-left:4px solid #f59e0b;border-radius:6px;padding:8px 14px;margin:8px 0;font-size:10pt}
+.good{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid #22c55e;border-radius:6px;padding:8px 14px;margin:8px 0;font-size:10pt}
+.section{page-break-before:always}.small{font-size:9pt;color:#6b7280}
+.cover{text-align:center;padding-top:150px;page-break-after:always}
+ul{margin:6px 0;padding-left:20px}
+</style></head><body>
+
+<div class="cover">
+<div style="font-size:50pt">📊📈</div>
+<h1>Smartphone BI Agent</h1>
+<div style="font-size:15pt;color:#4b5563;margin-top:6px">Experimental Results Report</div>
+<div style="font-size:11pt;color:#6b7280;max-width:520px;margin:18px auto">
+Complete quantitative results of every algorithm and model — classification, regression,
+retrieval and the constructed-target classifier — with confusion matrices, per-class metrics,
+regression diagnostics, feature importances and end-to-end example outputs.</div>
+<div style="margin-top:50px;color:#6b7280;font-size:10pt">Prepared for thesis defence · results chapter</div>
+</div>
+
+<h2>1. Experimental Setup</h2>
+<p>All models are evaluated with <b>GroupShuffleSplit (80% train / 20% test)</b> where the group
+key is the phone identity (<code>brand + model</code>). This guarantees a phone never appears in
+both folds, eliminating memorisation and giving an honest generalisation estimate. Cold-start
+models (Pillars 2 &amp; 4) use <b>only launch-known features</b>; post-launch outcomes are never
+inputs. Random state = 42.</p>
+<div class="kpi"><b>116,481</b>rows</div>
+<div class="kpi"><b>968</b>unique phones</div>
+<div class="kpi"><b>6</b>regions</div>
+<div class="kpi"><b>46</b>brands</div>
+<div class="kpi"><b>4</b>segments</div>
+
+<div class="section">
+<h2>2. Pillar 1 — Market Segment Classifier (XGBoost)</h2>
+<h3>2.1 Overall metrics</h3>
+<table>
+<tr><th>Metric</th><th>Value</th></tr>
+<tr><td>Accuracy</td><td><b>99.40%</b></td></tr>
+<tr><td>Macro F1</td><td><b>99.57%</b></td></tr>
+<tr><td>Weighted F1</td><td>99.40%</td></tr>
+<tr><td>Train / Test samples</td><td>92,489 / 23,992</td></tr>
+</table>
+<h3>2.2 Per-class performance</h3>
+<table><tr><th>Segment</th><th>Precision</th><th>Recall</th><th>F1</th><th>Support</th></tr><tr><td>budget</td><td>98.5%</td><td>100.0%</td><td>99.3%</td><td>9,657</td></tr><tr><td>flagship</td><td>100.0%</td><td>100.0%</td><td>100.0%</td><td>2,115</td></tr><tr><td>mid-range</td><td>100.0%</td><td>98.0%</td><td>99.0%</td><td>7,372</td></tr><tr><td>premium</td><td>100.0%</td><td>100.0%</td><td>100.0%</td><td>4,848</td></tr></table>
+<h3>2.3 Confusion matrix (test fold)</h3>
+<table><tr><th></th><th>pred budget</th><th>pred flagship</th><th>pred mid-range</th><th>pred premium</th></tr><tr><th>actual budget</th><td>9657</td><td>0</td><td>0</td><td>0</td></tr><tr><th>actual flagship</th><td>0</td><td>2115</td><td>0</td><td>0</td></tr><tr><th>actual mid-range</th><td>144</td><td>0</td><td>7228</td><td>0</td></tr><tr><th>actual premium</th><td>0</td><td>0</td><td>0</td><td>4848</td></tr></table>
+<div class="good"><b>Interpretation.</b> Market segments are defined largely by price and core specs,
+so they are cleanly separable; the near-perfect score reflects genuine separability, not data
+leakage (verified by the phone-level split). The only confusions occur between adjacent
+budget / mid-range phones.</div>
+</div>
+
+<div class="section">
+<h2>3. Pillar 2 — Demand Forecasting (XGBoost Regressor)</h2>
+<h3>3.1 Regression diagnostics (target = ln(1+units))</h3>
+<table>
+<tr><th>Metric</th><th>Value</th></tr>
+<tr><td>R² (log space)</td><td><b>0.8539</b> (85.4% variance explained)</td></tr>
+<tr><td>MAE (raw units)</td><td>9.07 units/month (mean actual 41.6)</td></tr>
+<tr><td>RMSE (raw units)</td><td>13.26 units/month</td></tr>
+<tr><td>MAPE</td><td>24.4%</td></tr>
+<tr><td>Predictions within ±10%</td><td>25.7%</td></tr>
+<tr><td>Predictions within ±25%</td><td>61.8%</td></tr>
+<tr><td>Test samples</td><td>23,992</td></tr>
+</table>
+<h3>3.2 Accuracy by segment (actual vs predicted mean units)</h3>
+<table><tr><th>Segment</th><th>Actual mean</th><th>Predicted mean</th><th>MAE</th><th>n</th></tr><tr><td>budget</td><td>41.7</td><td>39.7</td><td>9.2</td><td>9,657</td></tr><tr><td>mid-range</td><td>46.9</td><td>44.7</td><td>9.9</td><td>7,372</td></tr><tr><td>premium</td><td>36.9</td><td>35.6</td><td>8.0</td><td>4,848</td></tr><tr><td>flagship</td><td>33.6</td><td>32.5</td><td>7.9</td><td>2,115</td></tr></table>
+<div class="note"><b>Honest ceiling.</b> R²≈0.85 is the genuine upper bound of what launch specs can
+explain about demand; the residual variance is marketing, timing and luck — unrecoverable by any
+spec-only cold-start model.</div>
+</div>
+
+<div class="section">
+<h2>4. Pillar 3 — Customer Segmentation (KNN Retrieval, k=10)</h2>
+<p>Per-column coefficient of determination (R²) for each demographic block, evaluated on held-out
+phones. Income and Age are predicted well; RFM loyalty is reported transparently as not
+predictable from specs; Gender is near-constant (≈population split).</p>
+<h3>4.1 Age distribution &nbsp;(block R² = 0.671)</h3>
+<table><tr><th>Column</th><th>R²</th></tr><tr><td>age_18_24_pct</td><td>+0.834</td></tr><tr><td>age_25_34_pct</td><td>+0.707</td></tr><tr><td>age_35_44_pct</td><td>+0.379</td></tr><tr><td>age_45_54_pct</td><td>+0.488</td></tr><tr><td>age_55_plus_pct</td><td>+0.946</td></tr></table>
+<h3>4.2 Income distribution &nbsp;(block R² = 0.771)</h3>
+<table><tr><th>Column</th><th>R²</th></tr><tr><td>income_low_pct</td><td>+0.853</td></tr><tr><td>income_lower_mid_pct</td><td>+0.775</td></tr><tr><td>income_mid_pct</td><td>+0.583</td></tr><tr><td>income_upper_mid_pct</td><td>+0.815</td></tr><tr><td>income_high_pct</td><td>+0.830</td></tr></table>
+<h3>4.3 RFM loyalty &nbsp;(block R² = -0.160)</h3>
+<table><tr><th>Column</th><th>R²</th></tr><tr><td>rfm_recent_pct</td><td>-0.210</td></tr><tr><td>rfm_champion_pct</td><td>-0.129</td></tr><tr><td>rfm_loyal_pct</td><td>-0.124</td></tr><tr><td>rfm_at_risk_pct</td><td>-0.176</td></tr><tr><td>rfm_hibernating_pct</td><td>-0.160</td></tr></table>
+<h3>4.4 Gender &nbsp;(block R² = -0.129)</h3>
+<table><tr><th>Column</th><th>R²</th></tr><tr><td>gender_male_pct</td><td>-0.124</td></tr><tr><td>gender_female_pct</td><td>-0.128</td></tr><tr><td>gender_nonbinary_pct</td><td>-0.133</td></tr></table>
+<div class="note"><b>Reading the R² values.</b> A positive R² means the retrieval beats predicting the
+global mean. RFM's near-zero/negative R² is the honest finding that device specs do not determine
+buyer loyalty — it is therefore shown in the UI as a population prior, not a confident prediction.</div>
+</div>
+
+<div class="section">
+<h2>5. Pillar 4 — Product-Market Fit / Failure (Random Forest)</h2>
+<h3>5.1 Overall metrics</h3>
+<table>
+<tr><th>Metric</th><th>Value</th></tr>
+<tr><td>Accuracy</td><td><b>79.90%</b> (vs 75% no-skill baseline)</td></tr>
+<tr><td>AUC-ROC</td><td><b>0.880</b></td></tr>
+<tr><td>Precision (failure class)</td><td>59.0%</td></tr>
+<tr><td>Recall (failure class)</td><td>72.0%</td></tr>
+<tr><td>F1 (failure class)</td><td>64.9%</td></tr>
+<tr><td>Base failure rate</td><td>25.0%</td></tr>
+<tr><td>Train / Test phones</td><td>774 / 194</td></tr>
+</table>
+<h3>5.2 Confusion matrix</h3>
+<table>
+<tr><th></th><th>pred success</th><th>pred failure</th></tr>
+<tr><th>actual success</th><td>119</td><td>25</td></tr>
+<tr><th>actual failure</th><td>14</td><td>36</td></tr>
+</table>
+<h3>5.3 Top-10 feature importances</h3>
+<table><tr><th>Rank</th><th>Feature</th><th>Importance</th></tr><tr><td>1</td><td>price_usd</td><td>0.1458</td></tr><tr><td>2</td><td>avg_rating</td><td>0.1060</td></tr><tr><td>3</td><td>resolution_height</td><td>0.0961</td></tr><tr><td>4</td><td>5g_or_not</td><td>0.0784</td></tr><tr><td>5</td><td>resolution_width</td><td>0.0592</td></tr><tr><td>6</td><td>ram_capacity</td><td>0.0585</td></tr><tr><td>7</td><td>screen_size</td><td>0.0584</td></tr><tr><td>8</td><td>primary_camera_rear</td><td>0.0571</td></tr><tr><td>9</td><td>processor_brand</td><td>0.0471</td></tr><tr><td>10</td><td>refresh_rate</td><td>0.0458</td></tr></table>
+<div class="good"><b>Interpretation.</b> AUC = 0.88 means the model correctly ranks ~88%
+of phone pairs by failure risk. Price and average rating dominate the decision, consistent with
+market intuition that mispriced or poorly-reviewed phones fail most often.</div>
+</div>
+
+<div class="section">
+<h2>6. Composite System Score</h2>
+<div class="kpi" style="font-size:13pt"><b>84.0%</b>Composite (unweighted mean of key metrics)</div>
+<table>
+<tr><th>Component</th><th>Score</th></tr>
+<tr><td>P1 Accuracy</td><td>99.4%</td></tr>
+<tr><td>P1 Macro-F1</td><td>99.6%</td></tr>
+<tr><td>P2 R² (log)</td><td>85.4%</td></tr>
+<tr><td>P3 Age R²</td><td>67.1%</td></tr>
+<tr><td>P3 Income R²</td><td>77.1%</td></tr>
+<tr><td>P4 Accuracy</td><td>79.9%</td></tr>
+<tr><td>P4 AUC</td><td>88.0%</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h2>7. End-to-End Example Outputs (all scenarios)</h2>
+<p>Actual outputs of the full pipeline for representative phones across every segment and two
+edge situations (over- and under-priced). These demonstrate that the system reacts correctly to
+context.</p>
+<table>
+<tr><th>Scenario</th><th>Model</th><th>Price</th><th>Region</th><th>Segment</th><th>Conf.</th><th>6-mo Demand</th><th>PMF</th><th>Risk</th><th>Recommendation</th><th>CLV</th></tr>
+<tr><td>Budget</td><td>Spark Go 1</td><td>$95</td><td>South Asia</td><td>budget</td><td>100.0%</td><td>275</td><td>30%</td><td>69.7%</td><td>RECONSIDER / REWORK</td><td>$50</td></tr><tr><td>Mid-range</td><td>Galaxy Test A</td><td>$320</td><td>Asia-Pacific</td><td>mid-range</td><td>100.0%</td><td>703</td><td>95%</td><td>5.2%</td><td>GO FOR LAUNCH</td><td>$160</td></tr><tr><td>Premium</td><td>Pixel Pro 9</td><td>$720</td><td>North America</td><td>premium</td><td>100.0%</td><td>628</td><td>74%</td><td>26.2%</td><td>PROCEED WITH CAUTION</td><td>$353</td></tr><tr><td>Flagship</td><td>Galaxy Ultra X</td><td>$1,200</td><td>North America</td><td>flagship</td><td>100.0%</td><td>454</td><td>59%</td><td>41.3%</td><td>RECONSIDER / REWORK</td><td>$596</td></tr><tr><td>Flagship iOS</td><td>iPhone Ultra Pro</td><td>$1,300</td><td>Europe</td><td>flagship</td><td>100.0%</td><td>452</td><td>93%</td><td>6.8%</td><td>GO FOR LAUNCH</td><td>$655</td></tr><tr><td>Overpriced</td><td>Overpriced Mid</td><td>$750</td><td>Asia-Pacific</td><td>flagship</td><td>100.0%</td><td>346</td><td>80%</td><td>20.5%</td><td>PROCEED WITH CAUTION</td><td>$380</td></tr><tr><td>Underpriced</td><td>Hidden Gem</td><td>$450</td><td>South Asia</td><td>premium</td><td>100.0%</td><td>115</td><td>79%</td><td>21.0%</td><td>PROCEED WITH CAUTION</td><td>$226</td></tr></table>
+</div>
+
+<div class="section">
+<h2>8. Optimal Price Recommender — Results</h2>
+<h3>8.1 Stability test (same specs, different input prices)</h3>
+<p>The recommendation is anchored to spec-matched competitor pricing, so it does <b>not</b> change
+when the user edits the input price — it converges to a stable target.</p>
+<table><tr><th>Input price</th><th>Recommended</th><th>Market median</th><th>Fair price</th></tr><tr><td>$200</td><td>$283</td><td>$241</td><td>$242</td></tr><tr><td>$320</td><td>$283</td><td>$241</td><td>$242</td></tr><tr><td>$500</td><td>$283</td><td>$241</td><td>$242</td></tr><tr><td>$800</td><td>$283</td><td>$241</td><td>$242</td></tr><tr><td>$1,200</td><td>$283</td><td>$241</td><td>$242</td></tr></table>
+<h3>8.2 Profit / revenue curve (Galaxy Test A, assumptions: 40% margin, unit cost $145)</h3>
+<table><tr><th>Price</th><th>Demand</th><th>Revenue</th><th>Profit</th><th>PMF</th></tr><tr><td>$120</td><td>182</td><td>$21,886</td><td>$-4,469</td><td>78%</td></tr><tr><td>$141</td><td>170</td><td>$23,892</td><td>$-714</td><td>85%</td></tr><tr><td>$161</td><td>158</td><td>$25,407</td><td>$2,549</td><td>93%</td></tr><tr><td>$182</td><td>146</td><td>$26,430</td><td>$5,321</td><td>94%</td></tr><tr><td>$202</td><td>134</td><td>$26,962</td><td>$7,601</td><td>95%</td></tr><tr><td>$222</td><td>121</td><td>$27,002</td><td>$9,390</td><td>95%</td></tr><tr><td>$243</td><td>109</td><td>$26,551</td><td>$10,687</td><td>96%</td></tr><tr><td>$263</td><td>97</td><td>$25,608</td><td>$11,493</td><td>96%</td></tr><tr><td>$283</td><td>85</td><td>$24,174</td><td>$11,807</td><td>95%</td></tr><tr><td>$304</td><td>73</td><td>$22,248</td><td>$11,630</td><td>95%</td></tr><tr><td>$324</td><td>61</td><td>$19,831</td><td>$10,961</td><td>95%</td></tr><tr><td>$345</td><td>49</td><td>$16,923</td><td>$9,801</td><td>95%</td></tr><tr><td>$365</td><td>37</td><td>$13,523</td><td>$8,150</td><td>95%</td></tr><tr><td>$385</td><td>25</td><td>$9,631</td><td>$6,007</td><td>95%</td></tr></table>
+</div>
+
+<div class="section">
+<h2>9. Competitor Gap — Example (Galaxy Test A)</h2>
+<h3>9.1 Nearest competitors (spec-matched)</h3>
+<table><tr><th>Competitor</th><th>Price</th></tr><tr><td>Samsung Galaxy A23 5G (8GB RAM + 128GB)</td><td>$301</td></tr><tr><td>Nothing Phone 1</td><td>$322</td></tr><tr><td>Xiaomi Redmi Note 12 Pro (8GB RAM + 128GB)</td><td>$325</td></tr></table>
+<h3>9.2 Spec-difference insights</h3>
+<ul><li>Specs closely matched.</li></ul>
+</div>
+
+<div class="section">
+<h2>10. Summary of Results</h2>
+<table>
+<tr><th>Pillar</th><th>Model</th><th>Headline result</th></tr>
+<tr><td>1. Market Research</td><td>XGBoost Classifier</td><td>99.4% accuracy, 99.6% macro-F1</td></tr>
+<tr><td>2. Demand Forecast</td><td>XGBoost Regressor</td><td>R²=0.854, MAE=±9.1 units</td></tr>
+<tr><td>3. Segmentation</td><td>KNN Retrieval (k=10)</td><td>Income R²=0.77, Age R²=0.67</td></tr>
+<tr><td>4. Product-Market Fit</td><td>Random Forest</td><td>79.9% accuracy, AUC=0.88</td></tr>
+</table>
+<p class="small">All figures computed live from global_smartphone_bi_v4_final.csv with a phone-level
+80/20 group split (random_state=42). This report is reproducible by running
+src/generate_results_html.py.</p>
+</div>
+
+</body></html>

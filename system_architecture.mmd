@@ -1,0 +1,159 @@
+flowchart TB
+    classDef user fill:#1e3a5f,stroke:#4a9eff,color:#ffffff,rx:8
+    classDef frontend fill:#1a4731,stroke:#34d399,color:#ffffff
+    classDef api fill:#4a1942,stroke:#c084fc,color:#ffffff
+    classDef agent fill:#3d2000,stroke:#fb923c,color:#ffffff
+    classDef pillar fill:#1e3a5f,stroke:#60a5fa,color:#ffffff
+    classDef model fill:#1f2937,stroke:#9ca3af,color:#ffffff
+    classDef data fill:#1c1c1c,stroke:#6b7280,color:#ffffff
+    classDef external fill:#3b1f1f,stroke:#f87171,color:#ffffff
+    classDef preprocess fill:#1a2e1a,stroke:#86efac,color:#ffffff
+    classDef output fill:#312e00,stroke:#fde047,color:#ffffff
+
+    %% ─── USERS ───────────────────────────────────────────────────────────────
+    ANALYST(["👤 Data Analyst"]):::user
+    BIZUSER(["👤 Business User / PM"]):::user
+
+    %% ─── FRONTEND LAYER ──────────────────────────────────────────────────────
+    subgraph FL["  PRESENTATION LAYER  "]
+        direction LR
+        subgraph SA["  Streamlit Dashboard  (port 8501)  "]
+            SF["📋 Sidebar Spec Form\n25+ input fields"]
+            SC["📊 Charts & KPI Cards\nPlotly — Demand, Donut,\nGauge, Competitors"]
+        end
+        subgraph RN["  Next.js React App  (port 3000)  "]
+            RF["📝 SpecsForm\nReact 19 + Tailwind 4"]
+            RD["📊 Dashboard\nRecharts 3.8"]
+            RC["📡 CompetitorRadar\nPriceOptimizer\nNewsPanel"]
+        end
+    end
+
+    %% ─── API LAYER ────────────────────────────────────────────────────────────
+    subgraph AL["  API LAYER  "]
+        subgraph FAPI["  FastAPI Backend  (port 8000)  "]
+            EP1["POST /api/analyze\nFull 4-pillar analysis"]
+            EP2["POST /api/competitors\nRadar + spec gap"]
+            EP3["POST /api/price-optimize\n14-point elasticity sweep"]
+            EP4["POST /api/news\nParallel web search"]
+        end
+    end
+
+    %% ─── ORCHESTRATION LAYER ──────────────────────────────────────────────────
+    subgraph OL["  ORCHESTRATION LAYER  "]
+        AGENT["🤖 Agent Orchestrator\nsrc/agent.py\n\n① Feature engineering\n② Chain Pillars 1→2→3→4\n③ Compute CLV\n④ Return unified JSON"]:::agent
+    end
+
+    %% ─── PREPROCESSING ────────────────────────────────────────────────────────
+    subgraph PL["  PREPROCESSING LAYER  (config.py)  "]
+        direction LR
+        PP1["Feature Contract Split\nKNOWN_AT_LAUNCH\nvs POST_LAUNCH"]:::preprocess
+        PP2["Feature Engineering\n7 new columns\nperf·cam·pixels\nbattery_per_inch etc."]:::preprocess
+        PP3["Encoding + Scaling\nOrdinalEncoder\nStandardScaler\nLog Transform"]:::preprocess
+        PP4["Aggregation\nGroup by phone\nTrain-Test Group Split\nBrand Prior (leak-free)"]:::preprocess
+    end
+
+    %% ─── ML LAYER ─────────────────────────────────────────────────────────────
+    subgraph ML["  MACHINE LEARNING LAYER  "]
+        direction LR
+
+        subgraph P1["  PILLAR 1 — Market Research  "]
+            P1A["🏷️ Segment Classifier\nXGBoost · 300 trees\nmax_depth=6\n─────────────\nOutput: budget / mid-range\npremium / flagship\nAccuracy: 99.4%  F1: 99.6%"]:::pillar
+            P1B["🔍 Similarity Engine\nKNN (k=10)\nStandardScaler\nPrice weight ×2.5\n─────────────\nOutput: 10 nearest\ncompetitor phones\nRegion-aware fallback"]:::pillar
+        end
+
+        subgraph P2["  PILLAR 2 — Demand Forecast  "]
+            P2A["📈 XGBoost Regressor\n700 trees · depth=8\nlr=0.03\n─────────────\nTarget: log1p(units)\nOutput: 6-month curve\nR²=0.854  MAE=±9 units"]:::pillar
+        end
+
+        subgraph P3["  PILLAR 3 — Customer Segmentation  "]
+            P3A["👥 KNN Retrieval\n(not direct regression)\nUses Pillar 1 neighbors\n─────────────\nOutput:\nAge distribution\nIncome distribution\nRFM segments\nGender distribution\nIncome R²=0.77"]:::pillar
+        end
+
+        subgraph P4["  PILLAR 4 — PMF & Failure  "]
+            P4A["🎯 Random Forest\n500 trees · depth=12\nclass_weight=balanced\n─────────────\nConstructed PMF label:\nNPS·Repeat·Recommend\nReturn·Warranty·Slope\nAcc=79.9%  AUC=0.88"]:::pillar
+        end
+    end
+
+    %% ─── MODEL STORAGE ────────────────────────────────────────────────────────
+    subgraph MS["  MODEL STORAGE  (models/)  "]
+        direction LR
+        M1["pillar1_segment.joblib\nXGBoost + Encoder"]:::model
+        M2["pillar1_similarity.joblib\nPhone table + Scaler\n+ KNN matrix"]:::model
+        M3["pillar2_demand.joblib\nXGBoost + Encoder\n+ Brand priors"]:::model
+        M4["pillar3_segmentation.joblib\nEval artifact"]:::model
+        M5["pillar4_pmf.joblib\nRandom Forest\n+ PMF labels"]:::model
+    end
+
+    %% ─── DATA LAYER ───────────────────────────────────────────────────────────
+    subgraph DL["  DATA LAYER  "]
+        CSV["📁 global_smartphone_bi_v4_final.csv\n116,481 rows × 65 columns\n─────────────────────────────────────\nKNOWN_AT_LAUNCH (25 cols)         POST_LAUNCH (40 cols)\nprice · battery · RAM · cores       units_sold · NPS · return_rate\ncamera · screen · brand · OS        demographics · social_mentions\nprocessor · refresh · 5G            repeat_rate · warranty_claims"]:::data
+        TRAIN["⚙️ train_all.py\nTraining Driver\nSequential 4-pillar\ntraining + metrics save"]:::data
+    end
+
+    %% ─── EXTERNAL ─────────────────────────────────────────────────────────────
+    subgraph EXT["  EXTERNAL SERVICES  "]
+        DDG["🌐 DuckDuckGo DDGS\nNo API key required\n─────────────────────\nBucket A: Your Phone\n(9 slots · brand+model)\nBucket B: Competitors\n(11 slots · parallel)\nDedup by URL"]:::external
+    end
+
+    %% ─── OUTPUT ───────────────────────────────────────────────────────────────
+    subgraph OUT["  ANALYSIS OUTPUT  "]
+        JSON["📄 Unified JSON Result\n─────────────────────────────────────\nmarket_position: segment + confidence\ndemand_forecast: [m1 m2 m3 m4 m5 m6]\ncustomer_profile: age·income·rfm·gender\nsuccess: pmf_score + recommendation\nclv_per_buyer_usd: $xxx.xx"]:::output
+    end
+
+    %% ─── CONNECTIONS ──────────────────────────────────────────────────────────
+
+    ANALYST -->|"inputs specs"| SA
+    BIZUSER -->|"inputs specs"| RN
+
+    SF -->|"analyze click\nPython import"| AGENT
+    SC -.->|"displays results"| SF
+
+    RF -->|"HTTP POST\n/api/analyze"| EP1
+    RF -->|"HTTP POST\n/api/competitors"| EP2
+    RF -->|"HTTP POST\n/api/price-optimize"| EP3
+    RF -->|"HTTP POST\n/api/news"| EP4
+    RD -.->|"renders"| RF
+    RC -.->|"renders"| RF
+
+    EP1 -->|"calls"| AGENT
+    EP2 -->|"calls"| AGENT
+    EP3 -->|"14-point sweep"| AGENT
+    EP4 -->|"parallel queries"| DDG
+
+    AGENT -->|"preprocess"| PP1
+    PP1 --> PP2
+    PP2 --> PP3
+    PP3 --> PP4
+
+    PP4 -->|"cleaned features"| P1A
+    PP4 -->|"cleaned features"| P1B
+    PP4 -->|"cleaned features"| P2A
+    PP4 -->|"KNN neighbors\nfrom P1B"| P3A
+    PP4 -->|"cleaned features"| P4A
+
+    P1B -->|"10 neighbors"| P3A
+
+    P1A -->|"loads"| M1
+    P1B -->|"loads"| M2
+    P2A -->|"loads"| M3
+    P3A -->|"loads"| M4
+    P4A -->|"loads"| M5
+
+    TRAIN -->|"trains & saves"| M1
+    TRAIN -->|"trains & saves"| M2
+    TRAIN -->|"trains & saves"| M3
+    TRAIN -->|"trains & saves"| M4
+    TRAIN -->|"trains & saves"| M5
+
+    CSV -->|"116k rows"| TRAIN
+    CSV -->|"reference\nphone table"| M2
+
+    P1A -->|"segment + confidence"| JSON
+    P1B -->|"competitor list"| JSON
+    P2A -->|"6-month curve"| JSON
+    P3A -->|"demographics"| JSON
+    P4A -->|"PMF + recommendation"| JSON
+
+    AGENT -->|"CLV calculation"| JSON
+    JSON -->|"HTTP 200 response"| RF
+    JSON -->|"Python return"| SF

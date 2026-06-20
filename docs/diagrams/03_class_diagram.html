@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Class Diagram — BI Agent</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f8fafc; padding: 40px; }
+  .header { text-align: center; margin-bottom: 32px; }
+  .header h1 { font-size: 26px; color: #1e293b; font-weight: 700; }
+  .header p  { font-size: 13px; color: #64748b; margin-top: 6px; }
+  .badge { display: inline-block; background: #10b981; color: white; font-size: 11px;
+           padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
+  .card { background: white; border-radius: 16px; padding: 40px;
+          box-shadow: 0 4px 24px rgba(0,0,0,0.08); max-width: 1100px; margin: 0 auto; }
+  .mermaid { display: flex; justify-content: center; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <div class="badge">Diagram 3 of 5</div>
+    <h1>Class Diagram</h1>
+    <p>Modules, data models, and their relationships across the BI Agent codebase</p>
+  </div>
+  <div class="mermaid">
+classDiagram
+    direction TB
+
+    class PhoneSpec {
+        <<Pydantic Model>>
+        +str brand_name
+        +str model
+        +float price_usd
+        +str region
+        +int five_g
+        +str processor_brand
+        +int num_cores
+        +float processor_speed
+        +int battery_capacity
+        +int ram_capacity
+        +int internal_memory
+        +float screen_size
+        +int refresh_rate
+        +int primary_camera_rear
+        +int primary_camera_front
+        +str os
+    }
+
+    class Config {
+        <<Singleton Module>>
+        +Path DATA_PATH
+        +str MODEL_DIR
+        +List~str~ NUM_SPECS
+        +List~str~ CAT_SPECS
+        +List~str~ POST_LAUNCH
+        +List~str~ DEMO_COLS
+        +int RANDOM_STATE
+        +int TEST_SIZE
+        +add_engineered_features(df) DataFrame
+    }
+
+    class Agent {
+        <<Orchestrator>>
+        +estimate_clv(price, curve, repeat_rate, return_rate) float
+        +analyze(spec_row, region, horizon) dict
+    }
+
+    class Pillar1_MarketResearch {
+        <<XGBoost + k-NN>>
+        +train(df) dict
+        +predict_segment(spec_row) Tuple
+        +find_similar(spec_row, region, k) Tuple
+        -_phone_table(df) DataFrame
+    }
+
+    class Pillar2_Demand {
+        <<XGBoost Regressor>>
+        +train(df) dict
+        +predict_curve(spec_row, region, horizon) List
+        -_build_features(df) Tuple
+    }
+
+    class Pillar3_Segmentation {
+        <<k-NN Retrieval>>
+        +evaluate(df) dict
+        +predict_demographics(spec_row, region, k) Tuple
+    }
+
+    class Pillar4_PMF {
+        <<Random Forest>>
+        +train(df) dict
+        +build_labels(df) DataFrame
+        +predict_fit(spec_row) dict
+        -_minmax(x, invert) Series
+    }
+
+    class FastAPIApp {
+        <<REST API Server>>
+        +health() dict
+        +analyze(spec, region) dict
+        +competitor_analysis(spec, region) dict
+        +price_optimize(spec, region) dict
+        +market_news(spec, region) dict
+        -spec_to_dict(spec) dict
+        -_ddg_search(query, n) list
+        -_ddg_news(query, n) list
+        -_norm(val, lo, hi) float
+    }
+
+    class ModelStore {
+        <<joblib Files>>
+        +pillar1_segment.joblib
+        +pillar1_similarity.joblib
+        +pillar2_demand.joblib
+        +pillar4_pmf.joblib
+    }
+
+    FastAPIApp --> PhoneSpec : validates
+    FastAPIApp --> Agent : calls analyze()
+    FastAPIApp --> Pillar1_MarketResearch : /competitors /news
+    FastAPIApp --> Pillar2_Demand : /price-optimize
+    FastAPIApp --> Pillar4_PMF : /price-optimize
+
+    Agent --> Pillar1_MarketResearch : predict_segment\nfind_similar
+    Agent --> Pillar2_Demand : predict_curve
+    Agent --> Pillar3_Segmentation : predict_demographics
+    Agent --> Pillar4_PMF : predict_fit
+
+    Pillar1_MarketResearch --> Config : reads constants
+    Pillar2_Demand --> Config : reads constants
+    Pillar3_Segmentation --> Config : reads constants
+    Pillar4_PMF --> Config : reads constants
+
+    Pillar1_MarketResearch --> ModelStore : loads .joblib
+    Pillar2_Demand --> ModelStore : loads .joblib
+    Pillar3_Segmentation --> ModelStore : loads .joblib
+    Pillar4_PMF --> ModelStore : loads .joblib
+  </div>
+</div>
+<script>mermaid.initialize({ startOnLoad: true, theme: 'base',
+  themeVariables: { fontSize: '13px', primaryColor: '#d1fae5',
+    primaryTextColor: '#064e3b', lineColor: '#6ee7b7',
+    classText: '#064e3b' }});</script>
+</body>
+</html>

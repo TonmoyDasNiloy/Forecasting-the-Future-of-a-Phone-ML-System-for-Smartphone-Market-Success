@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Smartphone BI Agent — Functional &amp; Non-Functional Requirements</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #fff;
+    color: #111;
+    padding: 44px 52px;
+    max-width: 980px;
+    margin: auto;
+    font-size: 12.5px;
+    line-height: 1.8;
+  }
+
+  /* ── Cover ── */
+  .cover {
+    text-align: center;
+    padding: 70px 20px 56px;
+    border-bottom: 4px solid #4f46e5;
+    margin-bottom: 40px;
+    page-break-after: always;
+  }
+  .cover .logo { font-size: 52px; margin-bottom: 16px; }
+  .cover h1 { font-size: 30px; font-weight: 900; color: #4f46e5; margin-bottom: 6px; }
+  .cover h2 { font-size: 15px; font-weight: 600; color: #6366f1; margin-bottom: 6px; }
+  .cover h3 { font-size: 13px; font-weight: 400; color: #666; margin-bottom: 28px; }
+  .cover .badges { margin: 20px 0; }
+  .badge {
+    display: inline-block;
+    background: #eff6ff; border: 1px solid #bfdbfe;
+    color: #1d4ed8; padding: 4px 14px; border-radius: 20px;
+    font-size: 10.5px; font-weight: 700; margin: 3px;
+  }
+  .cover-meta {
+    display: flex; justify-content: center; gap: 32px;
+    margin-top: 28px; flex-wrap: wrap;
+  }
+  .cover-meta-item { text-align: center; }
+  .cover-meta-item .num { font-size: 28px; font-weight: 900; color: #4f46e5; }
+  .cover-meta-item .lbl { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: .08em; }
+
+  /* ── TOC ── */
+  .toc { page-break-after: always; margin-bottom: 36px; }
+  .toc-title { font-size: 18px; font-weight: 800; color: #1e1b4b;
+    border-left: 5px solid #4f46e5; padding-left: 14px; margin-bottom: 20px; }
+  .toc-section { margin-bottom: 6px; }
+  .toc-section a { color: #4f46e5; text-decoration: none; font-weight: 600; font-size: 12.5px; }
+  .toc-sub { margin-left: 22px; }
+  .toc-sub a { color: #555; font-weight: 400; font-size: 11.5px; text-decoration: none; }
+
+  /* ── Chapter / Section headings ── */
+  .chapter {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: #fff;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 800;
+    margin: 44px 0 24px;
+    page-break-before: always;
+    letter-spacing: .02em;
+  }
+  .chapter:first-of-type { page-break-before: avoid; }
+
+  h2 {
+    font-size: 14px; font-weight: 800; color: #1e1b4b;
+    border-left: 4px solid #6366f1; padding-left: 12px;
+    margin: 28px 0 12px;
+  }
+  h3 { font-size: 12.5px; font-weight: 700; color: #3730a3; margin: 18px 0 8px; }
+  h4 { font-size: 12px; font-weight: 700; color: #555; margin: 12px 0 6px; }
+
+  p { margin-bottom: 10px; }
+
+  /* ── Requirement cards ── */
+  .req-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    page-break-inside: avoid;
+  }
+  .req-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 11px 16px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .req-id {
+    background: #4f46e5; color: #fff;
+    font-size: 10px; font-weight: 800; letter-spacing: .08em;
+    padding: 3px 10px; border-radius: 12px;
+    white-space: nowrap;
+  }
+  .req-nfr .req-id { background: #7c3aed; }
+  .req-title { font-weight: 800; font-size: 13px; color: #1e1b4b; }
+  .req-priority {
+    margin-left: auto;
+    font-size: 10px; font-weight: 700; padding: 2px 10px;
+    border-radius: 12px; white-space: nowrap;
+  }
+  .high   { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+  .medium { background: #fefce8; color: #ca8a04; border: 1px solid #fde68a; }
+  .low    { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+
+  .req-body { padding: 14px 16px; }
+  .req-body p { font-size: 12px; margin-bottom: 10px; }
+
+  .req-table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-top: 6px; }
+  .req-table th {
+    background: #f1f5f9; color: #475569;
+    padding: 6px 10px; text-align: left;
+    font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em;
+    border: 1px solid #e2e8f0;
+  }
+  .req-table td { padding: 6px 10px; border: 1px solid #e2e8f0; vertical-align: top; }
+  .req-table tr:nth-child(even) td { background: #f8fafc; }
+
+  /* ── General tables ── */
+  table.gen {
+    width: 100%; border-collapse: collapse; font-size: 12px; margin: 14px 0;
+  }
+  table.gen th {
+    background: #4f46e5; color: #fff;
+    padding: 8px 12px; text-align: left;
+    font-size: 11px; letter-spacing: .04em;
+    border: 1px solid #4338ca;
+  }
+  table.gen td { padding: 8px 12px; border: 1px solid #e2e8f0; vertical-align: top; }
+  table.gen tr:nth-child(even) td { background: #f8fafc; }
+
+  /* ── Info / note boxes ── */
+  .note {
+    background: #eff6ff; border-left: 4px solid #3b82f6;
+    border-radius: 0 8px 8px 0; padding: 11px 15px; margin: 14px 0;
+    font-size: 12px;
+  }
+  .warn {
+    background: #fefce8; border-left: 4px solid #eab308;
+    border-radius: 0 8px 8px 0; padding: 11px 15px; margin: 14px 0;
+    font-size: 12px;
+  }
+  .success {
+    background: #f0fdf4; border-left: 4px solid #22c55e;
+    border-radius: 0 8px 8px 0; padding: 11px 15px; margin: 14px 0;
+    font-size: 12px;
+  }
+
+  /* ── Code ── */
+  code {
+    font-family: 'Courier New', Courier, monospace;
+    background: #f1f5f9; border: 1px solid #e2e8f0;
+    border-radius: 4px; padding: 1px 5px; font-size: 11px;
+  }
+  pre {
+    font-family: 'Courier New', Courier, monospace;
+    background: #f8fafc; border: 1px solid #e2e8f0;
+    border-radius: 6px; padding: 12px 14px;
+    font-size: 11px; line-height: 1.7;
+    margin: 8px 0; overflow-x: auto;
+    white-space: pre-wrap; word-break: break-word;
+  }
+
+  /* ── Lists ── */
+  ul, ol { margin: 8px 0 8px 22px; }
+  li { margin-bottom: 4px; font-size: 12px; }
+
+  /* ── Divider ── */
+  hr { border: none; border-top: 1px solid #e2e8f0; margin: 20px 0; }
+
+  /* ── Pillar tags ── */
+  .pill {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 10px; margin: 1px;
+  }
+  .pill-p1 { background: #dbeafe; color: #1d4ed8; }
+  .pill-p2 { background: #dcfce7; color: #15803d; }
+  .pill-p3 { background: #fef9c3; color: #854d0e; }
+  .pill-p4 { background: #fce7f3; color: #9d174d; }
+  .pill-api { background: #ede9fe; color: #6d28d9; }
+  .pill-fe  { background: #ffedd5; color: #9a3412; }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center; font-size: 10px; color: #94a3b8;
+    border-top: 1px solid #e2e8f0; padding-top: 14px; margin-top: 44px;
+  }
+
+  /* ── Print ── */
+  @media print {
+    body { padding: 20px 28px; font-size: 11.5px; }
+    .chapter { page-break-before: always; }
+    .req-card { page-break-inside: avoid; }
+    a { text-decoration: none; color: inherit; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ COVER ═══════════ -->
+<div class="cover">
+  <div class="logo">📱</div>
+  <h1>Smartphone BI Agent</h1>
+  <h2>Functional &amp; Non-Functional Requirements</h2>
+  <h3>AI-Powered Market Intelligence Platform</h3>
+  <div class="badges">
+    <span class="badge">XGBoost</span>
+    <span class="badge">Random Forest</span>
+    <span class="badge">KNN Retrieval</span>
+    <span class="badge">FastAPI</span>
+    <span class="badge">Next.js</span>
+    <span class="badge">116,481 Records</span>
+  </div>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><div class="num">13</div><div class="lbl">Functional Requirements</div></div>
+    <div class="cover-meta-item"><div class="num">12</div><div class="lbl">Non-Functional Requirements</div></div>
+    <div class="cover-meta-item"><div class="num">4</div><div class="lbl">ML Pillars</div></div>
+    <div class="cover-meta-item"><div class="num">4</div><div class="lbl">API Endpoints</div></div>
+    <div class="cover-meta-item"><div class="num">6</div><div class="lbl">Regions Covered</div></div>
+  </div>
+</div>
+
+<!-- ═══════════ TOC ═══════════ -->
+<div class="toc">
+  <div class="toc-title">Table of Contents</div>
+
+  <div class="toc-section"><a href="#intro">1. Introduction &amp; System Overview</a></div>
+  <div class="toc-sub"><a href="#purpose">1.1 Purpose</a></div>
+  <div class="toc-sub"><a href="#scope">1.2 Scope</a></div>
+  <div class="toc-sub"><a href="#stakeholders">1.3 Stakeholders</a></div>
+  <div class="toc-sub"><a href="#constraints">1.4 System Constraints</a></div>
+
+  <div class="toc-section" style="margin-top:8px;"><a href="#fr">2. Functional Requirements</a></div>
+  <div class="toc-sub"><a href="#fr1">FR-01 · Phone Specification Input</a></div>
+  <div class="toc-sub"><a href="#fr2">FR-02 · Market Segment Classification</a></div>
+  <div class="toc-sub"><a href="#fr3">FR-03 · Similar Phone Retrieval</a></div>
+  <div class="toc-sub"><a href="#fr4">FR-04 · Demand Forecasting</a></div>
+  <div class="toc-sub"><a href="#fr5">FR-05 · Customer Demographics</a></div>
+  <div class="toc-sub"><a href="#fr6">FR-06 · PMF Scoring &amp; Failure Prediction</a></div>
+  <div class="toc-sub"><a href="#fr7">FR-07 · CLV Calculation</a></div>
+  <div class="toc-sub"><a href="#fr8">FR-08 · Competitor Analysis</a></div>
+  <div class="toc-sub"><a href="#fr9">FR-09 · Price Optimisation</a></div>
+  <div class="toc-sub"><a href="#fr10">FR-10 · Live News Feed</a></div>
+  <div class="toc-sub"><a href="#fr11">FR-11 · Interactive Dashboard</a></div>
+  <div class="toc-sub"><a href="#fr12">FR-12 · Report Download</a></div>
+  <div class="toc-sub"><a href="#fr13">FR-13 · Dual Frontend Support</a></div>
+
+  <div class="toc-section" style="margin-top:8px;"><a href="#nfr">3. Non-Functional Requirements</a></div>
+  <div class="toc-sub"><a href="#nfr1">NFR-01 · Data Leakage Prevention</a></div>
+  <div class="toc-sub"><a href="#nfr2">NFR-02 · Model Accuracy &amp; Honesty</a></div>
+  <div class="toc-sub"><a href="#nfr3">NFR-03 · System Performance</a></div>
+  <div class="toc-sub"><a href="#nfr4">NFR-04 · Architectural Separation</a></div>
+  <div class="toc-sub"><a href="#nfr5">NFR-05 · Cold-Start Deployability</a></div>
+  <div class="toc-sub"><a href="#nfr6">NFR-06 · Reproducibility</a></div>
+  <div class="toc-sub"><a href="#nfr7">NFR-07 · Dataset Scale &amp; Coverage</a></div>
+  <div class="toc-sub"><a href="#nfr8">NFR-08 · Maintainability</a></div>
+  <div class="toc-sub"><a href="#nfr9">NFR-09 · Security</a></div>
+  <div class="toc-sub"><a href="#nfr10">NFR-10 · Usability</a></div>
+  <div class="toc-sub"><a href="#nfr11">NFR-11 · Reliability &amp; Error Handling</a></div>
+  <div class="toc-sub"><a href="#nfr12">NFR-12 · Scalability</a></div>
+
+  <div class="toc-section" style="margin-top:8px;"><a href="#summary">4. Requirements Summary Tables</a></div>
+  <div class="toc-section"><a href="#traceability">5. Traceability Matrix</a></div>
+</div>
+
+
+<!-- ═══════════ CHAPTER 1 — INTRODUCTION ═══════════ -->
+<div class="chapter" id="intro">1. Introduction &amp; System Overview</div>
+
+<h2 id="purpose">1.1 Purpose</h2>
+<p>
+  This document specifies the complete functional and non-functional requirements for the
+  <strong>Smartphone BI Agent</strong> — an AI-powered business intelligence system that converts
+  smartphone hardware specifications into comprehensive market analysis. The system is designed
+  to solve the <strong>cold-start prediction problem</strong>: producing reliable market insights
+  for a brand-new phone that has never been sold and has zero sales history.
+</p>
+<p>
+  The primary use case is to support pre-launch decision-making for smartphone manufacturers,
+  product managers, and market analysts by predicting market position, demand, customer
+  demographics, product-market fit, and optimal pricing — all from launch-known inputs alone.
+</p>
+
+<h2 id="scope">1.2 Scope</h2>
+<p>The system covers the following functional boundaries:</p>
+<ul>
+  <li>Input: smartphone hardware specifications and target region</li>
+  <li>Processing: four-pillar machine learning pipeline (market research, demand forecasting, customer segmentation, PMF prediction)</li>
+  <li>Output: business intelligence dashboard with KPIs, charts, competitor intelligence, and downloadable report</li>
+  <li>Data: 116,481 historical smartphone records across 6 global regions</li>
+  <li>Deployment: local environment with FastAPI backend and Next.js or Streamlit frontend</li>
+</ul>
+
+<div class="note">
+  <strong>Out of Scope:</strong> Real-time social media tracking, post-launch performance monitoring,
+  supply chain management, pricing contract negotiation, and consumer survey tools.
+</div>
+
+<h2 id="stakeholders">1.3 Stakeholders</h2>
+<table class="gen">
+  <tr><th>Stakeholder</th><th>Role</th><th>Primary Interest</th></tr>
+  <tr><td>Smartphone Manufacturer</td><td>Primary User</td><td>Launch decision — GO / CAUTION / RECONSIDER</td></tr>
+  <tr><td>Product Manager</td><td>Primary User</td><td>Market positioning and pricing strategy</td></tr>
+  <tr><td>Market Analyst</td><td>Secondary User</td><td>Competitor intelligence and demand forecast</td></tr>
+  <tr><td>Sales &amp; Marketing Team</td><td>Secondary User</td><td>Customer demographics and CLV</td></tr>
+  <tr><td>Developer / Researcher</td><td>Technical User</td><td>System accuracy, data leakage controls, model architecture</td></tr>
+</table>
+
+<h2 id="constraints">1.4 System Constraints</h2>
+<table class="gen">
+  <tr><th>Constraint</th><th>Description</th></tr>
+  <tr><td>Cold-Start Only</td><td>No post-launch data (NPS, social media, sales) may be used as model inputs</td></tr>
+  <tr><td>Offline Training</td><td>Models are pre-trained and serialised; inference is real-time but training is offline</td></tr>
+  <tr><td>Local Deployment</td><td>System runs on localhost; CORS is restricted to localhost:3000</td></tr>
+  <tr><td>Dataset Dependency</td><td>Similarity retrieval requires the full dataset CSV at runtime</td></tr>
+  <tr><td>Python 3.8+</td><td>Backend requires Python 3.8 or higher; Node.js 18+ for frontend</td></tr>
+  <tr><td>No Real Surveys</td><td>PMF is computed as a proxy formula; no Sean Ellis-style survey data is collected</td></tr>
+</table>
+
+
+<!-- ═══════════ CHAPTER 2 — FUNCTIONAL REQUIREMENTS ═══════════ -->
+<div class="chapter" id="fr">2. Functional Requirements</div>
+
+<p>
+  Functional requirements describe <strong>what the system must do</strong> — the specific
+  behaviours, capabilities, and outputs that the system must provide to satisfy its users.
+  Each requirement is tagged with its priority (High / Medium / Low) and the system layer
+  it belongs to.
+</p>
+
+<!-- FR-01 -->
+<div class="req-card" id="fr1">
+  <div class="req-header">
+    <div class="req-id">FR-01</div>
+    <div class="req-title">Phone Specification Input</div>
+    <span class="pill pill-fe">Frontend</span>
+    <span class="pill pill-api">API</span>
+    <div class="req-priority high">HIGH</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must accept a complete set of smartphone hardware specifications from the user through a structured input form. All fields must have sensible default values to allow immediate analysis without manual entry.</p>
+    <table class="req-table">
+      <tr><th>Field Group</th><th>Fields Required</th><th>Validation</th></tr>
+      <tr><td>Identity</td><td>brand_name, model, region</td><td>String, non-empty. Region must be one of 6 valid regions.</td></tr>
+      <tr><td>Pricing</td><td>price_usd</td><td>Float, greater than 0. Required (no default).</td></tr>
+      <tr><td>Connectivity</td><td>5g_or_not, os</td><td>5G: binary 0 or 1. OS: string (android/ios).</td></tr>
+      <tr><td>Processor</td><td>processor_brand, num_cores, processor_speed</td><td>Cores: integer ≥ 1. Speed: float GHz.</td></tr>
+      <tr><td>Memory</td><td>ram_capacity, internal_memory, extended_memory_available</td><td>RAM: integer GB. Storage: integer GB.</td></tr>
+      <tr><td>Battery</td><td>battery_capacity, fast_charging_available, fast_charging</td><td>Capacity: integer mAh. Charging: integer W.</td></tr>
+      <tr><td>Display</td><td>screen_size, refresh_rate, resolution_height, resolution_width</td><td>Screen: float inches. Refresh: integer Hz.</td></tr>
+      <tr><td>Camera</td><td>num_rear_cameras, primary_camera_rear, primary_camera_front</td><td>All integer MP values.</td></tr>
+      <tr><td>Quality</td><td>avg_rating</td><td>Float, 0–10 range representing brand quality history.</td></tr>
+    </table>
+    <div class="note" style="margin-top:10px;">Input validation is enforced by the Pydantic <code>PhoneSpec</code> model in <code>backend/main.py</code>. Invalid input returns HTTP 422 before any ML code executes.</div>
+  </div>
+</div>
+
+<!-- FR-02 -->
+<div class="req-card" id="fr2">
+  <div class="req-header">
+    <div class="req-id">FR-02</div>
+    <div class="req-title">Market Segment Classification</div>
+    <span class="pill pill-p1">Pillar 1</span>
+    <div class="req-priority high">HIGH</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must classify the input phone into one of four market segments based on its hardware specifications and price. The classification must include a confidence percentage and must never use post-launch data.</p>
+    <table class="req-table">
+      <tr><th>Attribute</th><th>Detail</th></tr>
+      <tr><td>Segments</td><td>Budget · Mid-Range · Premium · Flagship</td></tr>
+      <tr><td>Output</td><td>Segment label + confidence percentage (e.g., "Mid-Range — 87.3%")</td></tr>
+      <tr><td>Model</td><td>XGBoost Classifier — 300 trees, max_depth=6, learning_rate=0.1</td></tr>
+      <tr><td>Features Used</td><td>18 numeric specs + 3 categorical specs (brand, processor_brand, OS)</td></tr>
+      <tr><td>Split Strategy</td><td>GroupShuffleSplit by phone identity (no data leakage)</td></tr>
+      <tr><td>Accuracy</td><td>99.4% accuracy · Macro-F1: 99.6%</td></tr>
+    </table>
+    <p style="margin-top:10px;">The classifier also computes <code>price_vs_category_pct</code> — how much the input price deviates from the average price in the predicted segment — which is displayed as a positioning indicator on the dashboard.</p>
+  </div>
+</div>
+
+<!-- FR-03 -->
+<div class="req-card" id="fr3">
+  <div class="req-header">
+    <div class="req-id">FR-03</div>
+    <div class="req-title">Similar Phone Retrieval</div>
+    <span class="pill pill-p1">Pillar 1</span>
+    <div class="req-priority high">HIGH</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must identify the K most spec-similar historical phones to the input phone, restricted to the same geographic region where possible. These similar phones serve as the basis for competitor display (K=5) and demographic retrieval (K=10).</p>
+    <table class="req-table">
+      <tr><th>Attribute</th><th>Detail</th></tr>
+      <tr><td>Algorithm</td><td>K-Nearest Neighbours using Euclidean distance on standardised feature space</td></tr>
+      <tr><td>Features</td><td>12 spec features including price (log-transformed), RAM, battery, screen, camera, resolution</td></tr>
+      <tr><td>Price Weighting</td><td>Price feature is weighted 2.5× — price tier is the strongest signal of buyer profile</td></tr>
+      <tr><td>Scaling</td><td>StandardScaler applied to all features before distance computation</td></tr>
+      <tr><td>Region Logic</td><td>Regional phones used first; falls back to all regions if fewer than K phones exist in the target region</td></tr>
+      <tr><td>K Values</td><td>K=5 for competitor names · K=10 for demographic retrieval</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- FR-04 -->
+<div class="req-card" id="fr4">
+  <div class="req-header">
+    <div class="req-id">FR-04</div>
+    <div class="req-title">Six-Month Demand Forecasting</div>
+    <span class="pill pill-p2">Pillar 2</span>
+    <div class="req-priority high">HIGH</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must predict the monthly unit sales for the first six months after launch, producing a demand curve rather than a single aggregate figure. All predictions must use only launch-known features.</p>
+    <table class="req-table">
+      <tr><th>Attribute</th><th>Detail</th></tr>
+      <tr><td>Output</td><td>6 monthly unit predictions + total_horizon_units (sum)</td></tr>
+      <tr><td>Model</td><td>XGBoost Regressor — 700 trees, max_depth=8, learning_rate=0.03, subsample=0.85</td></tr>
+      <tr><td>Target Transform</td><td>log1p(units_sold_monthly) — handles right skew of ~1.8</td></tr>
+      <tr><td>Output Transform</td><td>np.expm1() applied to predictions to return original unit scale</td></tr>
+      <tr><td>Brand Prior</td><td>Brand-level mean log(units) computed on training fold only — no test leakage</td></tr>
+      <tr><td>Features</td><td>18 NUM_SPECS + 2 TIME_CONTEXT + 3 CAT_SPECS + 1 REGION + 7 ENGINEERED + 1 brand_demand_prior</td></tr>
+      <tr><td>Accuracy</td><td>R² = 0.854 (log-space) · MAE ≈ ±9 units/month (original space)</td></tr>
+    </table>
+    <div class="note" style="margin-top:10px;">R²=0.854 is the genuine ceiling of what hardware specs can explain about demand. The remaining 15% variance is from marketing spend, timing, economic conditions — factors unknowable at launch.</div>
+  </div>
+</div>
+
+<!-- FR-05 -->
+<div class="req-card" id="fr5">
+  <div class="req-header">
+    <div class="req-id">FR-05</div>
+    <div class="req-title">Customer Demographics</div>
+    <span class="pill pill-p3">Pillar 3</span>
+    <div class="req-priority high">HIGH</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must provide a buyer demographic profile for the input phone, covering age distribution, income distribution, RFM loyalty segments, and gender split. Demographics are retrieved from the K=10 most similar historical phones rather than predicted directly from specs.</p>
+    <table class="req-table">
+      <tr><th>Demographic Group</th><th>Buckets</th><th>R² (Accuracy)</th></tr>
+      <tr><td>Age Distribution</td><td>18–24 · 25–34 · 35–44 · 45–54 · 55+</td><td>~0.67</td></tr>
+      <tr><td>Income Distribution</td><td>Low · Lower-Mid · Mid · Upper-Mid · High</td><td>~0.77</td></tr>
+      <tr><td>RFM Loyalty</td><td>Recent · Champion · Loyal · At-Risk · Hibernating</td><td>~0.00 (population baseline only)</td></tr>
+      <tr><td>Gender Split</td><td>Male · Female · Non-Binary</td><td>Retrieval-based (Next.js only)</td></tr>
+    </table>
+    <div class="warn" style="margin-top:10px;"><strong>Limitation:</strong> RFM loyalty is not predictable from hardware specs — the system returns the population-level baseline from similar phones. This is displayed transparently and should not be used as a phone-specific prediction.</div>
+  </div>
+</div>
+
+<!-- FR-06 -->
+<div class="req-card" id="fr6">
+  <div class="req-header">
+    <div class="req-id">FR-06</div>
+    <div class="req-title">PMF Scoring &amp; Failure Prediction</div>
+    <span class="pill pill-p4">Pillar 4</span>
+    <div class="req-priority high">HIGH</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must compute a Product-Market Fit (PMF) score and failure probability for the input phone, then issue a launch recommendation based on three risk bands. The PMF label is constructed from post-launch behavioural metrics but the prediction model uses only pre-launch specs.</p>
+
+    <h4>PMF Label Construction Formula</h4>
+    <pre>PMF_score = 0.25 × NPS_norm
+           + 0.20 × repeat_purchase_norm
+           + 0.20 × recommendation_norm
+           + 0.15 × (1 − return_rate_norm)
+           + 0.10 × (1 − warranty_claims_norm)
+           + 0.10 × sales_slope_norm</pre>
+
+    <table class="req-table">
+      <tr><th>Attribute</th><th>Detail</th></tr>
+      <tr><td>Failure Label</td><td>failure=1 if PMF_score &lt; 25th percentile (bottom quartile)</td></tr>
+      <tr><td>Model</td><td>Random Forest — 500 trees, max_depth=12, class_weight="balanced"</td></tr>
+      <tr><td>Displayed PMF</td><td>1 − failure_probability (confidence of not being a failing product)</td></tr>
+      <tr><td>Accuracy</td><td>79.9% classification accuracy · AUC = 0.88</td></tr>
+    </table>
+
+    <h4 style="margin-top:12px;">Launch Recommendation Bands</h4>
+    <table class="req-table">
+      <tr><th>Failure Probability</th><th>Verdict</th><th>Meaning</th></tr>
+      <tr><td>Below 15%</td><td>✅ GO FOR LAUNCH</td><td>Low risk — product strongly positioned for success</td></tr>
+      <tr><td>15% – 35%</td><td>⚠️ PROCEED WITH CAUTION</td><td>Moderate risk — recommend mitigation before launch</td></tr>
+      <tr><td>Above 35%</td><td>❌ RECONSIDER / REWORK</td><td>High risk — significant spec or pricing changes needed</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- FR-07 -->
+<div class="req-card" id="fr7">
+  <div class="req-header">
+    <div class="req-id">FR-07</div>
+    <div class="req-title">Customer Lifetime Value (CLV) Calculation</div>
+    <span class="pill pill-api">Agent</span>
+    <div class="req-priority high">HIGH</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must compute CLV per buyer at inference time using a first-principles formula. CLV must never be read from a pre-calculated column in the dataset.</p>
+
+    <h4>CLV Formula</h4>
+    <pre>net_price      = price_usd × (1 − return_rate / 100)
+repeat_factor  = 1 + (repeat_rate / 100)
+CLV_per_buyer  = net_price × margin(18%) × repeat_factor × loyalty_horizon(2.4)</pre>
+
+    <table class="req-table">
+      <tr><th>Component</th><th>Value / Source</th></tr>
+      <tr><td>net_price</td><td>Derived from input price and return rate from similar phones</td></tr>
+      <tr><td>margin (18%)</td><td>Fixed assumption — net profit margin after operating expenses</td></tr>
+      <tr><td>repeat_factor</td><td>Derived from rfm_loyal_pct of retrieved demographics</td></tr>
+      <tr><td>loyalty_horizon (2.4)</td><td>Fixed constant — average brand upgrade cycles for loyal customers</td></tr>
+      <tr><td>return_rate</td><td>Default 8.0% (neutral prior); overridden by similar phone history when available</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- FR-08 -->
+<div class="req-card" id="fr8">
+  <div class="req-header">
+    <div class="req-id">FR-08</div>
+    <div class="req-title">Competitor Analysis</div>
+    <span class="pill pill-api">API</span>
+    <span class="pill pill-fe">Next.js</span>
+    <div class="req-priority high">HIGH</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must identify and analyse the top 3–5 nearest competitor phones, display a radar chart comparing 6 normalised spec axes, provide actual spec values for both the user's phone and competitors, and surface win/loss insights where differences exceed 12%.</p>
+    <table class="req-table">
+      <tr><th>Attribute</th><th>Detail</th></tr>
+      <tr><td>Radar Axes</td><td>RAM · Battery · Main Camera · Screen Size · Refresh Rate · Performance Score</td></tr>
+      <tr><td>Normalisation</td><td>Fixed scale per axis (e.g., RAM: 2–16 GB → 0–100); not relative to competitors</td></tr>
+      <tr><td>Insight Threshold</td><td>Win/Loss insight generated only when spec differs by ≥12% from competitor average</td></tr>
+      <tr><td>Competitor Count</td><td>Top 3 displayed on radar; up to 5 in companion list</td></tr>
+      <tr><td>Distance Shown</td><td>Euclidean similarity distance displayed per competitor (lower = more similar)</td></tr>
+    </table>
+    <div class="note" style="margin-top:10px;">Competitor matching uses spec-only similarity — price is excluded from the matching to prevent circular anchoring in the price optimiser.</div>
+  </div>
+</div>
+
+<!-- FR-09 -->
+<div class="req-card" id="fr9">
+  <div class="req-header">
+    <div class="req-id">FR-09</div>
+    <div class="req-title">Price Optimisation</div>
+    <span class="pill pill-api">API</span>
+    <span class="pill pill-fe">Next.js</span>
+    <div class="req-priority high">HIGH</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must recommend a profit-maximising launch price anchored to competitor market pricing — not to the user's input price. The recommendation must remain stable regardless of what price the user enters.</p>
+
+    <h4>Price Optimisation Logic</h4>
+    <pre>spec_ratio   = clamp(your_spec_score / avg_competitor_spec_score, 0.80, 1.25)
+fair_price   = market_median_price × spec_ratio
+unit_cost    = fair_price × (1 − 0.40)         ← 40% gross margin assumption
+demand(p)    = base_demand × max(0, 1 − 1.3 × (p − fair_price) / fair_price)
+profit(p)    = (p − unit_cost) × demand(p)
+objective(p) = profit(p) × pmf_score(p)         ← risk-adjusted profit</pre>
+
+    <table class="req-table">
+      <tr><th>Attribute</th><th>Detail</th></tr>
+      <tr><td>Price Sweep</td><td>14 equally-spaced points from 50% to 160% of market median price</td></tr>
+      <tr><td>Demand Sensitivity (BETA)</td><td>1.3 — elastic demand; each 1% price increase above fair price reduces demand by 1.3%</td></tr>
+      <tr><td>Spec Ratio Clamp</td><td>Bounded 0.80–1.25 to prevent economically unrealistic recommendations</td></tr>
+      <tr><td>Objective</td><td>Risk-adjusted profit = raw profit × PMF score (penalises high-profit but high-risk price points)</td></tr>
+      <tr><td>Outputs</td><td>Recommended price · Peak revenue price · Current input price · Fair price · Competitor range</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- FR-10 -->
+<div class="req-card" id="fr10">
+  <div class="req-header">
+    <div class="req-id">FR-10</div>
+    <div class="req-title">Live News Feed</div>
+    <span class="pill pill-api">API</span>
+    <span class="pill pill-fe">Next.js</span>
+    <div class="req-priority medium">MEDIUM</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must search the web in real time for news and reviews in two buckets: "Your Phone" (articles about the model and spec-similar handsets) and "Competitor" (articles about predicted competitor phones). All searches must run in parallel and complete within 15 seconds.</p>
+    <table class="req-table">
+      <tr><th>Attribute</th><th>Detail</th></tr>
+      <tr><td>Search Engine</td><td>DuckDuckGo Search (ddgs library) — no API key required</td></tr>
+      <tr><td>Parallelism</td><td>ThreadPoolExecutor with max_workers = min(tasks, 8)</td></tr>
+      <tr><td>Timeout</td><td>15 seconds total; slow searches are silently dropped</td></tr>
+      <tr><td>Your Phone cap</td><td>Maximum 9 articles</td></tr>
+      <tr><td>Competitor cap</td><td>Maximum 11 articles</td></tr>
+      <tr><td>Total Articles</td><td>Up to 20 articles returned, interleaved round-robin by bucket</td></tr>
+      <tr><td>Deduplication</td><td>URL-based deduplication to prevent the same article appearing twice</td></tr>
+      <tr><td>Article Fields</td><td>title · url · snippet (max 280 chars) · source domain · date · bucket tag</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- FR-11 -->
+<div class="req-card" id="fr11">
+  <div class="req-header">
+    <div class="req-id">FR-11</div>
+    <div class="req-title">Interactive Dashboard Display</div>
+    <span class="pill pill-fe">Frontend</span>
+    <div class="req-priority high">HIGH</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must render all analysis results in a structured, visually clear dashboard. The Next.js frontend must provide a richer feature set than the Streamlit prototype.</p>
+    <table class="req-table">
+      <tr><th>Dashboard Component</th><th>Next.js</th><th>Streamlit</th></tr>
+      <tr><td>KPI Cards (segment, demand, CLV, PMF score)</td><td>✅</td><td>✅</td></tr>
+      <tr><td>6-Month Demand Line Chart</td><td>✅</td><td>✅</td></tr>
+      <tr><td>Age Distribution Donut Chart</td><td>✅</td><td>✅</td></tr>
+      <tr><td>Income Distribution Donut Chart</td><td>✅</td><td>✅</td></tr>
+      <tr><td>Gender Split Donut Chart</td><td>✅</td><td>❌</td></tr>
+      <tr><td>PMF Gauge / Score Dial</td><td>✅</td><td>✅</td></tr>
+      <tr><td>RFM Loyalty Diverging Chart</td><td>✅</td><td>✅</td></tr>
+      <tr><td>Buyer Persona Plain-English Summary</td><td>✅</td><td>❌</td></tr>
+      <tr><td>Affordability Fit Indicator</td><td>✅</td><td>❌</td></tr>
+      <tr><td>Competitor Radar Chart</td><td>✅</td><td>❌</td></tr>
+      <tr><td>Price Optimisation Curve</td><td>✅</td><td>❌</td></tr>
+      <tr><td>Live News Panel</td><td>✅</td><td>❌</td></tr>
+      <tr><td>Dark / Light Theme Toggle</td><td>✅</td><td>❌</td></tr>
+      <tr><td>Raw JSON Output</td><td>❌</td><td>✅</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- FR-12 -->
+<div class="req-card" id="fr12">
+  <div class="req-header">
+    <div class="req-id">FR-12</div>
+    <div class="req-title">Report Download</div>
+    <span class="pill pill-fe">Next.js</span>
+    <div class="req-priority medium">MEDIUM</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must allow users to download the complete analysis as a printable report. The Next.js frontend generates an HTML report from the dashboard data and opens the browser print dialog for PDF export.</p>
+    <table class="req-table">
+      <tr><th>Attribute</th><th>Detail</th></tr>
+      <tr><td>Method</td><td>HTML string generation + window.print() → browser PDF export</td></tr>
+      <tr><td>Content</td><td>All KPIs, demand figures, demographic percentages, PMF score, verdict, and competitor names</td></tr>
+      <tr><td>Format</td><td>Browser-rendered HTML; user selects "Save as PDF" in print dialog</td></tr>
+      <tr><td>Trigger</td><td>DownloadButton component in dashboard; only active after analysis completes</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- FR-13 -->
+<div class="req-card" id="fr13">
+  <div class="req-header">
+    <div class="req-id">FR-13</div>
+    <div class="req-title">Dual Frontend Support</div>
+    <span class="pill pill-fe">Frontend</span>
+    <div class="req-priority low">LOW</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must support two independent frontend options: a Next.js + FastAPI production frontend (full features) and a Streamlit standalone prototype (basic features). Both must produce identical core analysis results for the same input phone.</p>
+    <table class="req-table">
+      <tr><th>Frontend</th><th>Connection Method</th><th>Startup</th><th>Primary Use</th></tr>
+      <tr><td>Next.js (React)</td><td>HTTP POST to FastAPI on port 8000</td><td>Two terminals required</td><td>Production demonstration</td></tr>
+      <tr><td>Streamlit</td><td>Direct Python import of agent.analyze()</td><td>Single terminal</td><td>Rapid prototyping / raw JSON inspection</td></tr>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══════════ CHAPTER 3 — NON-FUNCTIONAL REQUIREMENTS ═══════════ -->
+<div class="chapter" id="nfr">3. Non-Functional Requirements</div>
+
+<p>
+  Non-functional requirements describe <strong>how well the system performs</strong> — the quality
+  attributes, constraints, and standards that the system must meet beyond basic functionality.
+  These requirements govern correctness, performance, security, maintainability, and ethical behaviour.
+</p>
+
+<!-- NFR-01 -->
+<div class="req-card req-nfr" id="nfr1">
+  <div class="req-header req-nfr">
+    <div class="req-id">NFR-01</div>
+    <div class="req-title">Data Leakage Prevention (Cold-Start Integrity)</div>
+    <span class="pill pill-p1">All Pillars</span>
+    <div class="req-priority high">HIGH</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must guarantee that no post-launch information is ever used as an input feature in any cold-start prediction model. This is the most critical quality requirement — without it, all accuracy metrics are meaningless.</p>
+    <p><strong>Implementation:</strong> A strict feature contract is maintained in <code>config.py</code>. All columns are classified as either <code>KNOWN_AT_LAUNCH</code> or <code>POST_LAUNCH</code>. Post-launch columns are never passed to Pillar 1, 2, or 4 models.</p>
+    <table class="req-table">
+      <tr><th>Feature Contract</th><th>Allowed in Models?</th><th>Examples</th></tr>
+      <tr><td>KNOWN_AT_LAUNCH</td><td>✅ Yes</td><td>price_usd, ram_capacity, battery_capacity, brand_name, OS</td></tr>
+      <tr><td>TIME_CONTEXT</td><td>✅ Yes (Pillar 2 only)</td><td>months_since_launch, month_index</td></tr>
+      <tr><td>POST_LAUNCH</td><td>❌ Never as features</td><td>social_media_mentions (corr=0.86), nps_score, return_rate_pct, units_sold_monthly</td></tr>
+    </table>
+    <div class="warn" style="margin-top:10px;"><strong>Why this matters:</strong> Including social_media_mentions alone would inflate demand R² from 0.854 to approximately 0.95+ — but the model would be completely unusable at inference time since a new phone has no social mentions yet.</div>
+  </div>
+</div>
+
+<!-- NFR-02 -->
+<div class="req-card req-nfr" id="nfr2">
+  <div class="req-header req-nfr">
+    <div class="req-id">NFR-02</div>
+    <div class="req-title">Model Accuracy &amp; Honest Reporting</div>
+    <span class="pill pill-p1">All Pillars</span>
+    <div class="req-priority high">HIGH</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must report all accuracy metrics honestly — computed on genuinely held-out test phones that were never seen during training. The system must explicitly document limitations rather than inflate numbers through leakage or overfitting.</p>
+    <table class="req-table">
+      <tr><th>Pillar</th><th>Metric</th><th>Reported Value</th><th>Baseline</th></tr>
+      <tr><td>P1 Segment Classifier</td><td>Accuracy</td><td>99.4%</td><td>25% (random)</td></tr>
+      <tr><td>P1 Segment Classifier</td><td>Macro-F1</td><td>99.6%</td><td>0.25</td></tr>
+      <tr><td>P2 Demand Regressor</td><td>R² (log-space)</td><td>0.854</td><td>0.00</td></tr>
+      <tr><td>P2 Demand Regressor</td><td>MAE (units)</td><td>±9 units/month</td><td>Population mean error</td></tr>
+      <tr><td>P3 Income Retrieval</td><td>R²</td><td>0.771</td><td>0.00</td></tr>
+      <tr><td>P3 Age Retrieval</td><td>R²</td><td>0.671</td><td>0.00</td></tr>
+      <tr><td>P3 RFM Retrieval</td><td>R²</td><td>≈ 0.00</td><td>Explicitly acknowledged as not predictable</td></tr>
+      <tr><td>P4 PMF Classifier</td><td>Accuracy</td><td>79.9%</td><td>75% (majority class)</td></tr>
+      <tr><td>P4 PMF Classifier</td><td>AUC-ROC</td><td>0.88</td><td>0.50 (random)</td></tr>
+    </table>
+    <div class="success" style="margin-top:10px;"><strong>Honesty Principle:</strong> R²=0.854 for demand is the genuine ceiling of what hardware specs can explain — not a tuning failure. The remaining 15% variance comes from marketing spend, timing, and competitive actions that no spec-only model can recover.</div>
+  </div>
+</div>
+
+<!-- NFR-03 -->
+<div class="req-card req-nfr" id="nfr3">
+  <div class="req-header req-nfr">
+    <div class="req-id">NFR-03</div>
+    <div class="req-title">System Performance</div>
+    <span class="pill pill-api">API</span>
+    <span class="pill pill-fe">Frontend</span>
+    <div class="req-priority high">HIGH</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must deliver analysis results in a timely and responsive manner. Performance-critical operations must use parallelism where possible.</p>
+    <table class="req-table">
+      <tr><th>Operation</th><th>Target Latency</th><th>Mechanism</th></tr>
+      <tr><td>/api/analyze (full pipeline)</td><td>&lt; 5 seconds</td><td>Sequential P1 → P3 → P2 → P4 pipeline</td></tr>
+      <tr><td>/api/competitors</td><td>&lt; 2 seconds</td><td>Loaded non-blocking after main analysis</td></tr>
+      <tr><td>/api/news</td><td>&lt; 15 seconds</td><td>ThreadPoolExecutor — parallel web searches, timeout enforced</td></tr>
+      <tr><td>/api/price-optimize</td><td>&lt; 3 seconds</td><td>14-point price sweep with PMF calls per point</td></tr>
+      <tr><td>Dashboard first render</td><td>&lt; 5 seconds</td><td>Progressive loading — main analysis renders first</td></tr>
+    </table>
+    <p style="margin-top:10px;"><strong>Progressive Loading Strategy:</strong> The Next.js frontend calls <code>/api/analyze</code> first and renders the dashboard immediately. Competitor and news data load in the background as non-blocking background calls, filling in their sections as they complete.</p>
+  </div>
+</div>
+
+<!-- NFR-04 -->
+<div class="req-card req-nfr" id="nfr4">
+  <div class="req-header req-nfr">
+    <div class="req-id">NFR-04</div>
+    <div class="req-title">Architectural Separation of Concerns</div>
+    <span class="pill pill-api">API</span>
+    <span class="pill pill-fe">Frontend</span>
+    <div class="req-priority high">HIGH</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must maintain a clean three-layer architecture where each layer has a single responsibility and communicates through defined interfaces.</p>
+    <table class="req-table">
+      <tr><th>Layer</th><th>Location</th><th>Responsibility</th><th>Must Not</th></tr>
+      <tr><td>ML / Business Logic</td><td>src/</td><td>All predictions, feature engineering, model training</td><td>Contain UI code or HTTP handling</td></tr>
+      <tr><td>API / Backend</td><td>backend/</td><td>Request validation, routing, response assembly</td><td>Contain ML training logic or UI rendering</td></tr>
+      <tr><td>Frontend</td><td>frontend/ or app.py</td><td>UI rendering, user input, chart display</td><td>Call ML models directly (Next.js) or contain business rules</td></tr>
+    </table>
+    <p style="margin-top:10px;">The Next.js frontend communicates with the backend exclusively through HTTP POST requests. It never imports Python modules directly. The Streamlit frontend violates this principle (it imports <code>agent.analyze</code> directly) — this is accepted as a prototyping convenience only.</p>
+  </div>
+</div>
+
+<!-- NFR-05 -->
+<div class="req-card req-nfr" id="nfr5">
+  <div class="req-header req-nfr">
+    <div class="req-id">NFR-05</div>
+    <div class="req-title">Cold-Start Deployability</div>
+    <span class="pill pill-p1">All Pillars</span>
+    <div class="req-priority high">HIGH</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must be fully functional for phones that have never been sold and have zero historical data. Every prediction must be derivable from launch-known inputs alone. No feature may require post-launch data at inference time.</p>
+    <p><strong>Verification:</strong> Any new phone spec submitted through the input form must produce a complete 11-field analysis result with no null values and no "data unavailable" fallbacks in the core outputs (segment, demand, demographics, PMF, CLV).</p>
+    <div class="success">
+      <strong>Design Evidence:</strong> The brand_demand_prior falls back to the global training mean for unknown brands (line 74 of pillar2_demand.py). Region fallback activates automatically when fewer than K phones exist in the target region (line 93 of pillar1_market_research.py). Sales slope defaults to 0.0 for phones with fewer than 3 data points (pillar4_pmf.py).
+    </div>
+  </div>
+</div>
+
+<!-- NFR-06 -->
+<div class="req-card req-nfr" id="nfr6">
+  <div class="req-header req-nfr">
+    <div class="req-id">NFR-06</div>
+    <div class="req-title">Reproducibility</div>
+    <span class="pill pill-p1">All Pillars</span>
+    <div class="req-priority medium">MEDIUM</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must produce identical predictions for identical inputs. Training must be deterministic and results must be reproducible across different machines given the same dataset and random seed.</p>
+    <table class="req-table">
+      <tr><th>Mechanism</th><th>Implementation</th></tr>
+      <tr><td>Global Random Seed</td><td>RANDOM_STATE = 42 in config.py — applied to all models and split strategies</td></tr>
+      <tr><td>Model Serialisation</td><td>All trained models saved as .joblib files — training and inference are fully decoupled</td></tr>
+      <tr><td>Deterministic Features</td><td>All 7 engineered features are pure arithmetic functions — no randomness at inference</td></tr>
+      <tr><td>Scaler Persistence</td><td>StandardScaler fitted parameters saved inside pillar1_similarity.joblib</td></tr>
+      <tr><td>Encoder Persistence</td><td>OrdinalEncoder mappings saved in every pillar's joblib artifact</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- NFR-07 -->
+<div class="req-card req-nfr" id="nfr7">
+  <div class="req-header req-nfr">
+    <div class="req-id">NFR-07</div>
+    <div class="req-title">Dataset Scale &amp; Regional Coverage</div>
+    <span class="pill pill-p1">All Pillars</span>
+    <div class="req-priority medium">MEDIUM</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must operate on a dataset of sufficient scale to support reliable similarity retrieval and demographic inference across all supported regions.</p>
+    <table class="req-table">
+      <tr><th>Attribute</th><th>Value</th></tr>
+      <tr><td>Total Records</td><td>116,481 smartphone snapshots (monthly × regional)</td></tr>
+      <tr><td>Supported Regions</td><td>Asia-Pacific · North America · Europe · South Asia · Middle East &amp; Africa · Latin America</td></tr>
+      <tr><td>Dataset File</td><td>global_smartphone_bi_v4_final.csv (required at runtime for similarity retrieval)</td></tr>
+      <tr><td>Unique Phones</td><td>Multiple thousands of distinct brand+model combinations</td></tr>
+      <tr><td>Time Coverage</td><td>Multi-year monthly snapshots per phone in each region</td></tr>
+    </table>
+    <div class="note" style="margin-top:10px;">The dataset CSV must be present at runtime for Pillar 1 similarity retrieval and Pillar 3 demographics. If the file is missing, these endpoints will raise an error. Models (Pillar 2, 4) operate from pre-saved .joblib files and do not require the CSV at inference time.</div>
+  </div>
+</div>
+
+<!-- NFR-08 -->
+<div class="req-card req-nfr" id="nfr8">
+  <div class="req-header req-nfr">
+    <div class="req-id">NFR-08</div>
+    <div class="req-title">Maintainability</div>
+    <span class="pill pill-api">API</span>
+    <div class="req-priority medium">MEDIUM</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must be designed so that key business parameters — PMF weights, feature engineering formulas, model hyperparameters, and recommendation thresholds — can be changed in one place without affecting unrelated components.</p>
+    <table class="req-table">
+      <tr><th>Changeable Component</th><th>Location</th><th>Impact of Change</th></tr>
+      <tr><td>PMF component weights</td><td>pillar4_pmf.py — build_labels()</td><td>Retrain Pillar 4 only</td></tr>
+      <tr><td>Launch recommendation thresholds</td><td>pillar4_pmf.py — predict_fit()</td><td>No retraining needed; immediate effect</td></tr>
+      <tr><td>Feature engineering formulas</td><td>config.py — add_engineered_features()</td><td>Retrain Pillar 2 (uses ENGINEERED)</td></tr>
+      <tr><td>KNOWN_AT_LAUNCH / POST_LAUNCH split</td><td>config.py</td><td>Retrain all affected pillars</td></tr>
+      <tr><td>Price optimiser BETA constant</td><td>backend/main.py — price_optimize()</td><td>No retraining; immediate effect</td></tr>
+      <tr><td>CLV margin (18%) and horizon (2.4)</td><td>src/agent.py — estimate_clv()</td><td>No retraining; immediate effect</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- NFR-09 -->
+<div class="req-card req-nfr" id="nfr9">
+  <div class="req-header req-nfr">
+    <div class="req-id">NFR-09</div>
+    <div class="req-title">Security</div>
+    <span class="pill pill-api">API</span>
+    <div class="req-priority medium">MEDIUM</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must restrict browser-based cross-origin access to known safe origins and validate all incoming data before any ML code executes.</p>
+    <table class="req-table">
+      <tr><th>Control</th><th>Implementation</th><th>Scope</th></tr>
+      <tr><td>CORS Restriction</td><td>allow_origins: ["http://localhost:3000", "http://127.0.0.1:3000"]</td><td>Prevents browser-based cross-origin requests</td></tr>
+      <tr><td>Input Validation</td><td>Pydantic PhoneSpec model — type checking + field constraints (gt=0 for price)</td><td>All 4 endpoints</td></tr>
+      <tr><td>Error Isolation</td><td>All endpoints wrapped in try/except; ML errors return HTTP 500 with message</td><td>Prevents stack trace exposure</td></tr>
+      <tr><td>No Authentication</td><td>No API keys or tokens — local deployment only</td><td>Not suitable for public internet exposure</td></tr>
+    </table>
+    <div class="warn" style="margin-top:10px;"><strong>Production Note:</strong> For deployment beyond localhost, API key authentication, HTTPS, and rate limiting would be required. CORS alone does not protect against direct HTTP requests from non-browser clients (curl, Python requests, etc.).</div>
+  </div>
+</div>
+
+<!-- NFR-10 -->
+<div class="req-card req-nfr" id="nfr10">
+  <div class="req-header req-nfr">
+    <div class="req-id">NFR-10</div>
+    <div class="req-title">Usability</div>
+    <span class="pill pill-fe">Frontend</span>
+    <div class="req-priority medium">MEDIUM</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must be immediately usable without configuration. A user must be able to run a complete analysis within 30 seconds of opening the application, with no required prior knowledge of the ML models.</p>
+    <table class="req-table">
+      <tr><th>Usability Feature</th><th>Implementation</th></tr>
+      <tr><td>Pre-filled Defaults</td><td>All form fields have sensible defaults — user can click "Analyze" immediately</td></tr>
+      <tr><td>Colour-Coded Verdict</td><td>Green / Amber / Red banner gives the GO/CAUTION/RECONSIDER verdict at a glance</td></tr>
+      <tr><td>Progressive Load</td><td>Main dashboard renders in &lt;5s; news and competitors appear as they load</td></tr>
+      <tr><td>Plain-English Summary</td><td>Buyer persona described in natural language (Next.js): "Your likely buyer is a 25–34 year old mid-income professional"</td></tr>
+      <tr><td>Affordability Fit</td><td>Single percentage showing what proportion of target buyers can afford the phone</td></tr>
+      <tr><td>Dark / Light Mode</td><td>Theme toggle for different lighting environments (Next.js)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- NFR-11 -->
+<div class="req-card req-nfr" id="nfr11">
+  <div class="req-header req-nfr">
+    <div class="req-id">NFR-11</div>
+    <div class="req-title">Reliability &amp; Error Handling</div>
+    <span class="pill pill-api">API</span>
+    <span class="pill pill-fe">Frontend</span>
+    <div class="req-priority medium">MEDIUM</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system must handle partial failures gracefully. A failure in one endpoint must not prevent the user from seeing results from other endpoints. Optional features (news, competitors) must degrade silently without affecting core analysis.</p>
+    <table class="req-table">
+      <tr><th>Failure Scenario</th><th>System Behaviour</th></tr>
+      <tr><td>News search timeout (&gt;15s)</td><td>Affected searches silently dropped; remaining articles returned; no API error</td></tr>
+      <tr><td>/api/competitors failure</td><td>Dashboard loads without radar chart; core analysis unaffected</td></tr>
+      <tr><td>Unknown brand in input</td><td>brand_demand_prior falls back to global mean; prediction continues normally</td></tr>
+      <tr><td>Region has &lt;K phones</td><td>Similarity search expands to all regions automatically</td></tr>
+      <tr><td>Phone with &lt;3 months data</td><td>sales_slope defaults to 0.0 for PMF label construction</td></tr>
+      <tr><td>Invalid input (e.g., negative price)</td><td>HTTP 422 Unprocessable Entity returned before any ML code runs</td></tr>
+      <tr><td>ML model file missing</td><td>HTTP 500 returned with descriptive error message</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- NFR-12 -->
+<div class="req-card req-nfr" id="nfr12">
+  <div class="req-header req-nfr">
+    <div class="req-id">NFR-12</div>
+    <div class="req-title">Scalability</div>
+    <span class="pill pill-api">API</span>
+    <div class="req-priority low">LOW</div>
+  </div>
+  <div class="req-body">
+    <p><strong>Description:</strong> The system architecture must be designed so that performance-critical bottlenecks are identifiable and addressable without structural rewrites. The current implementation is optimised for correctness and demonstration; known scalability constraints are explicitly documented.</p>
+    <table class="req-table">
+      <tr><th>Component</th><th>Current State</th><th>Scalability Path</th></tr>
+      <tr><td>Model loading (joblib.load per call)</td><td>Re-reads disk on every request</td><td>Load once at startup in FastAPI @startup event</td></tr>
+      <tr><td>P2 and P4 run sequentially</td><td>~400ms added latency</td><td>Run in parallel using asyncio + ProcessPoolExecutor</td></tr>
+      <tr><td>n_jobs=-1 for all models</td><td>All cores per request; problematic at high concurrency</td><td>Set n_jobs=1 for inference; use multiple API worker processes</td></tr>
+      <tr><td>News: ThreadPoolExecutor</td><td>Max 8 parallel searches; 15s timeout</td><td>Async I/O with aiohttp for better throughput</td></tr>
+      <tr><td>Dataset CSV loaded at similarity runtime</td><td>One I/O per request</td><td>Cache in memory at startup; refresh on schedule</td></tr>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══════════ CHAPTER 4 — SUMMARY TABLES ═══════════ -->
+<div class="chapter" id="summary">4. Requirements Summary Tables</div>
+
+<h2>4.1 Functional Requirements Summary</h2>
+<table class="gen">
+  <tr>
+    <th>ID</th><th>Requirement</th><th>Layer</th><th>Priority</th><th>Pillar</th>
+  </tr>
+  <tr><td>FR-01</td><td>Phone Specification Input</td><td>Frontend + API</td><td>HIGH</td><td>All</td></tr>
+  <tr><td>FR-02</td><td>Market Segment Classification</td><td>ML</td><td>HIGH</td><td>P1</td></tr>
+  <tr><td>FR-03</td><td>Similar Phone Retrieval</td><td>ML</td><td>HIGH</td><td>P1</td></tr>
+  <tr><td>FR-04</td><td>Six-Month Demand Forecasting</td><td>ML</td><td>HIGH</td><td>P2</td></tr>
+  <tr><td>FR-05</td><td>Customer Demographics</td><td>ML</td><td>HIGH</td><td>P3</td></tr>
+  <tr><td>FR-06</td><td>PMF Scoring &amp; Failure Prediction</td><td>ML</td><td>HIGH</td><td>P4</td></tr>
+  <tr><td>FR-07</td><td>CLV Calculation</td><td>Agent</td><td>HIGH</td><td>Agent</td></tr>
+  <tr><td>FR-08</td><td>Competitor Analysis</td><td>API + Frontend</td><td>HIGH</td><td>P1 (retrieval)</td></tr>
+  <tr><td>FR-09</td><td>Price Optimisation</td><td>API + Frontend</td><td>HIGH</td><td>P2 + P4</td></tr>
+  <tr><td>FR-10</td><td>Live News Feed</td><td>API + Frontend</td><td>MEDIUM</td><td>—</td></tr>
+  <tr><td>FR-11</td><td>Interactive Dashboard</td><td>Frontend</td><td>HIGH</td><td>All</td></tr>
+  <tr><td>FR-12</td><td>Report Download</td><td>Frontend</td><td>MEDIUM</td><td>—</td></tr>
+  <tr><td>FR-13</td><td>Dual Frontend Support</td><td>Frontend</td><td>LOW</td><td>—</td></tr>
+</table>
+
+<h2>4.2 Non-Functional Requirements Summary</h2>
+<table class="gen">
+  <tr>
+    <th>ID</th><th>Requirement</th><th>Category</th><th>Priority</th>
+  </tr>
+  <tr><td>NFR-01</td><td>Data Leakage Prevention</td><td>Data Integrity</td><td>HIGH</td></tr>
+  <tr><td>NFR-02</td><td>Model Accuracy &amp; Honest Reporting</td><td>Correctness</td><td>HIGH</td></tr>
+  <tr><td>NFR-03</td><td>System Performance</td><td>Performance</td><td>HIGH</td></tr>
+  <tr><td>NFR-04</td><td>Architectural Separation</td><td>Design</td><td>HIGH</td></tr>
+  <tr><td>NFR-05</td><td>Cold-Start Deployability</td><td>Deployability</td><td>HIGH</td></tr>
+  <tr><td>NFR-06</td><td>Reproducibility</td><td>Reliability</td><td>MEDIUM</td></tr>
+  <tr><td>NFR-07</td><td>Dataset Scale &amp; Coverage</td><td>Data</td><td>MEDIUM</td></tr>
+  <tr><td>NFR-08</td><td>Maintainability</td><td>Design</td><td>MEDIUM</td></tr>
+  <tr><td>NFR-09</td><td>Security</td><td>Security</td><td>MEDIUM</td></tr>
+  <tr><td>NFR-10</td><td>Usability</td><td>UX</td><td>MEDIUM</td></tr>
+  <tr><td>NFR-11</td><td>Reliability &amp; Error Handling</td><td>Reliability</td><td>MEDIUM</td></tr>
+  <tr><td>NFR-12</td><td>Scalability</td><td>Performance</td><td>LOW</td></tr>
+</table>
+
+<h2>4.3 Priority Distribution</h2>
+<table class="gen">
+  <tr><th>Priority</th><th>Functional</th><th>Non-Functional</th><th>Total</th></tr>
+  <tr><td>HIGH</td><td>10</td><td>5</td><td>15</td></tr>
+  <tr><td>MEDIUM</td><td>2</td><td>6</td><td>8</td></tr>
+  <tr><td>LOW</td><td>1</td><td>1</td><td>2</td></tr>
+  <tr><td><strong>Total</strong></td><td><strong>13</strong></td><td><strong>12</strong></td><td><strong>25</strong></td></tr>
+</table>
+
+
+<!-- ═══════════ CHAPTER 5 — TRACEABILITY MATRIX ═══════════ -->
+<div class="chapter" id="traceability">5. Requirements Traceability Matrix</div>
+
+<p>This matrix shows which source files implement each requirement, enabling reviewers to verify that all requirements are covered in the codebase.</p>
+
+<table class="gen">
+  <tr>
+    <th>Requirement</th>
+    <th>Primary Source File</th>
+    <th>Supporting Files</th>
+  </tr>
+  <tr>
+    <td>FR-01 Input</td>
+    <td>backend/main.py (PhoneSpec)</td>
+    <td>frontend/components/bi-agent-app.tsx</td>
+  </tr>
+  <tr>
+    <td>FR-02 Segment</td>
+    <td>src/pillar1_market_research.py</td>
+    <td>src/config.py (NUM_SPECS, CAT_SPECS)</td>
+  </tr>
+  <tr>
+    <td>FR-03 Similarity</td>
+    <td>src/pillar1_market_research.py</td>
+    <td>src/config.py (sim_feats), models/pillar1_similarity.joblib</td>
+  </tr>
+  <tr>
+    <td>FR-04 Demand</td>
+    <td>src/pillar2_demand.py</td>
+    <td>src/config.py (ENGINEERED), models/pillar2_demand.joblib</td>
+  </tr>
+  <tr>
+    <td>FR-05 Demographics</td>
+    <td>src/pillar3_segmentation.py</td>
+    <td>src/config.py (DEMO_COLS), models/pillar1_similarity.joblib</td>
+  </tr>
+  <tr>
+    <td>FR-06 PMF</td>
+    <td>src/pillar4_pmf.py</td>
+    <td>src/config.py (POST_LAUNCH labels), models/pillar4_pmf.joblib</td>
+  </tr>
+  <tr>
+    <td>FR-07 CLV</td>
+    <td>src/agent.py (estimate_clv)</td>
+    <td>src/pillar3_segmentation.py (repeat_rate)</td>
+  </tr>
+  <tr>
+    <td>FR-08 Competitors</td>
+    <td>backend/main.py (/api/competitors)</td>
+    <td>src/pillar1_market_research.py (find_similar)</td>
+  </tr>
+  <tr>
+    <td>FR-09 Price Optimise</td>
+    <td>backend/main.py (/api/price-optimize)</td>
+    <td>src/pillar2_demand.py, src/pillar4_pmf.py</td>
+  </tr>
+  <tr>
+    <td>FR-10 News</td>
+    <td>backend/main.py (/api/news)</td>
+    <td>ddgs library, ThreadPoolExecutor</td>
+  </tr>
+  <tr>
+    <td>FR-11 Dashboard</td>
+    <td>frontend/components/dashboard.tsx</td>
+    <td>frontend/components/bi-agent-app.tsx, app.py</td>
+  </tr>
+  <tr>
+    <td>FR-12 Download</td>
+    <td>frontend/components/dashboard.tsx (DownloadButton)</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td>FR-13 Dual Frontend</td>
+    <td>app.py (Streamlit)</td>
+    <td>frontend/ (Next.js)</td>
+  </tr>
+  <tr>
+    <td>NFR-01 Leakage</td>
+    <td>src/config.py (POST_LAUNCH)</td>
+    <td>All pillar training functions</td>
+  </tr>
+  <tr>
+    <td>NFR-02 Accuracy</td>
+    <td>All pillar train() functions</td>
+    <td>README.md (honest scorecard)</td>
+  </tr>
+  <tr>
+    <td>NFR-03 Performance</td>
+    <td>backend/main.py (ThreadPoolExecutor)</td>
+    <td>frontend/components/bi-agent-app.tsx (progressive load)</td>
+  </tr>
+  <tr>
+    <td>NFR-04 Separation</td>
+    <td>src/ vs backend/ vs frontend/</td>
+    <td>backend/main.py (sys.path.insert)</td>
+  </tr>
+  <tr>
+    <td>NFR-05 Cold-Start</td>
+    <td>src/config.py (KNOWN_AT_LAUNCH)</td>
+    <td>All predict_* functions</td>
+  </tr>
+  <tr>
+    <td>NFR-06 Reproducibility</td>
+    <td>src/config.py (RANDOM_STATE=42)</td>
+    <td>All joblib.dump() calls in train() functions</td>
+  </tr>
+  <tr>
+    <td>NFR-07 Dataset Scale</td>
+    <td>global_smartphone_bi_v4_final.csv</td>
+    <td>src/config.py (DATA_PATH)</td>
+  </tr>
+  <tr>
+    <td>NFR-08 Maintainability</td>
+    <td>src/config.py (centralised constants)</td>
+    <td>src/pillar4_pmf.py (single-function weights)</td>
+  </tr>
+  <tr>
+    <td>NFR-09 Security</td>
+    <td>backend/main.py (CORSMiddleware, Pydantic)</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td>NFR-10 Usability</td>
+    <td>frontend/components/bi-agent-app.tsx</td>
+    <td>frontend/components/dashboard.tsx</td>
+  </tr>
+  <tr>
+    <td>NFR-11 Reliability</td>
+    <td>backend/main.py (try/except on all endpoints)</td>
+    <td>src/pillar2_demand.py (gmean fallback)</td>
+  </tr>
+  <tr>
+    <td>NFR-12 Scalability</td>
+    <td>backend/main.py (architecture notes)</td>
+    <td>src/agent.py (sequential pipeline)</td>
+  </tr>
+</table>
+
+<!-- Footer -->
+<div class="footer">
+  <p>Smartphone BI Agent — Functional &amp; Non-Functional Requirements Report</p>
+  <p>13 Functional Requirements · 12 Non-Functional Requirements · 4 ML Pillars · 4 API Endpoints · 116,481 Records</p>
+  <p>XGBoost · Random Forest · KNN · FastAPI · Next.js · Streamlit</p>
+</div>
+
+</body>
+</html>

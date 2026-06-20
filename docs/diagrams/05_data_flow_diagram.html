@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Data Flow Diagram — BI Agent</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f8fafc; padding: 40px; }
+  .header { text-align: center; margin-bottom: 32px; }
+  .header h1 { font-size: 26px; color: #1e293b; font-weight: 700; }
+  .header p  { font-size: 13px; color: #64748b; margin-top: 6px; }
+  .badge { display: inline-block; background: #0ea5e9; color: white; font-size: 11px;
+           padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
+  .card { background: white; border-radius: 16px; padding: 40px;
+          box-shadow: 0 4px 24px rgba(0,0,0,0.08); max-width: 1100px; margin: 0 auto; }
+  .mermaid { display: flex; justify-content: center; }
+  .legend { margin-top: 28px; display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #475569; }
+  .dot { width: 14px; height: 14px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <div class="badge">Diagram 5 of 5</div>
+    <h1>Data Flow Diagram</h1>
+    <p>How data moves from raw CSV and user input through models to the final dashboard output</p>
+  </div>
+  <div class="mermaid">
+flowchart TD
+    subgraph EXT["  External Data Sources  "]
+        CSV[("📂 global_smartphone_bi_v4_final.csv\n~45 MB · 44,000 rows")]:::store
+        USER[/"👤 User Input\n22 Phone Spec Fields"/]:::actor
+        DDG[/"🌐 DuckDuckGo\nSearch API"/]:::actor
+    end
+
+    subgraph TRAIN["  Offline Training Phase  "]
+        TR["⚙ train_all.py\nGroupShuffleSplit · 80/20"]:::proc
+        CSV --> |"raw spec + outcome rows"| TR
+        TR --> |"XGBoost Classifier\nn_estimators=300 · max_depth=6"| M1[("pillar1_segment.joblib\n878 KB")]:::store
+        TR --> |"k-NN + phone table\nNearestNeighbors"| M2[("pillar1_similarity.joblib\n2.7 MB")]:::store
+        TR --> |"XGBoost Regressor\nlog1p demand target"| M3[("pillar2_demand.joblib\n9.7 MB")]:::store
+        TR --> |"Random Forest\nPMF score labels"| M4[("pillar4_pmf.joblib\n5.2 MB")]:::store
+    end
+
+    subgraph INFER["  Online Inference Phase  "]
+        direction TB
+        BE["🔌 FastAPI Backend\nport 8000"]:::proc
+        USER --> |"JSON spec payload"| BE
+
+        subgraph PIPE["  Agent Pipeline — agent.py  "]
+            P1["Pillar 1\nMarket Research\nXGBoost + k-NN"]:::pillar
+            P2["Pillar 2\nDemand Forecast\nXGBoost Regressor"]:::pillar
+            P3["Pillar 3\nSegmentation\nk-NN Retrieval k=10"]:::pillar
+            P4["Pillar 4\nPMF Classifier\nRandom Forest"]:::pillar
+            CLV["CLV Engine\nFirst-Principles Formula"]:::pillar
+        end
+
+        BE --> |"spec dict"| P1
+        BE --> |"spec dict"| P2
+        BE --> |"spec dict"| P3
+        BE --> |"spec dict"| P4
+
+        M1 --> P1
+        M2 --> P1
+        M2 --> P3
+        M3 --> P2
+        M4 --> P4
+
+        P1 --> |"segment · confidence\nsimilar phones"| CLV
+        P2 --> |"6-month unit curve"| CLV
+        P3 --> |"demographics · RFM"| CLV
+        P4 --> |"pmf_score · GO/NO-GO"| CLV
+
+        CLV --> |"full analysis JSON"| BE
+    end
+
+    subgraph EXTRA["  Additional API Endpoints  "]
+        CE["Competitor Engine\n/api/competitors\nRadar + Spec Insights"]:::proc
+        PE["Price Optimizer\n/api/price-optimize\n14-Point Sweep"]:::proc
+        NE["News Engine\n/api/news\nParallel Threads"]:::proc
+        M2 --> CE
+        M2 --> PE
+        M3 --> PE
+        M4 --> PE
+        NE --> |"queries"| DDG
+        DDG --> |"articles"| NE
+        BE --> CE
+        BE --> PE
+        BE --> NE
+    end
+
+    subgraph FE["  Next.js Frontend · port 3000  "]
+        D1["Market Position\n+ Segment Badge"]:::output
+        D2["Demand Chart\n6-Month Curve"]:::output
+        D3["Customer Profile\nDemographics"]:::output
+        D4["PMF Score\nGO / NO-GO"]:::output
+        D5["Competitor Radar"]:::output
+        D6["Price Optimizer"]:::output
+        D7["News Feed"]:::output
+    end
+
+    BE --> |"market_position"| D1
+    BE --> |"demand_forecast"| D2
+    BE --> |"customer_profile"| D3
+    BE --> |"success · clv"| D4
+    CE --> |"radar data"| D5
+    PE --> |"price curve"| D6
+    NE --> |"articles"| D7
+
+    classDef store  fill:#fef3c7,color:#92400e,stroke:#fbbf24
+    classDef actor  fill:#ede9fe,color:#4c1d95,stroke:#8b5cf6
+    classDef proc   fill:#dbeafe,color:#1e3a8a,stroke:#60a5fa
+    classDef pillar fill:#dcfce7,color:#14532d,stroke:#4ade80
+    classDef output fill:#f1f5f9,color:#334155,stroke:#94a3b8
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="dot" style="background:#fef3c7;border:1px solid #fbbf24"></div>Data Store (files / DB)</div>
+    <div class="legend-item"><div class="dot" style="background:#ede9fe;border:1px solid #8b5cf6"></div>External Entity (actor)</div>
+    <div class="legend-item"><div class="dot" style="background:#dbeafe;border:1px solid #60a5fa"></div>Process (API / engine)</div>
+    <div class="legend-item"><div class="dot" style="background:#dcfce7;border:1px solid #4ade80"></div>ML Pillar (inference)</div>
+    <div class="legend-item"><div class="dot" style="background:#f1f5f9;border:1px solid #94a3b8"></div>Output (UI component)</div>
+  </div>
+</div>
+<script>mermaid.initialize({ startOnLoad: true, theme: 'base',
+  themeVariables: { fontSize: '13px', primaryColor: '#dbeafe',
+    primaryTextColor: '#1e3a8a', lineColor: '#93c5fd' }});</script>
+</body>
+</html>

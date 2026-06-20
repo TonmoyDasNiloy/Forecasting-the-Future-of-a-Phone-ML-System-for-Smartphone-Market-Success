@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Activity Diagram — BI Agent</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f8fafc; padding: 40px; }
+  .header { text-align: center; margin-bottom: 32px; }
+  .header h1 { font-size: 26px; color: #1e293b; font-weight: 700; }
+  .header p  { font-size: 13px; color: #64748b; margin-top: 6px; }
+  .badge { display: inline-block; background: #6366f1; color: white; font-size: 11px;
+           padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
+  .card { background: white; border-radius: 16px; padding: 40px;
+          box-shadow: 0 4px 24px rgba(0,0,0,0.08); max-width: 900px; margin: 0 auto; }
+  .mermaid { display: flex; justify-content: center; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <div class="badge">Diagram 1 of 5</div>
+    <h1>Activity Diagram</h1>
+    <p>Smartphone BI Agent — end-to-end user flow from spec input to dashboard</p>
+  </div>
+  <div class="mermaid">
+flowchart TD
+    Start([" 🚀 User Opens BI Agent "]):::green --> Form["📋 Fill Phone Spec Form\nbrand · price · specs · region"]
+    Form --> Submit["▶ Click Analyze"]
+    Submit --> Validate{"Valid\nInput?"}
+    Validate -->|"❌ No"| Error["⚠ Show Validation Error"]
+    Error --> Form
+    Validate -->|"✅ Yes"| API["POST /api/analyze"]:::api
+
+    API --> S1["🔍 Stage 1/2 · Market Research\nPredict Market Segment\nXGBoost Classifier · k=5 Similar Phones"]:::pillar
+    S1 --> S2["👥 Stage 3 · Customer Segmentation\nk-NN Demographic Retrieval\nAge · Income · Gender · RFM"]:::pillar
+    S2 --> S3["📈 Stage 4 · Demand Forecast\nXGBoost Regressor\n6-Month Unit Curve"]:::pillar
+    S3 --> S4["🎯 Stage 5 · Product-Market Fit\nRandom Forest Classifier\nPMF Score + GO / NO-GO"]:::pillar
+    S4 --> S5["💰 Stage 6 · Compute CLV\nFirst-Principles Formula\nprice × margin × repeat × loyalty"]:::pillar
+    S5 --> Dash["🖥 Render Dashboard"]:::green
+
+    Dash --> Choice{"Explore\nFurther?"}
+    Choice -->|"Compare"| C1["POST /api/competitors\nRadar Chart + Spec Insights"]:::api
+    Choice -->|"Pricing"| C2["POST /api/price-optimize\nPrice Sweep Curve"]:::api
+    Choice -->|"News"| C3["POST /api/news\nParallel Web Search\nDuckDuckGo"]:::api
+    Choice -->|"Done"| End([" ✅ End "]):::green
+
+    C1 --> ShowC1["Show Radar Chart"]
+    C2 --> ShowC2["Show Price vs Profit Curve"]
+    C3 --> ShowC3["Show News Articles"]
+    ShowC1 --> Choice
+    ShowC2 --> Choice
+    ShowC3 --> Choice
+
+    classDef green  fill:#22c55e,color:#fff,stroke:#16a34a,rx:20
+    classDef api    fill:#6366f1,color:#fff,stroke:#4f46e5
+    classDef pillar fill:#e0f2fe,color:#0369a1,stroke:#38bdf8
+  </div>
+</div>
+<script>mermaid.initialize({ startOnLoad: true, theme: 'base',
+  themeVariables: { fontSize: '14px', primaryColor: '#e0f2fe',
+    primaryTextColor: '#0f172a', lineColor: '#94a3b8' }});</script>
+</body>
+</html>

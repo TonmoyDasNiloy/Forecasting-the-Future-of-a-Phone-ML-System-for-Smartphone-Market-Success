@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sequence Diagram — BI Agent</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f8fafc; padding: 40px; }
+  .header { text-align: center; margin-bottom: 32px; }
+  .header h1 { font-size: 26px; color: #1e293b; font-weight: 700; }
+  .header p  { font-size: 13px; color: #64748b; margin-top: 6px; }
+  .badge { display: inline-block; background: #ec4899; color: white; font-size: 11px;
+           padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
+  .card { background: white; border-radius: 16px; padding: 40px;
+          box-shadow: 0 4px 24px rgba(0,0,0,0.08); max-width: 1100px; margin: 0 auto; }
+  .mermaid { display: flex; justify-content: center; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <div class="badge">Diagram 4 of 5</div>
+    <h1>Sequence Diagram</h1>
+    <p>Message flow for a full POST /api/analyze request — from user submission to dashboard render</p>
+  </div>
+  <div class="mermaid">
+sequenceDiagram
+    actor User as 👤 User
+    participant FE as Next.js Frontend
+    participant API as FastAPI Backend
+    participant AG as agent.py Orchestrator
+    participant P1 as Pillar 1 · Market Research
+    participant P2 as Pillar 2 · Demand Forecast
+    participant P3 as Pillar 3 · Segmentation
+    participant P4 as Pillar 4 · PMF
+    participant FS as .joblib Model Files
+
+    User->>FE: Enter phone specs + region
+    FE->>API: POST /api/analyze {PhoneSpec JSON}
+    API->>API: Pydantic validation
+
+    API->>AG: analyze(spec_dict, region)
+
+    Note over AG,P1: Stage 1/2 — Market Research
+
+    AG->>P1: predict_segment(spec_row)
+    P1->>FS: load pillar1_segment.joblib
+    FS-->>P1: XGBoost Classifier (878 KB)
+    P1-->>AG: segment label · confidence %
+
+    AG->>P1: find_similar(spec_row, region, k=5)
+    P1->>FS: load pillar1_similarity.joblib
+    FS-->>P1: k-NN + phone_table (2.7 MB)
+    P1-->>AG: 5 similar phone names
+
+    Note over AG,P3: Stage 3 — Customer Segmentation
+
+    AG->>P3: predict_demographics(spec_row, region, k=10)
+    P3->>FS: load pillar1_similarity.joblib
+    FS-->>P3: phone_table
+    P3-->>AG: age · income · gender · RFM distributions
+
+    Note over AG,P2: Stage 4 — Demand Forecast
+
+    AG->>P2: predict_curve(spec_row, region, horizon=6)
+    P2->>FS: load pillar2_demand.joblib
+    FS-->>P2: XGBoost Regressor (9.7 MB)
+    P2-->>AG: [month_1..month_6 units]
+
+    Note over AG,P4: Stage 5 — Product-Market Fit
+
+    AG->>P4: predict_fit(spec_row)
+    P4->>FS: load pillar4_pmf.joblib
+    FS-->>P4: Random Forest (5.2 MB)
+    P4-->>AG: pmf_score · failure_risk_pct · GO/NO-GO
+
+    Note over AG: Stage 6 — CLV Computation
+
+    AG->>AG: estimate_clv(price, curve, repeat_rate, return_rate)
+    AG-->>API: Full result JSON\n{market_position, customer_profile,\ndemand_forecast, success, clv}
+
+    API-->>FE: 200 OK + JSON payload
+    FE->>User: 🖥 Render Dashboard
+  </div>
+</div>
+<script>mermaid.initialize({ startOnLoad: true, theme: 'base',
+  themeVariables: { fontSize: '13px', primaryColor: '#fce7f3',
+    primaryTextColor: '#500724', lineColor: '#f9a8d4',
+    actorBorder: '#ec4899', actorBkg: '#fce7f3',
+    noteBkgColor: '#fff7ed', noteTextColor: '#7c2d12' }});</script>
+</body>
+</html>

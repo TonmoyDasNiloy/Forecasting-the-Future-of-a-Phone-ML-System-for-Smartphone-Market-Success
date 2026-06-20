@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Use Case Diagram — BI Agent</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f8fafc; padding: 40px; }
+  .header { text-align: center; margin-bottom: 32px; }
+  .header h1 { font-size: 26px; color: #1e293b; font-weight: 700; }
+  .header p  { font-size: 13px; color: #64748b; margin-top: 6px; }
+  .badge { display: inline-block; background: #f59e0b; color: white; font-size: 11px;
+           padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
+  .card { background: white; border-radius: 16px; padding: 40px;
+          box-shadow: 0 4px 24px rgba(0,0,0,0.08); max-width: 1000px; margin: 0 auto; }
+  .mermaid { display: flex; justify-content: center; }
+  .legend { margin-top: 24px; display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #475569; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <div class="badge">Diagram 2 of 5</div>
+    <h1>Use Case Diagram</h1>
+    <p>Actors, use cases, and their relationships in the Smartphone BI Agent system</p>
+  </div>
+  <div class="mermaid">
+flowchart LR
+    subgraph ACT1["  👤 Business Analyst  "]
+        A1(["Business\nAnalyst"])
+    end
+
+    subgraph ACT2["  🌐 External System  "]
+        A2(["DuckDuckGo\nSearch API"])
+    end
+
+    subgraph SYS["  🤖 BI Agent System  "]
+        direction TB
+        subgraph Core["Core Use Cases"]
+            UC1(["Analyze\nNew Phone"])
+            UC2(["Compare\nCompetitors"])
+            UC3(["Optimize\nLaunch Price"])
+            UC4(["Read Market\nNews"])
+        end
+        subgraph Sub["Sub Use Cases · included"]
+            UC5(["Predict Market\nSegment"])
+            UC6(["Forecast\nDemand"])
+            UC7(["Segment\nCustomers"])
+            UC8(["Score PMF\nGO / NO-GO"])
+            UC9(["Calculate\nCLV"])
+        end
+        subgraph Admin["Admin Use Case"]
+            UC10(["Train\nML Models"])
+        end
+    end
+
+    A1 --> UC1
+    A1 --> UC2
+    A1 --> UC3
+    A1 --> UC4
+
+    UC1 -. "«include»" .-> UC5
+    UC1 -. "«include»" .-> UC6
+    UC1 -. "«include»" .-> UC7
+    UC1 -. "«include»" .-> UC8
+    UC1 -. "«include»" .-> UC9
+    UC3 -. "«include»" .-> UC2
+    UC3 -. "«include»" .-> UC6
+
+    UC4 --> A2
+
+    UC10 -. "«enables»" .-> UC1
+    UC10 -. "«enables»" .-> UC2
+    UC10 -. "«enables»" .-> UC3
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="dot" style="background:#6366f1"></div>Core Use Cases — directly triggered by actor</div>
+    <div class="legend-item"><div class="dot" style="background:#94a3b8"></div>«include» — always executed as part of parent</div>
+    <div class="legend-item"><div class="dot" style="background:#f59e0b"></div>«enables» — prerequisite offline step</div>
+  </div>
+</div>
+<script>mermaid.initialize({ startOnLoad: true, theme: 'base',
+  themeVariables: { fontSize: '14px', primaryColor: '#ede9fe',
+    primaryTextColor: '#1e1b4b', lineColor: '#818cf8' }});</script>
+</body>
+</html>

@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Smartphone BI Agent — User Manual</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --indigo:  #4f46e5;
+    --violet:  #7c3aed;
+    --sky:     #0284c7;
+    --emerald: #059669;
+    --amber:   #d97706;
+    --red:     #dc2626;
+    --slate-50:  #f8fafc;
+    --slate-100: #f1f5f9;
+    --slate-200: #e2e8f0;
+    --slate-300: #cbd5e1;
+    --slate-400: #94a3b8;
+    --slate-500: #64748b;
+    --slate-600: #475569;
+    --slate-700: #334155;
+    --slate-800: #1e293b;
+    --slate-900: #0f172a;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+    background: #fff;
+    color: var(--slate-800);
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  /* ── Cover page ──────────────────────────────── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    color: #fff;
+    padding: 60px 40px;
+    page-break-after: always;
+  }
+  .cover-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(99,102,241,0.2);
+    border: 1px solid rgba(99,102,241,0.4);
+    border-radius: 100px;
+    padding: 6px 18px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #a5b4fc;
+    margin-bottom: 32px;
+  }
+  .cover h1 {
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    line-height: 1.05;
+    margin-bottom: 16px;
+    background: linear-gradient(90deg, #fff, #a5b4fc, #fff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .cover-sub {
+    font-size: 18px;
+    color: #94a3b8;
+    font-weight: 400;
+    margin-bottom: 48px;
+    max-width: 520px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    font-size: 12px;
+    color: #64748b;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 32px;
+    margin-top: 8px;
+  }
+  .cover-meta div { display: flex; flex-direction: column; gap: 4px; }
+  .cover-meta strong { color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; }
+
+  /* ── Layout ──────────────────────────────────── */
+  .page { max-width: 900px; margin: 0 auto; padding: 48px 40px; }
+
+  /* ── TOC ─────────────────────────────────────── */
+  .toc { page-break-after: always; }
+  .toc h2 { font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--indigo); margin-bottom: 24px; padding-bottom: 8px; border-bottom: 2px solid var(--slate-200); }
+  .toc-group { margin-bottom: 24px; }
+  .toc-group-title { font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--slate-400); margin-bottom: 10px; }
+  .toc-item { display: flex; align-items: baseline; gap: 0; margin-bottom: 7px; }
+  .toc-item a { color: var(--slate-700); text-decoration: none; font-size: 13px; font-weight: 500; }
+  .toc-item a:hover { color: var(--indigo); }
+  .toc-dots { flex: 1; border-bottom: 1px dotted var(--slate-300); margin: 0 8px; position: relative; top: -3px; }
+  .toc-num { font-size: 12px; color: var(--slate-400); font-weight: 600; }
+
+  /* ── Section heading ─────────────────────────── */
+  .section { margin-bottom: 48px; }
+  .section-num {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--indigo), var(--violet));
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .1em;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  h2.sec-title {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: -.5px;
+    color: var(--slate-900);
+    margin-bottom: 6px;
+  }
+  .sec-lead {
+    font-size: 14px;
+    color: var(--slate-500);
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--slate-200);
+    padding-bottom: 20px;
+  }
+
+  h3 { font-size: 15px; font-weight: 800; color: var(--slate-800); margin: 28px 0 10px; }
+  h4 { font-size: 12px; font-weight: 800; letter-spacing: .06em; color: var(--indigo); text-transform: uppercase; margin: 20px 0 8px; }
+  p  { margin-bottom: 12px; color: var(--slate-700); }
+  ul, ol { margin: 0 0 14px 20px; color: var(--slate-700); }
+  li { margin-bottom: 6px; }
+  strong { color: var(--slate-900); }
+  code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 11px;
+    background: var(--slate-100);
+    border: 1px solid var(--slate-200);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--indigo);
+  }
+
+  /* ── Info boxes ──────────────────────────────── */
+  .box {
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 18px 0;
+    border-left: 4px solid;
+  }
+  .box p:last-child { margin-bottom: 0; }
+  .box-title { font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 6px; }
+  .box.tip    { background: #eff6ff; border-color: #3b82f6; }
+  .box.tip .box-title { color: #1d4ed8; }
+  .box.note   { background: #faf5ff; border-color: #8b5cf6; }
+  .box.note .box-title { color: #6d28d9; }
+  .box.warn   { background: #fffbeb; border-color: #f59e0b; }
+  .box.warn .box-title { color: #b45309; }
+  .box.good   { background: #f0fdf4; border-color: #22c55e; }
+  .box.good .box-title { color: #15803d; }
+
+  /* ── Metric table ────────────────────────────── */
+  .metric-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 12px; }
+  .metric-table th {
+    background: var(--slate-800);
+    color: #fff;
+    text-align: left;
+    padding: 9px 14px;
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .metric-table th:first-child { border-radius: 8px 0 0 8px; }
+  .metric-table th:last-child  { border-radius: 0 8px 8px 0; }
+  .metric-table td { padding: 9px 14px; border-bottom: 1px solid var(--slate-100); vertical-align: top; }
+  .metric-table tr:last-child td { border-bottom: none; }
+  .metric-table tr:nth-child(even) td { background: var(--slate-50); }
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 100px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .06em;
+  }
+  .pill-green  { background: #dcfce7; color: #15803d; }
+  .pill-amber  { background: #fef9c3; color: #854d0e; }
+  .pill-red    { background: #fee2e2; color: #991b1b; }
+  .pill-indigo { background: #e0e7ff; color: #3730a3; }
+
+  /* ── Step cards ──────────────────────────────── */
+  .steps { display: flex; flex-direction: column; gap: 14px; margin: 20px 0; }
+  .step { display: flex; gap: 16px; align-items: flex-start; }
+  .step-num {
+    flex-shrink: 0;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--indigo), var(--violet));
+    color: #fff;
+    font-size: 13px;
+    font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-body { flex: 1; padding-top: 4px; }
+  .step-body strong { display: block; font-size: 13px; margin-bottom: 3px; color: var(--slate-900); }
+  .step-body p { margin: 0; font-size: 12px; color: var(--slate-600); }
+
+  /* ── Layout diagram ──────────────────────────── */
+  .layout-diagram {
+    display: grid;
+    grid-template-columns: 54px 240px 1fr;
+    gap: 6px;
+    margin: 20px 0;
+    height: 220px;
+    font-size: 11px;
+  }
+  .ld-col {
+    border-radius: 10px;
+    padding: 12px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .ld-col.sidebar  { background: #1e1b4b; color: #a5b4fc; align-items: center; }
+  .ld-col.specs    { background: #f1f5f9; border: 1px solid #e2e8f0; }
+  .ld-col.dashboard{ background: #f8fafc; border: 1px solid #e2e8f0; }
+  .ld-col .label   { font-size: 9px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 4px; }
+  .ld-col.sidebar .label { color: #818cf8; }
+  .ld-col.specs .label   { color: var(--indigo); }
+  .ld-col.dashboard .label { color: var(--slate-500); }
+  .ld-item {
+    background: rgba(255,255,255,0.12);
+    border-radius: 6px;
+    padding: 5px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .ld-col.specs .ld-item    { background: #fff; border: 1px solid #e2e8f0; color: var(--slate-700); }
+  .ld-col.dashboard .ld-item { background: #fff; border: 1px solid #e2e8f0; color: var(--slate-700); }
+  .ld-item.active { background: linear-gradient(135deg,#6366f1,#a855f7); color: #fff; border: none; }
+
+  /* ── Spec field grid ─────────────────────────── */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .spec-card {
+    background: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .spec-card .name { font-size: 11px; font-weight: 800; color: var(--slate-800); margin-bottom: 3px; }
+  .spec-card .type { font-size: 10px; color: var(--slate-400); font-family: monospace; margin-bottom: 4px; }
+  .spec-card .desc { font-size: 11px; color: var(--slate-600); margin: 0; }
+
+  /* ── Section visual key ──────────────────────── */
+  .section-list { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+  .section-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .section-emoji { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .section-info { flex: 1; }
+  .section-info .name  { font-size: 13px; font-weight: 800; color: var(--slate-900); margin-bottom: 3px; }
+  .section-info .desc  { font-size: 12px; color: var(--slate-600); margin: 0; }
+  .section-info .pills { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    display: inline-block;
+    background: var(--slate-100);
+    border: 1px solid var(--slate-200);
+    color: var(--slate-600);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+
+  /* ── Signal thresholds ───────────────────────── */
+  .threshold-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 14px 0; }
+  .threshold {
+    border-radius: 10px;
+    padding: 12px 14px;
+    text-align: center;
+  }
+  .threshold .val { font-size: 18px; font-weight: 900; }
+  .threshold .lbl { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-top: 4px; }
+  .threshold.green { background: #f0fdf4; }
+  .threshold.green .val { color: #15803d; }
+  .threshold.green .lbl { color: #166534; }
+  .threshold.amber { background: #fffbeb; }
+  .threshold.amber .val { color: #b45309; }
+  .threshold.amber .lbl { color: #92400e; }
+  .threshold.red   { background: #fef2f2; }
+  .threshold.red .val { color: #991b1b; }
+  .threshold.red .lbl { color: #7f1d1d; }
+
+  /* ── Keyboard shortcut ───────────────────────── */
+  kbd {
+    background: var(--slate-100);
+    border: 1px solid var(--slate-300);
+    border-bottom: 2px solid var(--slate-300);
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 11px;
+    padding: 2px 7px;
+    color: var(--slate-700);
+  }
+
+  /* ── Divider ─────────────────────────────────── */
+  .divider { border: none; border-top: 1px solid var(--slate-200); margin: 36px 0; }
+
+  /* ── Footer ──────────────────────────────────── */
+  footer {
+    text-align: center;
+    font-size: 10px;
+    color: var(--slate-400);
+    padding: 32px 40px;
+    border-top: 1px solid var(--slate-200);
+    margin-top: 48px;
+  }
+
+  /* ── Print ───────────────────────────────────── */
+  @media print {
+    .cover { min-height: auto; padding: 80px 60px; }
+    .cover h1 { font-size: 40px; }
+    .page { padding: 32px 0; }
+    .section { page-break-inside: avoid; }
+    h2.sec-title { page-break-after: avoid; }
+    h3, h4 { page-break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     COVER
+══════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">📱 Product Intelligence Platform</div>
+  <h1>Smartphone BI Agent<br/>User Manual</h1>
+  <p class="cover-sub">
+    A complete guide to predicting market outcomes for new smartphones
+    before launch — using machine learning, live data, and neomorphic analytics.
+  </p>
+  <div class="cover-meta">
+    <div><strong>Version</strong>2.0 — Bento Dashboard</div>
+    <div><strong>ML Engine</strong>XGBoost · Random Forest · KNN</div>
+    <div><strong>Dataset</strong>116,481 Snapshots</div>
+    <div><strong>Date</strong>June 2026</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TABLE OF CONTENTS
+══════════════════════════════════════════════ -->
+<div class="page toc">
+  <h2>Table of Contents</h2>
+
+  <div class="toc-group">
+    <div class="toc-group-title">Getting Started</div>
+    <div class="toc-item"><a href="#s1">1. System Overview</a><span class="toc-dots"></span><span class="toc-num">3</span></div>
+    <div class="toc-item"><a href="#s2">2. Interface Layout</a><span class="toc-dots"></span><span class="toc-num">4</span></div>
+    <div class="toc-item"><a href="#s3">3. Running Your First Analysis</a><span class="toc-dots"></span><span class="toc-num">5</span></div>
+    <div class="toc-item"><a href="#s4">4. Phone Specification Fields</a><span class="toc-dots"></span><span class="toc-num">6</span></div>
+  </div>
+
+  <div class="toc-group">
+    <div class="toc-group-title">Dashboard Sections</div>
+    <div class="toc-item"><a href="#s5">5. Demand Forecast</a><span class="toc-dots"></span><span class="toc-num">8</span></div>
+    <div class="toc-item"><a href="#s6">6. Customer Profile</a><span class="toc-dots"></span><span class="toc-num">9</span></div>
+    <div class="toc-item"><a href="#s7">7. Affordability Feed</a><span class="toc-dots"></span><span class="toc-num">10</span></div>
+    <div class="toc-item"><a href="#s8">8. Buyer Loyalty</a><span class="toc-dots"></span><span class="toc-num">11</span></div>
+    <div class="toc-item"><a href="#s9">9. Competitor Gap Analysis</a><span class="toc-dots"></span><span class="toc-num">12</span></div>
+    <div class="toc-item"><a href="#s10">10. Optimal Price Recommender</a><span class="toc-dots"></span><span class="toc-num">13</span></div>
+    <div class="toc-item"><a href="#s11">11. Product-Market Fit</a><span class="toc-dots"></span><span class="toc-num">14</span></div>
+    <div class="toc-item"><a href="#s12">12. Market Intelligence</a><span class="toc-dots"></span><span class="toc-num">15</span></div>
+  </div>
+
+  <div class="toc-group">
+    <div class="toc-group-title">Advanced Usage</div>
+    <div class="toc-item"><a href="#s13">13. Live Comparison Mode</a><span class="toc-dots"></span><span class="toc-num">16</span></div>
+    <div class="toc-item"><a href="#s14">14. Downloading Reports</a><span class="toc-dots"></span><span class="toc-num">17</span></div>
+    <div class="toc-item"><a href="#s15">15. Interpreting Signals</a><span class="toc-dots"></span><span class="toc-num">18</span></div>
+    <div class="toc-item"><a href="#s16">16. Troubleshooting</a><span class="toc-dots"></span><span class="toc-num">19</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 1 — SYSTEM OVERVIEW
+══════════════════════════════════════════════ -->
+<div class="page">
+<div class="section" id="s1">
+  <div class="section-num">Section 01</div>
+  <h2 class="sec-title">System Overview</h2>
+  <p class="sec-lead">
+    The Smartphone BI Agent is a cold-start business intelligence platform. Given only the specifications
+    of a phone that has not launched yet, it predicts market outcomes across 8 analytical dimensions
+    — without needing any real sales data for that phone.
+  </p>
+
+  <h3>What the Agent Does</h3>
+  <p>
+    Traditional BI tools require historical sales data. The BI Agent solves the <strong>cold-start problem</strong>:
+    it finds the most spec-similar phones in a dataset of 116,481 real-world snapshots, learns from their
+    market outcomes, and projects those outcomes onto your new phone.
+  </p>
+
+  <h3>The Four ML Pillars</h3>
+  <table class="metric-table">
+    <tr>
+      <th>Pillar</th>
+      <th>Model</th>
+      <th>Output</th>
+    </tr>
+    <tr>
+      <td><strong>P1 — Market Research</strong></td>
+      <td>XGBoost Classifier + KNN Similarity</td>
+      <td>Market segment, confidence %, closest competitor phones</td>
+    </tr>
+    <tr>
+      <td><strong>P2 — Demand Forecast</strong></td>
+      <td>XGBoost Regressor (log1p target)</td>
+      <td>6-month demand curve, monthly units, total projected sales</td>
+    </tr>
+    <tr>
+      <td><strong>P3 — Customer Segmentation</strong></td>
+      <td>KNN Retrieval (StandardScaler)</td>
+      <td>Age, income, gender, RFM segments of predicted buyers</td>
+    </tr>
+    <tr>
+      <td><strong>P4 — PMF & Failure</strong></td>
+      <td>Random Forest Classifier</td>
+      <td>PMF score (0–100), failure risk %, go/no-go verdict</td>
+    </tr>
+  </table>
+
+  <h3>What It Does NOT Do</h3>
+  <ul>
+    <li>Does not use real sales data from your phone (it hasn't launched)</li>
+    <li>Does not connect to live pricing APIs or retailer databases</li>
+    <li>Demand figures are <em>relative projections</em> from comparable phones, not absolute market forecasts</li>
+    <li>News articles are fetched live and may vary in relevance</li>
+  </ul>
+
+  <div class="box tip">
+    <p class="box-title">💡 Best Used For</p>
+    <p>Pre-launch go/no-go decisions, pricing strategy alignment, identifying your target buyer segment, and stress-testing specs before committing to manufacturing runs.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 2 — INTERFACE LAYOUT
+══════════════════════════════════════════════ -->
+<div class="page">
+<div class="section" id="s2">
+  <div class="section-num">Section 02</div>
+  <h2 class="sec-title">Interface Layout</h2>
+  <p class="sec-lead">The dashboard is split into three persistent zones — sidebar, specs panel, and the analytics area.</p>
+
+  <!-- Visual diagram -->
+  <div class="layout-diagram">
+    <div class="ld-col sidebar">
+      <div class="label">Sidebar</div>
+      <div class="ld-item active">Logo</div>
+      <div class="ld-item">◀ HIDE</div>
+      <div class="ld-item">☀ Theme</div>
+      <div class="ld-item">⬇ Report</div>
+    </div>
+    <div class="ld-col specs">
+      <div class="label">Specs Panel (340px)</div>
+      <div class="ld-item">Brand / Model</div>
+      <div class="ld-item">Price (USD)</div>
+      <div class="ld-item">RAM / Storage</div>
+      <div class="ld-item">Camera / Battery</div>
+      <div class="ld-item">5G / Region</div>
+      <div class="ld-item active">▶ Analyze</div>
+    </div>
+    <div class="ld-col dashboard">
+      <div class="label">Analytics Dashboard (scrollable)</div>
+      <div class="ld-item">📈 Demand Forecast</div>
+      <div class="ld-item">👥 Customer Profile</div>
+      <div class="ld-item">💵 Affordability Feed</div>
+      <div class="ld-item">🔁 Buyer Loyalty</div>
+      <div class="ld-item">⚔️ Competitor Gap</div>
+      <div class="ld-item">💰 Price Optimizer</div>
+      <div class="ld-item">🎯 PMF</div>
+      <div class="ld-item">🌐 News</div>
+    </div>
+  </div>
+
+  <h3>The Sidebar (72px, always visible)</h3>
+  <table class="metric-table">
+    <tr><th>Element</th><th>Function</th></tr>
+    <tr><td><strong>Logo</strong></td><td>Branding identifier, always at top</td></tr>
+    <tr><td><strong>◀ HIDE / ▶ SPECS button</strong></td><td>Collapses or expands the specs panel. When collapsed, the full screen is used for analytics.</td></tr>
+    <tr><td><strong>☀ / ☾ Theme toggle</strong></td><td>Switches between light mode (soft gray) and dark mode (deep navy). Preference is saved per session.</td></tr>
+    <tr><td><strong>⬇ Report button</strong></td><td>Downloads a printable PDF summary. Disabled until an analysis is run.</td></tr>
+  </table>
+
+  <h3>The Specs Panel (340px, docked left)</h3>
+  <p>The specs panel is <strong>always open by default</strong>. It stays visible alongside the dashboard so you can adjust specs and watch the analytics update in real time. Click the <strong>✕</strong> button inside the panel or the sidebar toggle button to collapse it for a full-width view.</p>
+
+  <h3>The Analytics Dashboard (scrollable)</h3>
+  <p>Eight sections appear in a fixed sequence after analysis. Each section uses a <strong>bento grid layout</strong> — cards of varying sizes arranged asymmetrically. Scroll down to move through sections in order.</p>
+
+  <div class="box note">
+    <p class="box-title">🎨 Neomorphism Design</p>
+    <p>All cards use a neomorphism style — they appear raised or pressed into the same surface rather than using traditional flat borders. Light mode uses a soft blue-gray palette; dark mode uses a deep navy with subtle white highlights.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 3 — FIRST ANALYSIS
+══════════════════════════════════════════════ -->
+<div class="page">
+<div class="section" id="s3">
+  <div class="section-num">Section 03</div>
+  <h2 class="sec-title">Running Your First Analysis</h2>
+  <p class="sec-lead">From opening the app to reading your first results — complete walkthrough.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <strong>Open the application</strong>
+        <p>Navigate to <code>http://localhost:3000</code> in your browser. The specs panel opens automatically on the left. The backend must be running on <code>http://localhost:8000</code>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <strong>Enter the phone specifications</strong>
+        <p>Fill in all fields in the specs panel — brand, model name, price, hardware specs, and market details. See Section 4 for a full field reference. All numeric fields have sliders for quick adjustment.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <strong>Click Analyze</strong>
+        <p>Press the <strong>Analyze</strong> button at the bottom of the specs panel. The loading screen shows live status messages as each ML pillar runs (Market Research → Demand → Customers → PMF).</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <strong>Wait for the dashboard to appear (~3–10 seconds)</strong>
+        <p>The core analysis (4 ML models) runs first and the dashboard appears. Competitor radar and news load in parallel in the background — a spinning indicator in the header shows background loading progress.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <strong>Scroll through the 8 analytical sections</strong>
+        <p>Sections appear in sequence from Demand Forecast down to Market Intelligence. All data is already loaded — scrolling is instant.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <strong>Iterate — change specs and re-analyze</strong>
+        <p>The specs panel stays visible. Change any field (e.g., raise the price by $50, increase RAM) and click Analyze again. The dashboard refreshes with the new projection. Use this to find the optimal configuration.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box warn">
+    <p class="box-title">⏱ Loading Time</p>
+    <p>The first analysis after a cold start may take 8–15 seconds as the ML models load from disk. Subsequent analyses within the same session run faster (2–6 seconds) because models stay in memory.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 4 — SPEC FIELDS
+══════════════════════════════════════════════ -->
+<div class="page">
+<div class="section" id="s4">
+  <div class="section-num">Section 04</div>
+  <h2 class="sec-title">Phone Specification Fields</h2>
+  <p class="sec-lead">Complete reference for every input field in the specs panel, including valid ranges and what each field affects.</p>
+
+  <h3>Identity Fields</h3>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="name">Brand</div>
+      <div class="type">text — e.g. Samsung, Apple, Xiaomi</div>
+      <p class="desc">Affects demand forecasting via brand-level priors. Unknown brands fall back to the geometric mean of all brands in the training set.</p>
+    </div>
+    <div class="spec-card">
+      <div class="name">Model Name</div>
+      <div class="type">text — e.g. Galaxy S25 Ultra</div>
+      <p class="desc">Used for display and PDF report labelling only. Does not affect ML predictions.</p>
+    </div>
+    <div class="spec-card">
+      <div class="name">Region</div>
+      <div class="type">dropdown — Asia-Pacific, Europe, North America, South America, Middle East, Africa</div>
+      <p class="desc">The KNN competitor search filters by region first. Affects which comparable phones are used for demographics and demand.</p>
+    </div>
+    <div class="spec-card">
+      <div class="name">Price (USD)</div>
+      <div class="type">number — $50 to $2,500</div>
+      <p class="desc">The single most influential input. Weighted 2.5× in the similarity search. Drives affordability fit, segment classification, and price vs. category calculations.</p>
+    </div>
+  </div>
+
+  <h3>Hardware Specifications</h3>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="name">RAM (GB)</div>
+      <div class="type">slider — 2 to 24 GB</div>
+      <p class="desc">Combined with storage in a derived feature (<code>ram_x_mem</code>). Higher RAM pushes the phone toward premium/flagship segments.</p>
+    </div>
+    <div class="spec-card">
+      <div class="name">Storage (GB)</div>
+      <div class="type">slider — 16 to 1024 GB</div>
+      <p class="desc">Part of the value score calculation. Also contributes to segment classification alongside price.</p>
+    </div>
+    <div class="spec-card">
+      <div class="name">Rear Cameras</div>
+      <div class="type">slider — 1 to 5</div>
+      <p class="desc">Aggregated into <code>cam_total</code> (rear + front). Camera count is a key mid-range vs premium differentiator in the training data.</p>
+    </div>
+    <div class="spec-card">
+      <div class="name">Front Camera (MP)</div>
+      <div class="type">slider — 2 to 64 MP</div>
+      <p class="desc">Included in total camera score. High front camera MP correlates with mid-range social-media-oriented buyers.</p>
+    </div>
+    <div class="spec-card">
+      <div class="name">Battery (mAh)</div>
+      <div class="type">slider — 1,500 to 7,000 mAh</div>
+      <p class="desc">Combined with screen size into <code>battery_per_inch</code>. Larger batteries shift buyer demographics toward older age groups and value-seekers.</p>
+    </div>
+    <div class="spec-card">
+      <div class="name">Screen Size (inches)</div>
+      <div class="type">slider — 4.0 to 7.5 in</div>
+      <p class="desc">Used in <code>battery_per_inch</code> and <code>pixels</code> derived features. Larger screens correlate with mid-range demand and male-leaning demographics.</p>
+    </div>
+    <div class="spec-card">
+      <div class="name">Screen Resolution (px)</div>
+      <div class="type">number — e.g. 1080, 1440</div>
+      <p class="desc">The width in pixels. Combined with screen size into a <code>pixels</code> density feature used in segment classification.</p>
+    </div>
+    <div class="spec-card">
+      <div class="name">Processor Speed (GHz)</div>
+      <div class="type">slider — 0.8 to 4.0 GHz</div>
+      <p class="desc">Part of the <code>perf_score</code> derived feature (speed × cores). Drives premium vs mid-range boundary in the classifier.</p>
+    </div>
+    <div class="spec-card">
+      <div class="name">CPU Cores</div>
+      <div class="type">slider — 2 to 12</div>
+      <p class="desc">Multiplied by processor speed for the performance score. Octa-core (8) is common in mid-range; 10–12 cores push toward flagship.</p>
+    </div>
+    <div class="spec-card">
+      <div class="name">5G Support</div>
+      <div class="type">toggle — Yes / No</div>
+      <p class="desc">Strongly influences segment. 5G is now standard in premium/flagship but still a differentiator in budget/mid-range in many regions. Affects price-vs-category calculation.</p>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <p class="box-title">💡 Tip — Use Sliders for Iteration</p>
+    <p>All hardware fields have sliders. Click a value, then use the left/right arrow keys to increment by 1 unit. This lets you quickly test how a single spec change (e.g., +2GB RAM) shifts your demand or segment classification.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 5 — DEMAND FORECAST
+══════════════════════════════════════════════ -->
+<div class="page">
+<div class="section" id="s5">
+  <div class="section-num">Section 05</div>
+  <h2 class="sec-title">Demand Forecast</h2>
+  <p class="sec-lead">Predicts the monthly unit sales trajectory for your phone over the first 6 months post-launch, using XGBoost regression trained on historical launch curves.</p>
+
+  <h3>What You See</h3>
+  <ul>
+    <li><strong>Demand curve chart</strong> — a line/bar chart showing units per month from M1 to M6</li>
+    <li><strong>Monthly tiles (M1–M6)</strong> — individual inset cards showing the exact projected unit count per month</li>
+    <li><strong>Total 6-Month Demand</strong> — sum of all monthly projections, shown as a large sky-blue number</li>
+    <li><strong>CLV / Buyer</strong> — Customer Lifetime Value in USD, shown as a large emerald number</li>
+  </ul>
+
+  <h3>How the Model Works</h3>
+  <p>The demand model (XGBoost regressor, 700 estimators, max depth 8) predicts <code>log1p(units_sold_monthly)</code>. The output is inverse-transformed with <code>expm1()</code> to get real unit projections.</p>
+  <p>A <strong>brand demand prior</strong> is computed on the training fold for each brand and injected as a feature. Unknown brands fall back to the geometric mean across all brands, preventing zero-demand predictions for new entrants.</p>
+
+  <h3>CLV Formula</h3>
+  <p>Customer Lifetime Value is calculated as:</p>
+  <div class="box note" style="font-family:monospace; font-size:12px; padding:14px 18px;">
+    CLV = (price × gross_margin) × repeat_factor × 2.4 years<br/>
+    repeat_factor = repeat_rate / (1 − repeat_rate × (1 − return_rate))
+  </div>
+  <p>The <strong>2.4</strong> is the loyalty horizon constant — the average number of years a buyer stays engaged with the same brand, derived from the training dataset.</p>
+
+  <h3>How to Interpret</h3>
+  <table class="metric-table">
+    <tr><th>Signal</th><th>Meaning</th><th>Action</th></tr>
+    <tr>
+      <td>Demand peaks at M1 then falls sharply</td>
+      <td>Hype-driven launch with weak retention</td>
+      <td>Invest in post-launch engagement; consider a storage upgrade SKU</td>
+    </tr>
+    <tr>
+      <td>Demand rises from M1 to M3 then flattens</td>
+      <td>Word-of-mouth-driven growth, stable market</td>
+      <td>Healthy sign — focus on review seeding for M1–M2</td>
+    </tr>
+    <tr>
+      <td>Low CLV despite decent demand</td>
+      <td>Low repeat rate — buyers don't return to the brand</td>
+      <td>Review pricing and after-sales support strategy</td>
+    </tr>
+    <tr>
+      <td>High CLV, moderate demand</td>
+      <td>Premium niche — fewer but more loyal buyers</td>
+      <td>Lean into subscription services, accessories, warranties</td>
+    </tr>
+  </table>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 6 — CUSTOMER PROFILE
+══════════════════════════════════════════════ -->
+<div class="page">
+<div class="section" id="s6">
+  <div class="section-num">Section 06</div>
+  <h2 class="sec-title">Customer Profile</h2>
+  <p class="sec-lead">Reveals who will buy your phone — age groups, income levels, and gender split — derived by finding the most spec-similar phones in the dataset and reading their real buyer demographics.</p>
+
+  <h3>What You See</h3>
+  <ul>
+    <li><strong>Buyer Persona card</strong> — a plain-English summary: "A 25–34 year-old, mid-income shopper who is typically a loyal repeat buyer. Leans Male (52%)."</li>
+    <li><strong>Age donut chart</strong> — percentage split across 18–24, 25–34, 35–44, 45–54, and 55+ age bands</li>
+    <li><strong>Income donut chart</strong> — Low / Lower-mid / Mid / Upper-mid / High income tier breakdown</li>
+    <li><strong>Gender donut chart</strong> — Male / Female / Non-binary split</li>
+  </ul>
+
+  <h3>How It's Derived</h3>
+  <p>The KNN retrieval engine (Pillar 3) searches for the <strong>k most spec-similar phones</strong> in the dataset using 12 normalized features. Price is weighted 2.5× more than other specs. The buyer demographics of those similar phones are aggregated and returned as your predicted buyer profile.</p>
+
+  <h3>Key Dimension Meanings</h3>
+  <table class="metric-table">
+    <tr><th>Dimension</th><th>Why It Matters</th></tr>
+    <tr>
+      <td><strong>Age Groups</strong></td>
+      <td>Drives which ad channels, messaging, and distribution work. 18–24 → TikTok/social; 35–44 → LinkedIn/professional; 55+ → TV/print.</td>
+    </tr>
+    <tr>
+      <td><strong>Income Level</strong></td>
+      <td>Confirms whether your price point reaches your actual buyers. A phone with 60% Low/Lower-mid buyers priced at $900 will struggle.</td>
+    </tr>
+    <tr>
+      <td><strong>Gender Split</strong></td>
+      <td>Informs product design, color choices, and influencer partnerships. Not a rigid rule — treat as a probabilistic tendency from comparable phones.</td>
+    </tr>
+  </table>
+
+  <div class="box warn">
+    <p class="box-title">⚠ Important Caveat</p>
+    <p>Demographics are <em>inferred from spec-similar phones</em>, not from a direct survey of your phone's buyers. Treat these as probabilistic estimates for planning, not guaranteed audience breakdowns. Large, distinctive spec combinations (e.g., ultra-premium 12GB RAM + 5G + $200 price) may have fewer similar comparables, making predictions less precise.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 7 — AFFORDABILITY FEED
+══════════════════════════════════════════════ -->
+<div class="page">
+<div class="section" id="s7">
+  <div class="section-num">Section 07</div>
+  <h2 class="sec-title">Affordability Feed</h2>
+  <p class="sec-lead">Checks whether your phone's price is realistic for the income distribution of your predicted buyers — one of the most actionable price signals in the dashboard.</p>
+
+  <h3>What You See</h3>
+  <ul>
+    <li><strong>Verdict banner</strong> — "Well-matched price," "Priced at the edge," or "Priced above audience" with a color-coded border</li>
+    <li><strong>Comfortable vs Stretch split bar</strong> — visual bar showing what % of buyers can comfortably afford vs. find it a stretch</li>
+    <li><strong>5 income-tier chips</strong> — Low / Lower-mid / Mid / Upper-mid / High, each showing % of buyers and whether they can afford your price</li>
+  </ul>
+
+  <h3>The Affordability Calculation</h3>
+  <p>Each income tier has an indicative phone budget ceiling. If your price falls below that ceiling, buyers in that tier can "comfortably afford" the phone:</p>
+  <table class="metric-table">
+    <tr><th>Income Tier</th><th>Budget Ceiling</th><th>Typical Profile</th></tr>
+    <tr><td>Low</td><td>≤ $180</td><td>Budget-focused, entry-level buyers</td></tr>
+    <tr><td>Lower-mid</td><td>≤ $350</td><td>Value-seekers, mid-budget</td></tr>
+    <tr><td>Mid</td><td>≤ $650</td><td>Core mid-range market</td></tr>
+    <tr><td>Upper-mid</td><td>≤ $1,100</td><td>Premium-aware buyers</td></tr>
+    <tr><td>High</td><td>No limit</td><td>Flagship, luxury</td></tr>
+  </table>
+
+  <h3>Verdict Thresholds</h3>
+  <div class="threshold-row">
+    <div class="threshold green">
+      <div class="val">≥ 70%</div>
+      <div class="lbl">✅ Well-matched</div>
+    </div>
+    <div class="threshold amber">
+      <div class="val">45–69%</div>
+      <div class="lbl">⚠️ At the edge</div>
+    </div>
+    <div class="threshold red">
+      <div class="val">&lt; 45%</div>
+      <div class="lbl">🚫 Above audience</div>
+    </div>
+  </div>
+
+  <div class="box tip">
+    <p class="box-title">💡 Analyst Tip — Price Sensitivity Testing</p>
+    <p>With the specs panel docked, reduce the price by $50 and click Analyze. Watch how the "comfortable" % changes in the Affordability Feed. This is the fastest way to find the price point that maximises audience reach without sacrificing your segment classification.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 8 — BUYER LOYALTY
+══════════════════════════════════════════════ -->
+<div class="page">
+<div class="section" id="s8">
+  <div class="section-num">Section 08</div>
+  <h2 class="sec-title">Buyer Loyalty</h2>
+  <p class="sec-lead">Shows the RFM (Recency, Frequency, Monetary) segment breakdown of your predicted buyer base — revealing how engaged vs at-risk your likely buyers are.</p>
+
+  <h3>What You See</h3>
+  <ul>
+    <li><strong>Engaged Buyers %</strong> — sum of Champions + Loyal + Recent segments</li>
+    <li><strong>At-Risk Buyers %</strong> — sum of At-risk + Hibernating segments</li>
+    <li><strong>Dominant Segment</strong> — the single largest RFM group</li>
+    <li><strong>Loyalty Diverging Chart</strong> — horizontal bar chart showing positive (engaged) vs negative (at-risk) proportions</li>
+  </ul>
+
+  <h3>RFM Segment Definitions</h3>
+  <table class="metric-table">
+    <tr><th>Segment</th><th>Profile</th><th>Implication</th></tr>
+    <tr>
+      <td><span class="pill pill-indigo">Champion</span></td>
+      <td>Bought recently, frequently, and spent well</td>
+      <td>Brand advocates — prioritise retaining them with loyalty programs</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-green">Loyal</span></td>
+      <td>Buy regularly, good spend</td>
+      <td>Core base — upsell accessories, extended warranties</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-green">Recent</span></td>
+      <td>Bought recently but not yet frequent</td>
+      <td>New converts — engage with onboarding and review requests</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-amber">At-risk</span></td>
+      <td>Used to buy, now lapsing</td>
+      <td>Need win-back campaigns — targeted offers before they churn</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-red">Hibernating</span></td>
+      <td>Long inactive, low recency</td>
+      <td>Near-lost — cost of re-engagement may exceed value</td>
+    </tr>
+  </table>
+
+  <h3>Engaged Buyer Benchmarks</h3>
+  <div class="threshold-row">
+    <div class="threshold green">
+      <div class="val">≥ 60%</div>
+      <div class="lbl">✅ Strong loyalty</div>
+    </div>
+    <div class="threshold amber">
+      <div class="val">40–59%</div>
+      <div class="lbl">⚠️ Mixed base</div>
+    </div>
+    <div class="threshold red">
+      <div class="val">&lt; 40%</div>
+      <div class="lbl">🚫 At-risk dominated</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 9 — COMPETITOR GAP
+══════════════════════════════════════════════ -->
+<div class="page">
+<div class="section" id="s9">
+  <div class="section-num">Section 09</div>
+  <h2 class="sec-title">Competitor Gap Analysis</h2>
+  <p class="sec-lead">A radar chart comparing your phone's specs against the average of its nearest competitor phones across key dimensions.</p>
+
+  <h3>What You See</h3>
+  <ul>
+    <li><strong>Price vs Category Avg</strong> — how much above or below the average price of phones in your predicted segment</li>
+    <li><strong>Market Segment + Confidence bar</strong> — the XGBoost classifier's predicted tier and certainty</li>
+    <li><strong>Competitor Radar Chart</strong> — polygon overlay comparing your specs vs competitor average across 5–8 dimensions</li>
+  </ul>
+
+  <h3>Reading the Radar</h3>
+  <p>Each axis of the radar represents a normalised spec dimension. Your phone's polygon is shown in one colour; the competitor average in another. Areas where your polygon <strong>extends further</strong> than the competitor's are your spec advantages. Areas where it falls inside are gaps.</p>
+
+  <h3>Price Signal Interpretation</h3>
+  <table class="metric-table">
+    <tr><th>Price vs Category</th><th>Signal</th><th>Recommended Action</th></tr>
+    <tr><td><span class="pill pill-red">&gt; +15%</span></td><td>Premium-priced vs peers</td><td>Ensure radar shows clear spec advantages to justify the premium</td></tr>
+    <tr><td><span class="pill pill-amber">−5% to +15%</span></td><td>In-line with market</td><td>Compete on brand, software, or marketing differentiation</td></tr>
+    <tr><td><span class="pill pill-green">&lt; −5%</span></td><td>Value leader</td><td>Strong positioning — communicate the value story proactively</td></tr>
+  </table>
+
+  <div class="box note">
+    <p class="box-title">⏳ Loading Behaviour</p>
+    <p>The competitor radar loads asynchronously after the core analysis. It may take 5–15 seconds to appear. A spinning loader is shown in its place while it loads. This does not block the rest of the dashboard from displaying.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 10 — PRICE OPTIMIZER
+══════════════════════════════════════════════ -->
+<div class="page">
+<div class="section" id="s10">
+  <div class="section-num">Section 10</div>
+  <h2 class="sec-title">Optimal Price Recommender</h2>
+  <p class="sec-lead">Runs a 14-point sweep across a price range and finds the price point that maximises projected revenue, adjusted for spec quality relative to competitors.</p>
+
+  <h3>What You See</h3>
+  <ul>
+    <li><strong>Your Price</strong> — the price you entered in the specs panel</li>
+    <li><strong>Recommended Price</strong> — the price point at maximum revenue on the demand curve</li>
+    <li><strong>vs Category Avg</strong> — price gap vs the average for phones in your segment</li>
+    <li><strong>Revenue / Demand Curve Chart</strong> — full 14-point sweep showing revenue and demand at each tested price</li>
+    <li><strong>Assumptions strip</strong> — Gross Margin (40%), Demand Elasticity β (1.30), Spec Ratio cap (0.8–1.25×)</li>
+  </ul>
+
+  <h3>How the Sweep Works</h3>
+  <p>The algorithm runs across 14 price points around your entered price. At each point it estimates:</p>
+  <ol>
+    <li><strong>Spec ratio</strong> — your spec score vs competitor average, clamped to 0.8–1.25× to prevent outlier distortion</li>
+    <li><strong>Adjusted demand</strong> — base demand scaled by <code>spec_ratio / price_ratio^β</code> where β = 1.30 (price elasticity)</li>
+    <li><strong>Revenue</strong> — adjusted demand × price × gross margin (40%)</li>
+  </ol>
+  <p>The price with the highest resulting revenue is marked as the recommendation.</p>
+
+  <h3>Key Assumptions to Note</h3>
+  <table class="metric-table">
+    <tr><th>Assumption</th><th>Value</th><th>What to Do If It Doesn't Apply</th></tr>
+    <tr>
+      <td>Gross Margin</td>
+      <td>40%</td>
+      <td>If your actual margin is different, scale the recommended revenue accordingly — the optimal price point doesn't change</td>
+    </tr>
+    <tr>
+      <td>Demand Elasticity β</td>
+      <td>1.30</td>
+      <td>Higher β (price-sensitive market) will shift the recommendation lower; lower β will push it higher</td>
+    </tr>
+    <tr>
+      <td>Spec Ratio Cap</td>
+      <td>0.8–1.25×</td>
+      <td>Prevents extreme outlier specs from distorting the model — representative of real-world positioning constraints</td>
+    </tr>
+  </table>
+
+  <div class="box tip">
+    <p class="box-title">💡 Using the Price Optimizer Iteratively</p>
+    <p>If the recommended price is higher than yours, try entering that price in the specs panel and re-running the analysis. Check if the segment classification changes and whether the affordability feed still supports that price for your buyer base.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 11 — PMF
+══════════════════════════════════════════════ -->
+<div class="page">
+<div class="section" id="s11">
+  <div class="section-num">Section 11</div>
+  <h2 class="sec-title">Product-Market Fit</h2>
+  <p class="sec-lead">The final go/no-go verdict. Combines a composite PMF score with a Random Forest failure risk classifier to produce a clear launch recommendation.</p>
+
+  <h3>What You See</h3>
+  <ul>
+    <li><strong>Verdict banner</strong> — GO FOR LAUNCH (green), CAUTION (amber), or RECONSIDER (red)</li>
+    <li><strong>PMF Gauge</strong> — a semicircular gauge from 0 to 100 with colour zones</li>
+    <li><strong>PMF Score</strong> — the composite product-market fit score out of 100</li>
+    <li><strong>Failure Risk %</strong> — the Random Forest's estimated probability of product failure</li>
+    <li><strong>6 KPI tiles</strong> — PMF, Risk, Demand, CLV, Confidence, Segment in compact inset cards</li>
+  </ul>
+
+  <h3>PMF Score Formula</h3>
+  <div class="box note" style="font-size:12px; font-family:monospace; padding:14px 18px;">
+    PMF = 0.25 × NPS_score<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;+ 0.20 × repeat_purchase_rate<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;+ 0.20 × recommend_rate<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;+ 0.15 × (1 − return_rate)<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;+ 0.10 × (1 − warranty_claim_rate)<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;+ 0.10 × demand_growth_slope<br/>
+    <br/>
+    All components are min-max normalised to [0, 1] before weighting.<br/>
+    Final PMF score = (1 − failure_probability) × 100
+  </div>
+
+  <h3>Go / No-Go Thresholds</h3>
+  <table class="metric-table">
+    <tr><th>Failure Risk</th><th>Verdict</th><th>Guidance</th></tr>
+    <tr>
+      <td><span class="pill pill-green">&lt; 15%</span></td>
+      <td>✅ GO FOR LAUNCH</td>
+      <td>Strong product-market fit. Proceed with planned launch and standard marketing investment.</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-amber">15–35%</span></td>
+      <td>⚠️ CAUTION</td>
+      <td>Moderate fit. Address the weakest spec dimensions (check radar) before launch. Consider a soft launch first.</td>
+    </tr>
+    <tr>
+      <td><span class="pill pill-red">&gt; 35%</span></td>
+      <td>🚫 RECONSIDER</td>
+      <td>Poor fit. Major misalignment detected — revisit pricing, specs, or target region before committing.</td>
+    </tr>
+  </table>
+
+  <h3>What the Random Forest Detects</h3>
+  <p>The failure classifier (500 estimators, max depth 12, class_weight="balanced") is trained on phones that historically fell in the bottom 25% of their PMF score distribution. Features include all 7 engineered specs plus brand and region. The model is particularly sensitive to <strong>price-to-spec mismatches</strong> — phones priced too high for their spec tier in a given region.</p>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 12 — MARKET INTELLIGENCE
+══════════════════════════════════════════════ -->
+<div class="page">
+<div class="section" id="s12">
+  <div class="section-num">Section 12</div>
+  <h2 class="sec-title">Market Intelligence</h2>
+  <p class="sec-lead">Live news articles about your phone, its competitors, and the broader smartphone market — fetched in parallel while the ML analysis runs.</p>
+
+  <h3>What You See</h3>
+  <ul>
+    <li>Grouped articles: <strong>Your Phone</strong> (up to 9 articles) and <strong>Competitor</strong> (up to 11 articles)</li>
+    <li>Each article shows: headline, source, date, and a brief excerpt</li>
+    <li>Articles are clickable links that open in a new tab</li>
+  </ul>
+
+  <h3>How News Is Fetched</h3>
+  <p>After the ML analysis completes, the backend fires up to 8 parallel web requests (ThreadPoolExecutor, max 8 workers) to search for articles. Each request has a 15-second timeout. Articles are filtered and grouped by topic (your phone vs competitors) before being returned to the dashboard.</p>
+
+  <h3>What to Look For</h3>
+  <ul>
+    <li><strong>Competitor announcements</strong> — is a direct rival launching something at a similar price point in the same quarter?</li>
+    <li><strong>Market trend signals</strong> — are 5G or foldable stories dominating? Does your phone fit the current narrative?</li>
+    <li><strong>Regional coverage</strong> — is your target region well-represented in the news? Sparse coverage may indicate lower analyst/media attention.</li>
+  </ul>
+
+  <div class="box warn">
+    <p class="box-title">⚠ News Loading</p>
+    <p>News loads asynchronously. The spinning "Fetching news…" indicator in the top bar disappears when loading is complete. If you re-run analysis before news finishes loading, the previous news results are cleared and fresh requests are fired.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 13 — LIVE COMPARISON MODE
+══════════════════════════════════════════════ -->
+<div class="page">
+<div class="section" id="s13">
+  <div class="section-num">Section 13</div>
+  <h2 class="sec-title">Live Comparison Mode</h2>
+  <p class="sec-lead">The specs panel is docked alongside the dashboard — making the BI Agent the only pre-launch tool that lets you watch every metric respond in real time as you change specs.</p>
+
+  <h3>How to Use It</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <strong>Run a baseline analysis</strong>
+        <p>Enter your initial phone specs and click Analyze. Let the full dashboard load including competitor radar and news.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <strong>Keep the specs panel open</strong>
+        <p>The panel is docked by default. Do not close it. Scroll through the dashboard to understand the baseline metrics.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <strong>Change one variable</strong>
+        <p>Adjust a single field — for example, increase price from $320 to $370. Leave everything else the same.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <strong>Click Analyze again</strong>
+        <p>The dashboard refreshes. The specs panel stays open. You can immediately see how demand changed, whether the segment shifted, and how affordability was affected.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <strong>Iterate methodically</strong>
+        <p>Change one variable at a time so you can attribute changes in output to specific inputs. Common experiments: ±$50 price, ±2GB RAM, region change, 5G on/off.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Most Impactful Experiments</h3>
+  <table class="metric-table">
+    <tr><th>Change</th><th>Sections Most Affected</th></tr>
+    <tr><td>±$50 price</td><td>Affordability Feed, Segment (may flip tier), Price Optimizer, PMF</td></tr>
+    <tr><td>+2 GB RAM</td><td>Competitor Radar, Segment confidence, PMF score</td></tr>
+    <tr><td>Toggle 5G on/off</td><td>Segment classification, Price vs Category, Demand Forecast</td></tr>
+    <tr><td>Region change</td><td>All sections — KNN search re-filters by region, demographics shift</td></tr>
+    <tr><td>Budget vs flagship brand</td><td>Demand Forecast (brand prior), PMF, Customer Profile</td></tr>
+  </table>
+
+  <div class="box good">
+    <p class="box-title">✅ Best Practice — The Price Ladder</p>
+    <p>Run the same specs at $50 increments across 4 price points. Record the PMF score, affordability %, and total demand for each. You will quickly identify the "sweet spot" where you maximise revenue without triggering a segment downgrade or an affordability mismatch.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 14 — REPORTS
+══════════════════════════════════════════════ -->
+<div class="page">
+<div class="section" id="s14">
+  <div class="section-num">Section 14</div>
+  <h2 class="sec-title">Downloading Reports</h2>
+  <p class="sec-lead">Export a formatted PDF summary of the current analysis results for sharing with stakeholders.</p>
+
+  <h3>How to Download</h3>
+  <p>Click the <strong>⬇</strong> download button at the bottom of the sidebar. This button is disabled (greyed out) until at least one analysis has been run. Clicking it opens a new browser tab with a formatted HTML report and immediately triggers the browser's print dialog — select "Save as PDF" from your printer list.</p>
+
+  <h3>What the Report Contains</h3>
+  <ul>
+    <li>Phone model, price, and region</li>
+    <li>Go/No-Go verdict with PMF score and failure risk</li>
+    <li>6-Month demand forecast (monthly breakdown table)</li>
+    <li>CLV per buyer</li>
+    <li>Key metrics grid (segment, confidence, price delta)</li>
+    <li>Age and income customer profile breakdown</li>
+    <li>Model attribution footnote (XGBoost + Random Forest + KNN)</li>
+  </ul>
+
+  <div class="box note">
+    <p class="box-title">📋 Report Note</p>
+    <p>The PDF report is a snapshot of the <em>most recent</em> analysis. If you re-run analysis with different specs, the report will reflect the new results. The competitor radar chart and news articles are not included in the report (they are live/async components).</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 15 — INTERPRETING SIGNALS
+══════════════════════════════════════════════ -->
+<div class="page">
+<div class="section" id="s15">
+  <div class="section-num">Section 15</div>
+  <h2 class="sec-title">Interpreting Signals</h2>
+  <p class="sec-lead">Quick-reference guide for the most common output patterns and what they mean for your launch strategy.</p>
+
+  <h3>Common Patterns</h3>
+  <table class="metric-table">
+    <tr>
+      <th>Pattern</th>
+      <th>Likely Cause</th>
+      <th>Recommended Response</th>
+    </tr>
+    <tr>
+      <td><strong>GO verdict + High demand + Low CLV</strong></td>
+      <td>Volume product in competitive segment; buyers don't repeat</td>
+      <td>Focus on volume distribution channels; minimise after-sales cost</td>
+    </tr>
+    <tr>
+      <td><strong>CAUTION + "Priced above audience"</strong></td>
+      <td>Price exceeds what buyers in your predicted segment can afford</td>
+      <td>Reduce price by 10–15% or target a wealthier region</td>
+    </tr>
+    <tr>
+      <td><strong>High PMF + Low demand</strong></td>
+      <td>Great fit for a small niche — possibly too premium or too regional</td>
+      <td>Consider expanding to additional regions; invest in niche community marketing</td>
+    </tr>
+    <tr>
+      <td><strong>Segment: Budget + 5G enabled</strong></td>
+      <td>Budget phone with 5G is unusual — model will classify with lower confidence</td>
+      <td>Strong market opportunity if confidence is ≥70%; otherwise check pricing</td>
+    </tr>
+    <tr>
+      <td><strong>Rec. price &gt; entered price</strong></td>
+      <td>Your specs could command a higher price for max revenue</td>
+      <td>Test the recommended price in a new analysis; check if affordability still supports it</td>
+    </tr>
+    <tr>
+      <td><strong>RECONSIDER + 55+ buyer age dominant</strong></td>
+      <td>Phone appeals to older buyers but has premium specs they may not value</td>
+      <td>Reduce spec complexity; emphasise battery life and camera simplicity</td>
+    </tr>
+    <tr>
+      <td><strong>High "At-risk" buyer base (&gt;50%)</strong></td>
+      <td>Similar phones have historically failed to retain buyers</td>
+      <td>Plan aggressive after-sales: software updates, loyalty discounts, community</td>
+    </tr>
+  </table>
+
+  <h3>Confidence as a Reliability Signal</h3>
+  <p>The classifier confidence % tells you how certain the XGBoost model is about the segment it assigned. Use it to calibrate how much to trust the other outputs:</p>
+  <div class="threshold-row">
+    <div class="threshold green">
+      <div class="val">≥ 80%</div>
+      <div class="lbl">High confidence — trust fully</div>
+    </div>
+    <div class="threshold amber">
+      <div class="val">60–79%</div>
+      <div class="lbl">Moderate — cross-check competitors</div>
+    </div>
+    <div class="threshold red">
+      <div class="val">&lt; 60%</div>
+      <div class="lbl">Low — phone is atypical; use caution</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 16 — TROUBLESHOOTING
+══════════════════════════════════════════════ -->
+<div class="page">
+<div class="section" id="s16">
+  <div class="section-num">Section 16</div>
+  <h2 class="sec-title">Troubleshooting</h2>
+  <p class="sec-lead">Solutions to the most common issues encountered while running the BI Agent.</p>
+
+  <table class="metric-table">
+    <tr>
+      <th>Problem</th>
+      <th>Cause</th>
+      <th>Fix</th>
+    </tr>
+    <tr>
+      <td><strong>Dashboard stays on loading screen</strong></td>
+      <td>Backend is not running or has crashed</td>
+      <td>Start the backend: <code>uvicorn backend.main:app --port 8000</code> from the project root. Check <code>localhost:8000/api/health</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>"Analysis failed" error banner</strong></td>
+      <td>Network error or invalid input rejected by Pydantic</td>
+      <td>Ensure all fields are filled. Price must be a positive number. Check browser console for the exact error message.</td>
+    </tr>
+    <tr>
+      <td><strong>Competitor radar never appears</strong></td>
+      <td>Competitors endpoint timed out or phone has no KNN matches</td>
+      <td>Wait 30 seconds — the background request retries. Very unusual spec combinations (e.g., $50 phone with 16GB RAM) may return no competitors.</td>
+    </tr>
+    <tr>
+      <td><strong>News panel shows no articles</strong></td>
+      <td>News API timeout or rate limit</td>
+      <td>Re-run analysis. The news endpoint uses up to 8 parallel requests with 15s timeout. Intermittent failures are normal.</td>
+    </tr>
+    <tr>
+      <td><strong>Specs panel disappeared</strong></td>
+      <td>Toggled closed via the ◀ HIDE button or ✕ in the panel</td>
+      <td>Click the <strong>▶ SPECS</strong> button in the sidebar (bottom section, same icon). The panel slides back in.</td>
+    </tr>
+    <tr>
+      <td><strong>Dark mode cards not visible</strong></td>
+      <td>Browser cached an older CSS version</td>
+      <td>Hard refresh: <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> (Windows) or <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> (Mac).</td>
+    </tr>
+    <tr>
+      <td><strong>First analysis takes &gt;30 seconds</strong></td>
+      <td>Models loading from disk on cold start</td>
+      <td>This is normal for the first run. Subsequent analyses in the same session are significantly faster.</td>
+    </tr>
+    <tr>
+      <td><strong>Download button is greyed out</strong></td>
+      <td>No analysis has been run yet in this session</td>
+      <td>Run at least one analysis. The button activates as soon as results are displayed.</td>
+    </tr>
+  </table>
+
+  <h3>System Requirements</h3>
+  <ul>
+    <li><strong>Backend:</strong> Python 3.10+, FastAPI, Uvicorn. Run <code>pip install -r requirements.txt</code> first.</li>
+    <li><strong>Frontend:</strong> Node.js 18+, Next.js 14+. Run <code>npm install</code> then <code>npm run dev</code>.</li>
+    <li><strong>Browser:</strong> Chrome 110+ or Firefox 115+ recommended. Safari is supported but some CSS animations may differ.</li>
+    <li><strong>Ports:</strong> Backend on <code>8000</code>, Frontend on <code>3000</code>. No other services required.</li>
+    <li><strong>Memory:</strong> At least 4GB RAM available for the ML models (XGBoost + Random Forest + KNN fit in ~1.2GB).</li>
+  </ul>
+
+  <div class="box good">
+    <p class="box-title">✅ Quick Start Commands</p>
+    <p>
+      <strong>Backend:</strong> <code>cd bi_agent && uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload</code><br/>
+      <strong>Frontend:</strong> <code>cd bi_agent/frontend && npm run dev</code><br/>
+      <strong>Open:</strong> <code>http://localhost:3000</code>
+    </p>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<footer>
+  Smartphone BI Agent — User Manual &nbsp;·&nbsp; Version 2.0 &nbsp;·&nbsp;
+  XGBoost + Random Forest + KNN Retrieval &nbsp;·&nbsp; 116,481 Training Snapshots &nbsp;·&nbsp;
+  Cold-Start Inference Only &nbsp;·&nbsp; June 2026
+</footer>
+</div>
+
+</body>
+</html>

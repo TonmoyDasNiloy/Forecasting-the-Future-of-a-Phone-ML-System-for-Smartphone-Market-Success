@@ -1,0 +1,95 @@
+flowchart LR
+    classDef machine fill:#0f172a,stroke:#334155,color:#94a3b8
+    classDef process fill:#1e3a5f,stroke:#3b82f6,color:#white
+    classDef storage fill:#1c1917,stroke:#78716c,color:#d6d3d1
+    classDef network fill:#14532d,stroke:#22c55e,color:#white
+    classDef ext fill:#3b1f1f,stroke:#ef4444,color:#fca5a5
+
+    subgraph DEV["  💻 Developer Machine  "]
+        direction TB
+
+        subgraph PROC["  Running Processes  "]
+            direction TB
+
+            subgraph FEP["  Port 3000  "]
+                NEXT["Next.js Dev Server\nnpm run dev\n────────────────\nReact 19 · Tailwind 4\nRecharts · shadcn/ui"]:::process
+            end
+
+            subgraph BEP["  Port 8000  "]
+                FAST["FastAPI + Uvicorn\nuvicorn backend.main:app\n────────────────\nCORS: localhost:3000\nPydantic validation\nAsync endpoints"]:::process
+            end
+
+            subgraph SEP["  Port 8501  "]
+                STRM["Streamlit Server\nstreamlit run app.py\n────────────────\nDirect Python import\nNo HTTP overhead\nPlotly charts"]:::process
+            end
+        end
+
+        subgraph FS["  File System  "]
+            direction LR
+
+            subgraph SRC["  src/  "]
+                PY1["config.py"]:::storage
+                PY2["agent.py"]:::storage
+                PY3["pillar1_market_research.py"]:::storage
+                PY4["pillar2_demand.py"]:::storage
+                PY5["pillar3_segmentation.py"]:::storage
+                PY6["pillar4_pmf.py"]:::storage
+                PY7["train_all.py"]:::storage
+            end
+
+            subgraph MDL["  models/  "]
+                JB1["pillar1_segment.joblib"]:::storage
+                JB2["pillar1_similarity.joblib"]:::storage
+                JB3["pillar2_demand.joblib"]:::storage
+                JB4["pillar3_segmentation.joblib"]:::storage
+                JB5["pillar4_pmf.joblib"]:::storage
+            end
+
+            subgraph DAT["  root/  "]
+                CSV["global_smartphone_bi_v4_final.csv\n116,481 rows · 65 cols · 43 MB"]:::storage
+                MET["outputs/metrics.json\nHonest accuracy scorecard"]:::storage
+                APP["app.py\nStreamlit entrypoint"]:::storage
+            end
+
+            subgraph FE["  frontend/  "]
+                NM["node_modules/"]:::storage
+                COMP["components/\nbi-agent-app.tsx\nspecs-form.tsx\ndashboard.tsx\ncharts/"]:::storage
+                LIB["lib/\napi.ts · types.ts"]:::storage
+            end
+
+            subgraph BE["  backend/  "]
+                MAIN["main.py\nFastAPI app"]:::storage
+                REQ["requirements.txt"]:::storage
+            end
+        end
+    end
+
+    subgraph NET["  🌐 Network  "]
+        DDG["DuckDuckGo DDGS\nFree · No API key\nWeb + News search"]:::ext
+    end
+
+    %% ── connections ──
+    NEXT -->|"HTTP POST\nfetch('/api/...')"| FAST
+    STRM -->|"import agent\nDirect Python call"| PY2
+
+    FAST -->|"import"| PY2
+    PY2 -->|"import"| PY3
+    PY2 -->|"import"| PY4
+    PY2 -->|"import"| PY5
+    PY2 -->|"import"| PY6
+
+    PY3 -->|"joblib.load"| JB1
+    PY3 -->|"joblib.load"| JB2
+    PY4 -->|"joblib.load"| JB3
+    PY5 -->|"joblib.load"| JB4
+    PY6 -->|"joblib.load"| JB5
+
+    PY7 -->|"reads"| CSV
+    PY7 -->|"writes"| JB1
+    PY7 -->|"writes"| JB2
+    PY7 -->|"writes"| JB3
+    PY7 -->|"writes"| JB4
+    PY7 -->|"writes"| JB5
+    PY7 -->|"writes"| MET
+
+    FAST -->|"HTTP GET\nddgs.text()"| DDG

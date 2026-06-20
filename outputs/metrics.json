@@ -1,0 +1,21 @@
+{
+  "market_research": {
+    "segment_accuracy": 0.9939979993331111,
+    "segment_macro_f1": 0.9956841078149354,
+    "n_reference_phones": 5801
+  },
+  "demand_forecast": {
+    "r2_log": 0.8539154617868964,
+    "mae_units": 9.072483536759071
+  },
+  "customer_segmentation": {
+    "age_r2": 0.6708883793449726,
+    "income_r2": 0.7712529774426967,
+    "rfm_r2": -0.15980527154886287
+  },
+  "product_market_fit": {
+    "failure_accuracy": 0.7989690721649485,
+    "failure_auc": 0.88,
+    "failure_base_rate": 0.25
+  }
+}

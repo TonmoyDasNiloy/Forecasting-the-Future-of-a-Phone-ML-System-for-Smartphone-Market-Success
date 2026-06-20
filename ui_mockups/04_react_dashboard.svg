@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1400" height="1100" xmlns="http://www.w3.org/2000/svg" font-family="Inter,-apple-system,sans-serif">
+<defs>
+  <linearGradient id="go-banner" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#064e3b"/><stop offset="100%" stop-color="#052e1e"/>
+  </linearGradient>
+  <linearGradient id="bar-r" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#5a78f8"/><stop offset="100%" stop-color="#3b5bd9"/>
+  </linearGradient>
+  <linearGradient id="afford-green" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#22c55e" stop-opacity="0.8"/><stop offset="100%" stop-color="#16a34a" stop-opacity="0.8"/>
+  </linearGradient>
+  <linearGradient id="afford-red" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#ef4444" stop-opacity="0.7"/><stop offset="100%" stop-color="#dc2626" stop-opacity="0.7"/>
+  </linearGradient>
+</defs>
+
+<!-- Background -->
+<rect width="1400" height="1100" fill="#0b0d14"/>
+
+<!-- ═══ LEFT SIDEBAR (compact) ═══ -->
+<rect x="0" y="0" width="300" height="1100" fill="#111318"/>
+<rect x="300" y="0" width="1" height="1100" fill="#1f2937"/>
+<circle cx="30" cy="36" r="18" fill="#1e1b4b"/>
+<text x="30" y="40" fill="#818cf8" font-size="14" text-anchor="middle">BI</text>
+<text x="58" y="30" fill="#f1f5f9" font-size="13" font-weight="900">Launch Profile</text>
+<text x="58" y="46" fill="#64748b" font-size="10">Configure specs · Run AI analysis</text>
+<rect x="0" y="72" width="300" height="1" fill="#1f2937"/>
+<!-- Condensed form summary -->
+<text x="18" y="96" fill="#6366f1" font-size="8" font-weight="700" letter-spacing="2">IDENTITY</text>
+<rect x="18" y="100" width="264" height="22" rx="6" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="28" y="115" fill="#e2e8f0" font-size="10">Galaxy A55  ·  Asia-Pacific</text>
+<text x="18" y="138" fill="#6366f1" font-size="8" font-weight="700" letter-spacing="2">PRICING</text>
+<rect x="18" y="142" width="264" height="22" rx="6" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="28" y="157" fill="#e2e8f0" font-size="10">$320  ·  android  ·  5G</text>
+<text x="18" y="180" fill="#6366f1" font-size="8" font-weight="700" letter-spacing="2">PROCESSOR</text>
+<rect x="18" y="184" width="264" height="22" rx="6" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="28" y="199" fill="#e2e8f0" font-size="10">snapdragon · 8c · 2.4GHz</text>
+<text x="18" y="222" fill="#6366f1" font-size="8" font-weight="700" letter-spacing="2">MEMORY</text>
+<rect x="18" y="226" width="264" height="22" rx="6" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="28" y="241" fill="#e2e8f0" font-size="10">8GB RAM  ·  128GB storage</text>
+<text x="18" y="264" fill="#6366f1" font-size="8" font-weight="700" letter-spacing="2">BATTERY</text>
+<rect x="18" y="268" width="264" height="22" rx="6" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="28" y="283" fill="#e2e8f0" font-size="10">5000 mAh  ·  25W fast charge</text>
+<text x="18" y="306" fill="#6366f1" font-size="8" font-weight="700" letter-spacing="2">DISPLAY</text>
+<rect x="18" y="310" width="264" height="22" rx="6" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="28" y="325" fill="#e2e8f0" font-size="10">6.5″  ·  120Hz  ·  2400×1080</text>
+<text x="18" y="348" fill="#6366f1" font-size="8" font-weight="700" letter-spacing="2">CAMERA</text>
+<rect x="18" y="352" width="264" height="22" rx="6" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="28" y="367" fill="#e2e8f0" font-size="10">3 cameras  ·  50+16 MP</text>
+
+<!-- Re-analyze button -->
+<rect x="0" y="1048" width="300" height="1" fill="#1f2937"/>
+<rect x="0" y="1049" width="300" height="51" fill="#111318"/>
+<rect x="16" y="1058" width="268" height="36" rx="10" fill="#1e1b4b" stroke="#6366f1" stroke-width="1"/>
+<text x="150" y="1081" fill="#818cf8" font-size="12" font-weight="700" text-anchor="middle">🔍  Analyze Again</text>
+
+<!-- ═══ MAIN PANEL ═══ -->
+
+<!-- TOP BAR -->
+<rect x="300" y="0" width="1100" height="58" fill="#0b0d14" opacity="0.92"/>
+<rect x="300" y="58" width="1100" height="1" fill="#1f2937"/>
+<circle cx="330" cy="29" r="16" fill="#1e1b4b"/>
+<text x="330" y="34" fill="#818cf8" font-size="12" font-weight="700" text-anchor="middle">BI</text>
+<text x="356" y="23" fill="#f1f5f9" font-size="12" font-weight="900">Product Launch</text>
+<text x="490" y="23" fill="#818cf8" font-size="12" font-weight="900">Intelligence</text>
+<text x="572" y="23" fill="#f1f5f9" font-size="12" font-weight="900"> Dashboard</text>
+<!-- Green dot (ready) -->
+<circle cx="357" cy="41" r="5" fill="#22c55e"/>
+<text x="368" y="45" fill="#22c55e" font-size="10">Analysis ready</text>
+<!-- Model badge -->
+<rect x="1090" y="16" width="100" height="26" rx="13" fill="rgba(34,197,94,0.1)" stroke="rgba(34,197,94,0.2)" stroke-width="1"/>
+<text x="1140" y="33" fill="#4ade80" font-size="10" text-anchor="middle">📱 Galaxy A55</text>
+<!-- Buttons -->
+<rect x="1200" y="16" width="60" height="26" rx="13" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="1230" y="33" fill="#94a3b8" font-size="10" text-anchor="middle">Report</text>
+<rect x="1268" y="16" width="68" height="26" rx="13" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<text x="1302" y="33" fill="#94a3b8" font-size="10" text-anchor="middle">☀ Light</text>
+
+<!-- ─── CONTENT AREA ─── (starts at y=75) -->
+
+<!-- RECOMMENDATION BANNER -->
+<rect x="316" y="74" width="1068" height="62" rx="12" fill="url(#go-banner)" stroke="rgba(52,211,153,0.4)" stroke-width="1"/>
+<text x="336" y="100" fill="#6ee7b7" font-size="19" font-weight="900">✅  GO FOR LAUNCH</text>
+<text x="336" y="120" fill="#6ee7b7" font-size="11" opacity="0.8">Galaxy A55  ·  $320  ·  Asia-Pacific</text>
+<rect x="1210" y="84" width="90" height="28" rx="14" fill="rgba(99,102,241,0.2)" stroke="rgba(99,102,241,0.3)" stroke-width="1"/>
+<text x="1255" y="103" fill="#818cf8" font-size="10" font-weight="700" text-anchor="middle">MID-RANGE</text>
+
+<!-- ─── KPI CARDS ─── -->
+<rect x="316" y="148" width="196" height="72" rx="10" fill="#111827" stroke="#1f2937" stroke-width="1"/>
+<text x="414" y="170" fill="#6b7280" font-size="8" font-weight="700" text-anchor="middle" letter-spacing="1">MARKET SEGMENT</text>
+<text x="414" y="198" fill="#818cf8" font-size="19" font-weight="900" text-anchor="middle">MID-RANGE</text>
+<text x="414" y="212" fill="#6b7280" font-size="9" text-anchor="middle">87% confidence</text>
+
+<rect x="522" y="148" width="196" height="72" rx="10" fill="#111827" stroke="#1f2937" stroke-width="1"/>
+<text x="620" y="170" fill="#6b7280" font-size="8" font-weight="700" text-anchor="middle" letter-spacing="1">PMF SCORE</text>
+<text x="620" y="198" fill="#34d399" font-size="19" font-weight="900" text-anchor="middle">78/100</text>
+<text x="620" y="212" fill="#6b7280" font-size="9" text-anchor="middle">Product-Market Fit</text>
+
+<rect x="728" y="148" width="196" height="72" rx="10" fill="#111827" stroke="#1f2937" stroke-width="1"/>
+<text x="826" y="170" fill="#6b7280" font-size="8" font-weight="700" text-anchor="middle" letter-spacing="1">6-MONTH DEMAND</text>
+<text x="826" y="198" fill="#38bdf8" font-size="19" font-weight="900" text-anchor="middle">2,456</text>
+<text x="826" y="212" fill="#6b7280" font-size="9" text-anchor="middle">Projected units</text>
+
+<rect x="934" y="148" width="196" height="72" rx="10" fill="#111827" stroke="#1f2937" stroke-width="1"/>
+<text x="1032" y="170" fill="#6b7280" font-size="8" font-weight="700" text-anchor="middle" letter-spacing="1">CLV / BUYER</text>
+<text x="1032" y="198" fill="#34d399" font-size="19" font-weight="900" text-anchor="middle">$118</text>
+<text x="1032" y="212" fill="#6b7280" font-size="9" text-anchor="middle">Customer lifetime value</text>
+
+<rect x="1140" y="148" width="244" height="72" rx="10" fill="#111827" stroke="#1f2937" stroke-width="1"/>
+<text x="1262" y="170" fill="#6b7280" font-size="8" font-weight="700" text-anchor="middle" letter-spacing="1">PRICE VS MARKET</text>
+<text x="1262" y="198" fill="#34d399" font-size="19" font-weight="900" text-anchor="middle">-2.1%</text>
+<text x="1262" y="212" fill="#6b7280" font-size="9" text-anchor="middle">vs same-segment avg</text>
+
+<!-- ─── DEMAND CHART ─── -->
+<rect x="316" y="232" width="1068" height="190" rx="10" fill="#111827" stroke="#1f2937" stroke-width="1"/>
+<text x="336" y="254" fill="#6b7280" font-size="9" font-weight="700" letter-spacing="1">📈  6-MONTH DEMAND FORECAST</text>
+<line x1="336" y1="260" x2="1368" y2="260" stroke="#1f2937" stroke-width="1"/>
+
+<!-- Chart area -->
+<!-- Y labels -->
+<text x="344" y="288" fill="#6b7280" font-size="9">500</text>
+<text x="344" y="318" fill="#6b7280" font-size="9">400</text>
+<text x="344" y="348" fill="#6b7280" font-size="9">300</text>
+<text x="344" y="378" fill="#6b7280" font-size="9">200</text>
+<text x="344" y="408" fill="#6b7280" font-size="9">0</text>
+<!-- Grid -->
+<line x1="370" y1="285" x2="1360" y2="285" stroke="#1f2937" stroke-width="1"/>
+<line x1="370" y1="315" x2="1360" y2="315" stroke="#1f2937" stroke-width="1"/>
+<line x1="370" y1="345" x2="1360" y2="345" stroke="#1f2937" stroke-width="1"/>
+<line x1="370" y1="375" x2="1360" y2="375" stroke="#1f2937" stroke-width="1"/>
+<line x1="370" y1="405" x2="1360" y2="405" stroke="#1f2937" stroke-width="1"/>
+
+<!-- Bars (base=405, scale 500→120px) -->
+<rect x="400"  y="296" width="110" height="109" rx="4" fill="url(#bar-r)"/>
+<text x="455"  y="292" fill="#94a3b8" font-size="10" text-anchor="middle">456</text>
+<text x="455"  y="420" fill="#6b7280" font-size="10" text-anchor="middle">Month 1</text>
+
+<rect x="566"  y="307" width="110" height="98"  rx="4" fill="url(#bar-r)"/>
+<text x="621"  y="303" fill="#94a3b8" font-size="10" text-anchor="middle">412</text>
+<text x="621"  y="420" fill="#6b7280" font-size="10" text-anchor="middle">Month 2</text>
+
+<rect x="732"  y="311" width="110" height="94"  rx="4" fill="url(#bar-r)"/>
+<text x="787"  y="307" fill="#94a3b8" font-size="10" text-anchor="middle">389</text>
+<text x="787"  y="420" fill="#6b7280" font-size="10" text-anchor="middle">Month 3</text>
+
+<rect x="898"  y="318" width="110" height="87"  rx="4" fill="url(#bar-r)"/>
+<text x="953"  y="314" fill="#94a3b8" font-size="10" text-anchor="middle">360</text>
+<text x="953"  y="420" fill="#6b7280" font-size="10" text-anchor="middle">Month 4</text>
+
+<rect x="1064" y="324" width="110" height="81"  rx="4" fill="url(#bar-r)"/>
+<text x="1119" y="320" fill="#94a3b8" font-size="10" text-anchor="middle">338</text>
+<text x="1119" y="420" fill="#6b7280" font-size="10" text-anchor="middle">Month 5</text>
+
+<rect x="1230" y="331" width="110" height="74"  rx="4" fill="url(#bar-r)"/>
+<text x="1285" y="327" fill="#94a3b8" font-size="10" text-anchor="middle">311</text>
+<text x="1285" y="420" fill="#6b7280" font-size="10" text-anchor="middle">Month 6</text>
+
+<!-- Trend line -->
+<polyline points="455,296 621,307 787,311 953,318 1119,324 1285,331" fill="none" stroke="#818cf8" stroke-width="2.5" stroke-dasharray="5,3"/>
+<circle cx="455"  cy="296" r="4" fill="#818cf8"/>
+<circle cx="621"  cy="307" r="4" fill="#818cf8"/>
+<circle cx="787"  cy="311" r="4" fill="#818cf8"/>
+<circle cx="953"  cy="318" r="4" fill="#818cf8"/>
+<circle cx="1119" cy="324" r="4" fill="#818cf8"/>
+<circle cx="1285" cy="331" r="4" fill="#818cf8"/>
+
+<!-- Monthly mini tiles inside chart -->
+<rect x="400"  y="433" width="110" height="32" rx="6" fill="#1f2937"/>
+<text x="455"  y="445" fill="#6b7280" font-size="8" text-anchor="middle">M1</text>
+<text x="455"  y="458" fill="#6366f1" font-size="11" font-weight="700" text-anchor="middle">456</text>
+<rect x="566"  y="433" width="110" height="32" rx="6" fill="#1f2937"/>
+<text x="621"  y="445" fill="#6b7280" font-size="8" text-anchor="middle">M2</text>
+<text x="621"  y="458" fill="#6366f1" font-size="11" font-weight="700" text-anchor="middle">412</text>
+<rect x="732"  y="433" width="110" height="32" rx="6" fill="#1f2937"/>
+<text x="787"  y="445" fill="#6b7280" font-size="8" text-anchor="middle">M3</text>
+<text x="787"  y="458" fill="#6366f1" font-size="11" font-weight="700" text-anchor="middle">389</text>
+<rect x="898"  y="433" width="110" height="32" rx="6" fill="#1f2937"/>
+<text x="953"  y="445" fill="#6b7280" font-size="8" text-anchor="middle">M4</text>
+<text x="953"  y="458" fill="#6366f1" font-size="11" font-weight="700" text-anchor="middle">360</text>
+<rect x="1064" y="433" width="110" height="32" rx="6" fill="#1f2937"/>
+<text x="1119" y="445" fill="#6b7280" font-size="8" text-anchor="middle">M5</text>
+<text x="1119" y="458" fill="#6366f1" font-size="11" font-weight="700" text-anchor="middle">338</text>
+<rect x="1230" y="433" width="110" height="32" rx="6" fill="#1f2937"/>
+<text x="1285" y="445" fill="#6b7280" font-size="8" text-anchor="middle">M6</text>
+<text x="1285" y="458" fill="#6366f1" font-size="11" font-weight="700" text-anchor="middle">311</text>
+
+<!-- ─── CUSTOMER PROFILE ─── -->
+<text x="316" y="490" fill="#6366f1" font-size="8" font-weight="700" letter-spacing="2">👥  CUSTOMER PROFILE</text>
+<line x1="384" y1="486" x2="1384" y2="486" stroke="#1f2937" stroke-width="1"/>
+
+<!-- Buyer persona card -->
+<rect x="316" y="498" width="1068" height="62" rx="10" fill="#111827" stroke="#1f2937" stroke-width="1"/>
+<circle cx="348" cy="529" r="18" fill="rgba(99,102,241,0.15)"/>
+<text x="348" y="533" fill="#818cf8" font-size="14" text-anchor="middle">🧑‍💼</text>
+<text x="376" y="516" fill="#6366f1" font-size="8" font-weight="700" letter-spacing="1">MOST LIKELY BUYER</text>
+<text x="376" y="533" fill="#e2e8f0" font-size="12">A <tspan font-weight="700">25–34</tspan> year-old, <tspan font-weight="700">value-seeking</tspan> shopper who is typically <tspan font-weight="700">loyal repeat buyers.</tspan></text>
+<text x="376" y="550" fill="#6b7280" font-size="10">Estimated from the real buyers of the most spec-similar phones in Asia-Pacific.</text>
+
+<!-- 3 donut charts -->
+<!-- Age -->
+<rect x="316" y="572" width="340" height="210" rx="10" fill="#111827" stroke="#1f2937" stroke-width="1"/>
+<text x="336" y="592" fill="#e2e8f0" font-size="12" font-weight="700">Age Groups</text>
+<text x="336" y="608" fill="#6b7280" font-size="10">How old your buyers are</text>
+<!-- Donut (r=62, circ≈390) -->
+<circle cx="420" cy="690" r="62" fill="none" stroke="#4f6ef7" stroke-width="28" stroke-dasharray="133 257" stroke-dashoffset="0" transform="rotate(-90 420 690)"/>
+<circle cx="420" cy="690" r="62" fill="none" stroke="#7c8cf8" stroke-width="28" stroke-dasharray="105 285" stroke-dashoffset="-133" transform="rotate(-90 420 690)"/>
+<circle cx="420" cy="690" r="62" fill="none" stroke="#a78bfa" stroke-width="28" stroke-dasharray="78 312" stroke-dashoffset="-238" transform="rotate(-90 420 690)"/>
+<circle cx="420" cy="690" r="62" fill="none" stroke="#f472b6" stroke-width="28" stroke-dasharray="58 332" stroke-dashoffset="-316" transform="rotate(-90 420 690)"/>
+<circle cx="420" cy="690" r="62" fill="none" stroke="#38bdf8" stroke-width="28" stroke-dasharray="35 355" stroke-dashoffset="-374" transform="rotate(-90 420 690)"/>
+<circle cx="420" cy="690" r="34" fill="#111827"/>
+<text x="420" y="686" fill="#e2e8f0" font-size="16" font-weight="900" text-anchor="middle">34%</text>
+<text x="420" y="702" fill="#6b7280" font-size="10" text-anchor="middle">18–24 yrs</text>
+<!-- Age legend -->
+<rect x="510" y="640" width="8" height="8" fill="#4f6ef7" rx="1"/><text x="522" y="648" fill="#94a3b8" font-size="9">18–24  34%</text>
+<rect x="510" y="656" width="8" height="8" fill="#7c8cf8" rx="1"/><text x="522" y="664" fill="#94a3b8" font-size="9">25–34  27%</text>
+<rect x="510" y="672" width="8" height="8" fill="#a78bfa" rx="1"/><text x="522" y="680" fill="#94a3b8" font-size="9">35–44  20%</text>
+<rect x="510" y="688" width="8" height="8" fill="#f472b6" rx="1"/><text x="522" y="696" fill="#94a3b8" font-size="9">45–54  15%</text>
+<rect x="510" y="704" width="8" height="8" fill="#38bdf8" rx="1"/><text x="522" y="712" fill="#94a3b8" font-size="9">55+     9%</text>
+<text x="420" y="772" fill="#6b7280" font-size="9" text-anchor="middle">Largest: 18–24 (34%)</text>
+
+<!-- Income -->
+<rect x="670" y="572" width="340" height="210" rx="10" fill="#111827" stroke="#1f2937" stroke-width="1"/>
+<text x="690" y="592" fill="#e2e8f0" font-size="12" font-weight="700">Income Level</text>
+<text x="690" y="608" fill="#6b7280" font-size="10">Spending power of buyers</text>
+<circle cx="774" cy="690" r="62" fill="none" stroke="#ef4444" stroke-width="28" stroke-dasharray="39 351" stroke-dashoffset="0" transform="rotate(-90 774 690)"/>
+<circle cx="774" cy="690" r="62" fill="none" stroke="#f59e0b" stroke-width="28" stroke-dasharray="90 300" stroke-dashoffset="-39" transform="rotate(-90 774 690)"/>
+<circle cx="774" cy="690" r="62" fill="none" stroke="#facc15" stroke-width="28" stroke-dasharray="144 246" stroke-dashoffset="-129" transform="rotate(-90 774 690)"/>
+<circle cx="774" cy="690" r="62" fill="none" stroke="#86efac" stroke-width="28" stroke-dasharray="82 308" stroke-dashoffset="-273" transform="rotate(-90 774 690)"/>
+<circle cx="774" cy="690" r="62" fill="none" stroke="#22c55e" stroke-width="28" stroke-dasharray="35 355" stroke-dashoffset="-355" transform="rotate(-90 774 690)"/>
+<circle cx="774" cy="690" r="34" fill="#111827"/>
+<text x="774" y="686" fill="#e2e8f0" font-size="16" font-weight="900" text-anchor="middle">37%</text>
+<text x="774" y="702" fill="#6b7280" font-size="10" text-anchor="middle">Mid income</text>
+<rect x="862" y="640" width="8" height="8" fill="#ef4444" rx="1"/><text x="874" y="648" fill="#94a3b8" font-size="9">Low         10%</text>
+<rect x="862" y="656" width="8" height="8" fill="#f59e0b" rx="1"/><text x="874" y="664" fill="#94a3b8" font-size="9">Lower-mid   23%</text>
+<rect x="862" y="672" width="8" height="8" fill="#facc15" rx="1"/><text x="874" y="680" fill="#94a3b8" font-size="9">Mid         37%</text>
+<rect x="862" y="688" width="8" height="8" fill="#86efac" rx="1"/><text x="874" y="696" fill="#94a3b8" font-size="9">Upper-mid   21%</text>
+<rect x="862" y="704" width="8" height="8" fill="#22c55e" rx="1"/><text x="874" y="712" fill="#94a3b8" font-size="9">High         9%</text>
+<text x="774" y="772" fill="#6b7280" font-size="9" text-anchor="middle">Largest: Mid (37%)</text>
+
+<!-- Gender -->
+<rect x="1024" y="572" width="360" height="210" rx="10" fill="#111827" stroke="#1f2937" stroke-width="1"/>
+<text x="1044" y="592" fill="#e2e8f0" font-size="12" font-weight="700">Gender Split</text>
+<text x="1044" y="608" fill="#6b7280" font-size="10">Who tends to buy this phone</text>
+<circle cx="1130" cy="690" r="62" fill="none" stroke="#4f6ef7" stroke-width="28" stroke-dasharray="226 164" stroke-dashoffset="0" transform="rotate(-90 1130 690)"/>
+<circle cx="1130" cy="690" r="62" fill="none" stroke="#f472b6" stroke-width="28" stroke-dasharray="133 257" stroke-dashoffset="-226" transform="rotate(-90 1130 690)"/>
+<circle cx="1130" cy="690" r="62" fill="none" stroke="#a78bfa" stroke-width="28" stroke-dasharray="31 359" stroke-dashoffset="-359" transform="rotate(-90 1130 690)"/>
+<circle cx="1130" cy="690" r="34" fill="#111827"/>
+<text x="1130" y="686" fill="#e2e8f0" font-size="16" font-weight="900" text-anchor="middle">58%</text>
+<text x="1130" y="702" fill="#6b7280" font-size="10" text-anchor="middle">Male</text>
+<rect x="1224" y="654" width="8" height="8" fill="#4f6ef7" rx="1"/><text x="1236" y="662" fill="#94a3b8" font-size="9">Male     58%</text>
+<rect x="1224" y="672" width="8" height="8" fill="#f472b6" rx="1"/><text x="1236" y="680" fill="#94a3b8" font-size="9">Female   34%</text>
+<rect x="1224" y="690" width="8" height="8" fill="#a78bfa" rx="1"/><text x="1236" y="698" fill="#94a3b8" font-size="9">Non-bin   8%</text>
+<text x="1130" y="772" fill="#6b7280" font-size="9" text-anchor="middle">Leans: Male (58%)</text>
+
+<!-- ─── AFFORDABILITY FIT ─── -->
+<rect x="316" y="796" width="1068" height="140" rx="10" fill="#111827" stroke="#1f2937" stroke-width="1"/>
+<text x="336" y="818" fill="#e2e8f0" font-size="12" font-weight="700">💵 Affordability Fit</text>
+<text x="336" y="834" fill="#6b7280" font-size="10">Does your $320 price match what your predicted buyers can afford?</text>
+
+<!-- Verdict banner (good) -->
+<rect x="336" y="844" width="1028" height="36" rx="8" fill="rgba(34,197,94,0.1)" stroke="rgba(34,197,94,0.4)" stroke-width="1"/>
+<text x="352" y="866" fill="#4ade80" font-size="12" font-weight="700">✅ Well-matched price</text>
+<text x="524" y="866" fill="#6b7280" font-size="10">  73% of likely buyers can comfortably afford this price.</text>
+
+<!-- Split bar -->
+<rect x="336" y="888" width="1028" height="28" rx="6" fill="#1f2937" stroke="#374151" stroke-width="1"/>
+<rect x="336" y="888" width="750" height="28" rx="6" fill="url(#afford-green)"/>
+<text x="711" y="907" fill="white" font-size="11" font-weight="700" text-anchor="middle">73% can afford</text>
+<rect x="1086" y="888" width="278" height="28" rx="0" fill="url(#afford-red)"/>
+<rect x="1086" y="888" width="278" height="28" rx="0" fill="url(#afford-red)"/>
+<rect x="1086" y="888" width="278" height="28" fill="url(#afford-red)"/>
+<path d="M1086 888 h250 a6 6 0 0 1 6 6 v16 a6 6 0 0 1 -6 6 h-250 z" fill="url(#afford-red)"/>
+<text x="1225" y="907" fill="white" font-size="11" font-weight="700" text-anchor="middle">27% stretch</text>
+
+<!-- ─── PMF GAUGE ─── -->
+<rect x="316" y="950" width="1068" height="136" rx="10" fill="#111827" stroke="#1f2937" stroke-width="1"/>
+<text x="336" y="972" fill="#e2e8f0" font-size="12" font-weight="700">🎯 Product-Market Fit Score</text>
+<!-- Gauge arc (semicircle, center x=580, y=1060, r=70) -->
+<path d="M 510 1060 A 70 70 0 0 1 650 1060" fill="none" stroke="#1f2937" stroke-width="22"/>
+<path d="M 510 1060 A 70 70 0 0 1 580 990" fill="none" stroke="#7f1d1d" stroke-width="22"/>
+<path d="M 580 990  A 70 70 0 0 1 638 1016" fill="none" stroke="#78350f" stroke-width="22"/>
+<path d="M 638 1016 A 70 70 0 0 1 650 1060" fill="none" stroke="#14532d" stroke-width="22"/>
+<!-- Active needle fill (78%) -->
+<path d="M 510 1060 A 70 70 0 1 1 640 1018" fill="none" stroke="#22c55e" stroke-width="7" stroke-linecap="round"/>
+<line x1="580" y1="1060" x2="636" y2="1020" stroke="white" stroke-width="3" stroke-linecap="round"/>
+<circle cx="580" cy="1060" r="6" fill="white"/>
+<text x="580" y="1050" fill="#22c55e" font-size="22" font-weight="900" text-anchor="middle">78%</text>
+
+<!-- PMF stats -->
+<text x="740" y="998" fill="#6b7280" font-size="9" font-weight="700">PMF SCORE</text>
+<text x="740" y="1018" fill="#22c55e" font-size="18" font-weight="900">78.0%</text>
+<text x="900" y="998" fill="#6b7280" font-size="9" font-weight="700">FAILURE RISK</text>
+<text x="900" y="1018" fill="#f87171" font-size="18" font-weight="900">12.4%</text>
+<text x="1060" y="998" fill="#6b7280" font-size="9" font-weight="700">BASE RATE</text>
+<text x="1060" y="1018" fill="#6b7280" font-size="18" font-weight="900">25%</text>
+
+<!-- Color zones legend -->
+<rect x="740" y="1040" width="10" height="10" fill="#7f1d1d" rx="2"/>
+<text x="754" y="1049" fill="#6b7280" font-size="9">0–40%: Poor fit</text>
+<rect x="860" y="1040" width="10" height="10" fill="#78350f" rx="2"/>
+<text x="874" y="1049" fill="#6b7280" font-size="9">40–65%: Caution</text>
+<rect x="990" y="1040" width="10" height="10" fill="#14532d" rx="2"/>
+<text x="1004" y="1049" fill="#6b7280" font-size="9">65–100%: Strong fit</text>
+
+<!-- Footer -->
+<text x="850" y="1088" fill="#374151" font-size="9" text-anchor="middle">Smartphone BI Agent  ·  XGBoost + Random Forest + KNN Retrieval  ·  116,481 snapshots  ·  Cold-start inference only</text>
+</svg>
